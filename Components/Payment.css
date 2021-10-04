@@ -1,0 +1,49 @@
+*{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.Payment {
+  padding: 10px 100px;
+  
+}
+
+.Payment-title{
+  font-size: 25px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-bottom: 0px;
+}
+.container{
+  margin: 50px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+
+.btn{
+  padding: 10px 50px;
+}
+
+.navigation-links{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.back-to-cart{
+  padding: 10px 50px;
+  width: fit-content;
+  border-radius: 20px;
+  background-color: #F0F0F0;
+  color: black;
+  font-size: 13px;
+}
+
+.Proceed{
+  padding: 10px 50px;
+  width: fit-content;
+  border-radius: 20px;
+  background-color: green;
+  color: white;
+  font-size: 14px;
+}
