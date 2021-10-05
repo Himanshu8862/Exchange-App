@@ -7,6 +7,8 @@ import Upi from './Components/Upi';
 import PaymentSuccess from './Components/PaymentSuccess';
 import Cart from './Components/Cart';
 import { BrowserRouter,Route} from "react-router-dom";
+import Discussion from './Components/Discussion';
+import NewPost from './Components/NewPost';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <Route exact path="/internetbanking" component={InternetBanking} />
       <Route exact path="/upi" component={Upi} />
       <Route exact path="/paymentsuccess" component={PaymentSuccess} />
+      <Route exact path="/discussion" component={Discussion}/>
+      <Route exact path="/newpost" component={NewPost}/>
     </BrowserRouter>
   );
 }
