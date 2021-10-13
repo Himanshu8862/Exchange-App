@@ -1,10 +1,41 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 
 export default function Header() {
-
+	let history = useHistory();
 	var myStyles = {
 		width: "400px",
+	}
+
+	function logout(){
+		localStorage.removeItem("token");
+		history.push("/login");
+	}
+
+	function CheckLogin(){
+		const token = localStorage.getItem('token');
+		if(!token){
+			return (
+				<div>
+					<Link to="/login">
+					<button type="button" className="btn btn-outline-light ms-5 me-3">Login</button>
+					</Link>
+					<Link to="/register">
+					<button type="button" className="btn btn-outline-light me-3">Register</button>
+					</Link>
+				</div>				
+			)
+		} else {
+			return (
+				<div>
+					<Link to="/profile">
+					<button type="button" className="btn btn-outline-light ms-5 me-3">Profile</button>
+					</Link>
+					<button type="button" className="btn btn-outline-light me-3" onClick={logout}>Logout</button>
+						
+				</div>
+			)
+		}
 	}
 
 	return (
@@ -25,12 +56,8 @@ export default function Header() {
 					<li><Link to="/sell" className="nav-link px-5 text-white">Sell</Link></li>
 					<li><Link to="/faqs" className="nav-link px-5 text-white">FAQs</Link></li>
 					</ul>
-					<Link to="/login">
-					<button type="button" className="btn btn-outline-light ms-5 me-3">Login</button>
-					</Link>
-					<Link to="/register">
-					<button type="button" className="btn btn-outline-light me-3">Register</button>
-					</Link>
+					<CheckLogin />
+					
 				</div>
   			</header>
 		</div>
