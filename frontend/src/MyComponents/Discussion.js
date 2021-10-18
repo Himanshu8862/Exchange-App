@@ -15,7 +15,7 @@ function Discussion() {
                 <DiscussionCard />
                 <DiscussionCard />
                 <DiscussionCard />
-            </div >
+            </div>
         </div>
     );
 }

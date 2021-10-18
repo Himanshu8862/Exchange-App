@@ -15,7 +15,7 @@ export default function Login() {
             console.log(res);
             //setToken(res.data.token);
             localStorage.setItem("token", res.data.token);
-            history.push('/cart');
+            history.push('/');
         }) 
         e.preventDefault();       
     };

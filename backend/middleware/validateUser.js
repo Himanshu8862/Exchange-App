@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 
 export let verifyJwt = (req,res,next) => {
-    const token = req.headers("x-access-token");
+    const token = req.header("x-access-token");
     if(!token){
-        res.send("Unauthorized");
+        res.status(404).send("Unauthorized");
     } else {
         jwt.verify(token, "jwtSecret", (err, decoded) => {
             if (err){

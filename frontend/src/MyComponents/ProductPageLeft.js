@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router';
 
 export default function ProductPageLeft() {
+
+    let query = new URLSearchParams(useLocation().search);
+
+    useEffect(()=>{
+        getDataDB();
+    },[]);
+
+    function getDataDB(){
+        
+    }
+
     return (
         <div>
             <div className="container">
                 <div className="row">
                     <h3 className="col-6">Iphone 8 (White)</h3>
-                    <h3 className="col-6 text-end">Amal Majunu Vidya</h3>
+                    <h3 className="col-6 text-end">{query.get("id")}</h3>
                 </div>
                 <div>
                     <div id="carouselExampleIndicators" className="carousel slide my-3" data-bs-ride="carousel">
