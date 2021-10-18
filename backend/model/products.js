@@ -7,9 +7,7 @@ const productSchema = mongoose.Schema({
     Owner: String,
     imageUrl: Array,
     category: String,
-    date: {
-        type: new Date()
-    },
+    date: Date,
 });
 
 const Product = mongoose.model('Product', productSchema);

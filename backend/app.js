@@ -4,6 +4,7 @@ import express from "express"
 import cors from "cors"
 import productRoutes from "./routes/product.js"
 import authRoutes from "./routes/auth.js"
+import uploadRoutes from "./routes/uploadItem.js"
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
@@ -47,6 +48,7 @@ app.listen(port,()=>{
 
 
 app.use("/products", productRoutes);
+app.use("/sell", uploadRoutes);
 app.use("/", authRoutes);
 
 app.get("/",(req,res)=>{

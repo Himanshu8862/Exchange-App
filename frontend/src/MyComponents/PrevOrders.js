@@ -1,42 +1,43 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function PrevOrders() {
     return (
         <div className="container rounded mt-5 bg-dark py-3">
             <div>
                 <h2 className="container row text-white mb-3">Order Archives</h2>
-                <div class="container text-white">
-                    <div class="row my-2">
-                        <div class="col order-first">
+                <div className="container text-white">
+                    <div className="row my-2">
+                        <div className="col order-first">
                             Order no. 1001
                         </div>
-                        <div class="col">
+                        <div className="col">
                             Date - 00/00/0000
                         </div>
-                        <div class="col order-last">
-                            <a href="#" className="text-white"> Download receipt </a>
+                        <div className="col order-last">
+                            <Link to="#" className="text-white"> Download receipt </Link>
                         </div>
                     </div>
-                    <div class="row my-2">
-                        <div class="col order-first">
+                    <div className="row my-2">
+                        <div className="col order-first">
                             Order no. 2321
                         </div>
-                        <div class="col">
+                        <div className="col">
                             Date - 00/00/0000
                         </div>
-                        <div class="col order-last">
-                            <a href="#" className="text-white"> Download receipt </a>
+                        <div className="col order-last">
+                            <Link to="#" className="text-white"> Download receipt </Link>
                         </div>
                     </div>
-                    <div class="row my-2">
-                        <div class="col order-first">
+                    <div className="row my-2">
+                        <div className="col order-first">
                             Order no. 3111
                         </div>
-                        <div class="col">
+                        <div className="col">
                             Date - 00/00/0000
                         </div>
-                        <div class="col order-last">
-                            <a href="#" className="text-white"> Download receipt </a>
+                        <div className="col order-last">
+                            <Link to="#" className="text-white"> Download receipt </Link>
                         </div>
                     </div>
                 </div>
