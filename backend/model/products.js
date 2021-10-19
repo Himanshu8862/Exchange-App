@@ -5,11 +5,9 @@ const productSchema = mongoose.Schema({
     desc: String,
     price: Number,
     owner: String,
-    imageUrl: Array,
+    images: Array,
     category: String,
-    // date: {
-    //     type: new Date()
-    // },
+    date: Date,
 });
 
 const Product = mongoose.model('Product', productSchema);

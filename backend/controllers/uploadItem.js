@@ -8,7 +8,6 @@ const uploadItem = async (req, res) => {
             desc: req.body.desc,
             price: req.body.price,
             Owner: req.body.owner,
-            imageUrl: req.body.imageUrl,
             category: req.body.category,
             date: Date.now(),
         })

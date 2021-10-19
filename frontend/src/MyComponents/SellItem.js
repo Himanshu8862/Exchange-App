@@ -14,12 +14,29 @@ export default function SellItem() {
 
     const upload = (e) => {
         console.log({category: category, title: title, desc: desc, images: images, price: price});
+        const fd = new FormData();
+        const imageArray = [];
+        for(let i=0; i<images.length; i++) {
+            imageArray.push(images[i]);
+        }
+        console.log(images, images.length, imageArray);
+        fd.append("images", imageArray);
+        console.log(fd);
+        Axios.post("http://localhost:5000/sell/imageupload", fd, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
         Axios.post("http://localhost:5000/sell", {
             category: category,
             title: title,
             desc: desc,
-            imageUrl: images,
             price: price,
+            }, 
+        {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            } 
         })
         .then((res) => {
             console.log(res);
