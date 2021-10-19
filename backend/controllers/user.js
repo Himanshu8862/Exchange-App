@@ -21,7 +21,10 @@ export let registerUser = async (req,res) => {
                     user.password = user.generateHash(password);
                     user.save();
                     console.log(user);
-                    return res.status(200).json({msg: user});
+                    const id = user._id;
+                    const token = jwt.sign({id},"jwtSecret");
+                    req.session.user = user;
+                    return res.status(200).json({result: user, auth: true, token: token});
                 }
             });
             
@@ -62,3 +65,13 @@ export let loginUser = async (req,res) => {
     }
 }
 
+export let getUserData = async (req,res) => {
+    let id = req.user;
+    User.findById(id, (err,user) => {
+        if(err){
+            res.status(404).json({auth:true, msg:"user doesn't exist"});
+        }else{
+            res.status(201).json({auth:true, result: user});
+        }
+    });
+}

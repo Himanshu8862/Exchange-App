@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router';
+import Axios from 'axios';
 
 export default function ProductPageRight() {
+
+    let [cartFlag, setCartFlag] = useState(false);
+    let query = new URLSearchParams(useLocation().search);
+
+    function addToCart() {
+        let id = query.get("id");
+        Axios.post("http://localhost:5000/products/addToCart", {
+            id: id,
+            
+        },{headers: {
+            "x-access-token": localStorage.getItem("token"),
+        }})
+        .then((res)=>{
+            console.log(res);
+        }) 
+        setCartFlag(!cartFlag);
+    }
+
     return (
         <div>
             <div className="container">
@@ -26,9 +46,12 @@ export default function ProductPageRight() {
                         </Link>
                     </div>
                     <div>
-                        <Link to="/cart">
-                        <button className="btn btn-success mx-5 my-3 px-5 py-2">Add to Cart</button>
-                        </Link>
+                    { !cartFlag ? 
+                        <button className="btn btn-success mx-5 my-3 px-5 py-2" onClick={addToCart}>Add to Cart</button>
+                        :  
+                        <button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Added to Cart</button>
+                         }
+                        
                     </div>
                 </div>
                 <hr />

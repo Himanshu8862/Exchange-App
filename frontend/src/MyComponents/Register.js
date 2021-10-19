@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 
 
 export default function Register() {
 
+    let history = useHistory();
     const [usernameReg, setUsernameReg] = useState("");
     const [passwordReg, setPasswordReg] = useState("");
     const [cpasswordReg, setCpasswordReg] = useState("");
@@ -21,6 +22,9 @@ export default function Register() {
         })
         .then((res)=>{
             console.log(res);
+            localStorage.setItem("token", res.data.token);
+            history.push('/');
+
             //this.props.history.push('/cart')
         }) 
         e.preventDefault();       

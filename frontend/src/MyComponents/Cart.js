@@ -1,9 +1,29 @@
-import React from "react";
+import Axios from 'axios';
+import React, { useEffect, useState } from "react";
 import DisplaySeller from "./DisplaySellers";
 
-export default function Cart(props) {
+export default function Cart() {
 
-    props = [{
+    useEffect(()=>{
+        getCartDetails();
+    },[]);
+
+    let [orders, setOrdersReg] = useState();
+    let details = [];
+
+    function getCartDetails(){
+        Axios.get("http://localhost:5000/products/viewCart", {
+                headers: {
+                    "x-access-token": localStorage.getItem("token"),
+                }
+            })
+            .then((res)=>{
+                details = res.data.result;
+                
+            }) 
+    }
+
+    let props = [{
         seller: "seller1",
         total: "1200",
         products: [
@@ -76,7 +96,6 @@ export default function Cart(props) {
                     {props.map(function (d) {
                         return (
                             <div className="row p-3 rounded">
-
                                 <DisplaySeller seller={d.seller} total={d.total} products={d.products} status={d.status} Offer={d.Offer} />
                             </div>
                         )
