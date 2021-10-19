@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function DiscussionCard() {
   return (
@@ -13,9 +14,9 @@ function DiscussionCard() {
                 
                 <div className="media-body ml-3">
                   {" "}
-                  <a href="javascript:void(0)" data-abc="true">
+                  <Link to="/profile" data-abc="true">
                     Tom Harry
-                  </a>
+                  </Link>
                   <div className="text-muted small">13 days ago</div>
                 </div>
               
