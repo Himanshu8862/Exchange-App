@@ -1,6 +1,6 @@
 import Product from "../model/products.js";
 
-const uploadItem = async (req, res) => {
+export let uploadItem = async (req, res) => {
     console.log(req.body);
     try {
         const item = new Product({
@@ -12,7 +12,7 @@ const uploadItem = async (req, res) => {
             date: Date.now(),
         })
         item.save();
-        console.log(item);
+        //console.log(item);
         return res.status(200).json({msg: item});
     }
     catch (error) {
@@ -21,4 +21,3 @@ const uploadItem = async (req, res) => {
     }
 }
 
-export default uploadItem;

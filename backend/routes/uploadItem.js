@@ -1,5 +1,5 @@
 import express from "express";
-import uploadItem from "../controllers/uploadItem.js";
+import {uploadItem} from "../controllers/uploadItem.js";
 import multer from "multer";
 
 const imageStorage = multer.diskStorage({
@@ -27,9 +27,9 @@ const router = express.Router();
 router.post("/", uploadItem);
 router.post("/imageupload", imageUpload.array('images', 10), (req, res) => {
     console.log(req.files);
-    res.send(req.files);
+    
  }, (error, req, res, next) => {
-    console.log(req.files);
+   // console.log(req.files);
     res.status(400).send({ error: error.message });
  });
 

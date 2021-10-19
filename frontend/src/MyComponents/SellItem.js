@@ -13,18 +13,21 @@ export default function SellItem() {
     const [images, setImages] = useState();
 
     const upload = (e) => {
-        console.log({category: category, title: title, desc: desc, images: images, price: price});
+        //console.log({category: category, title: title, desc: desc, images: images, price: price});
         const fd = new FormData();
-        const imageArray = [];
+        // const imageArray = [];
         for(let i=0; i<images.length; i++) {
-            imageArray.push(images[i]);
+            fd.append('images', images[i]);
         }
-        console.log(images, images.length, imageArray);
-        fd.append("images", imageArray);
+        // console.log(imageArray);
+        //fd.append('images', images);
         console.log(fd);
-        Axios.post("http://localhost:5000/sell/imageupload", fd, {
+        Axios.post("http://localhost:5000/sell/imageupload", 
+        fd
+        , {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
+                'content-type': 'multipart/form-data'
             }
         })
         Axios.post("http://localhost:5000/sell", {
@@ -49,7 +52,7 @@ export default function SellItem() {
     return (
         <div className="text-center container w-25 rounded bg-dark">
             <div className="form-signin my-5 p-3">
-                <form onSubmit={upload}>
+                <form onSubmit={upload} >
                     <h1 className="h3 mb-4 pt-3 fw-normal text-white">Sell Item</h1>
                     <div className="dropdown">
                         <button className="btn w-100 btn-secondary dropdown-toggle" type="button" id="categorybutton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -87,7 +90,7 @@ export default function SellItem() {
                         </Link>
                         </div>
                     </div>
-                </form >
+                </form>
             </div>
         </div>
     )
