@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import express from "express"
 import cors from "cors"
 import productRoutes from "./routes/product.js"
+import userRoutes from "./routes/profile.js";
 import authRoutes from "./routes/auth.js"
 import uploadRoutes from "./routes/uploadItem.js"
 import bodyParser from "body-parser";
@@ -46,7 +47,7 @@ app.listen(port,()=>{
     console.log('Server listening at port 5000');
 })
 
-
+app.use("/profile", userRoutes);
 app.use("/products", productRoutes);
 app.use("/sell", uploadRoutes);
 app.use("/", authRoutes);

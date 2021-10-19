@@ -1,4 +1,6 @@
 import express from "express";
+import { addToCart, viewCart } from "../controllers/product.js";
+import { verifyJwt } from "../middleware/validateUser.js";
 const router = express.Router();
 
 // http://localhost:5000/products/
@@ -6,6 +8,11 @@ const router = express.Router();
 router.get("/", (req,res) => {
     res.send('This works');
 });
+
+router.get("/viewCart", verifyJwt, viewCart);
+router.post("/addToCart", verifyJwt, addToCart);
+
+
 
 
 

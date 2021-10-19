@@ -8,6 +8,10 @@ export default function DisplaySeller(props) {
 
     const toggle = () => setIsOpen(!isOpen);
 
+    function makeRequest(){
+                
+    }
+
     return (
         <div className="bg-light rounded">
             <div className="fs-3">{props.seller}</div>
@@ -53,7 +57,7 @@ export default function DisplaySeller(props) {
             </div>
             <div className="d-flex py-2 justify-content-between">
                 <div>
-                    <button type="button" className={props.status==="pending" ?" btn btn-warning":" btn btn-success"}>
+                    <button type="button" onClick={makeRequest} className={props.status==="pending" ?" btn btn-warning":" btn btn-success"}>
                         {props.status}
                     </button>
                 </div>
