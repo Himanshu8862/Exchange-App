@@ -13,7 +13,7 @@ export default function SellItem(props) {
     const [images, setImages] = useState();
 
     const upload = (e) => {
-        console.log({category: category, title: title, desc: desc, images: images, price: price});
+        //console.log({category: category, title: title, desc: desc, images: images, price: price});
         const fd = new FormData();
         const imageNames = [];
         // var userName = "noUser";
@@ -21,6 +21,7 @@ export default function SellItem(props) {
         Axios.get("http://localhost:5000/profile/getUserData", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
+                'content-type': 'multipart/form-data'
             }
         })
         .then((res)=>{
@@ -75,7 +76,7 @@ export default function SellItem(props) {
     return (
         <div className="text-center container w-25 rounded bg-dark">
             <div className="form-signin my-5 p-3">
-                <form onSubmit={upload}>
+                <form onSubmit={upload} >
                     <h1 className="h3 mb-4 pt-3 fw-normal text-white">Sell Item</h1>
                     <div className="dropdown">
                         <button className="btn w-100 btn-secondary dropdown-toggle" type="button" id="categorybutton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -113,7 +114,7 @@ export default function SellItem(props) {
                         </Link>
                         </div>
                     </div>
-                </form >
+                </form>
             </div>
         </div>
     )

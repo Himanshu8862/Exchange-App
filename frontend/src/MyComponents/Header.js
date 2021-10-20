@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link,useHistory } from "react-router-dom";
 
 export default function Header() {
@@ -10,6 +10,7 @@ export default function Header() {
 	function logout(){
 		localStorage.removeItem("token");
 		history.push("/login");
+		window.location.reload();
 	}
 
 	function CheckLogin(){
