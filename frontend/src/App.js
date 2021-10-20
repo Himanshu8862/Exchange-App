@@ -19,6 +19,7 @@ import PaymentSuccess from './MyComponents/PaymentSuccess';
 import Cart from './MyComponents/Cart';
 import Discussion from './MyComponents/Discussion';
 import NewPost from './MyComponents/NewPost';
+import RequestPage from './MyComponents/RequestPage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -32,56 +33,59 @@ function App() {
         <Header />
         <Switch> 
 			
-			<Route path="/login">
+			<Route exact path="/login">
 				<Login />
 			</Route>
-			<Route path="/register">
+			<Route exact path="/register">
 				<Register />
 			</Route>
-			<Route path="/product">
+			<Route exact path="/product">
 				<ProductBody />
 			</Route>
-			<Route path="/chatbox">
+			<Route exact path="/chatbox">
 				<ChatBox />
 			</Route>
-			<Route path="/faqs">
+			<Route exact path="/faqs">
 				<FaqPage />
 			</Route>
-			<Route path="/profile">
+			<Route exact path="/profile">
 				<ProfilePage />
 			</Route>
-			<Route path="/sell">
+			<Route exact path="/sell">
 				<SellItem />
 			</Route>
-			<Route path="/payment">
+			<Route exact path="/payment">
 				<Payment />
 			</Route>
-			<Route path="/debitcard">
+			<Route exact path="/debitcard">
 				<DebitCards />
 			</Route>
-			<Route path="/creditcard">
+			<Route exact path="/creditcard">
 				<CreditCard />
 			</Route>
-			<Route path="/cart">
+			<Route exact path="/cart">
 				<Cart />
 			</Route>
-			<Route path="/paymentsuccess">
+			<Route exact path="/paymentsuccess">
 				<PaymentSuccess />
 			</Route>
-			<Route path="/internetbanking">
+			<Route exact path="/internetbanking">
 				<InternetBanking />
 			</Route>
-			<Route path="/upi">
+			<Route exact path="/upi">
 				<Upi />
 			</Route>
-			<Route path="/discuss">
+			<Route exact path="/discuss">
 				<Discussion />
 			</Route>
-			<Route path="/newpost">
+			<Route exact path="/newpost">
 				<NewPost />
 			</Route>
-			<Route path="/">
+			<Route exact path="/">
 				<MainPage />
+			</Route>
+			<Route exact exact path="/request">
+				<RequestPage />
 			</Route>
         </Switch>
         <Footer/>
