@@ -4,7 +4,7 @@ import Axios from 'axios';
 // import { useState } from 'react
 // import './SellItem.css';
 
-export default function SellItem() {
+export default function SellItem(props) {
     var history = useHistory();
     const [category, setCategory] = useState("");
     const [title, setTitle] = useState("");
@@ -15,34 +15,60 @@ export default function SellItem() {
     const upload = (e) => {
         console.log({category: category, title: title, desc: desc, images: images, price: price});
         const fd = new FormData();
-        const imageArray = [];
-        for(let i=0; i<images.length; i++) {
-            imageArray.push(images[i]);
-        }
-        console.log(images, images.length, imageArray);
-        fd.append("images", imageArray);
-        console.log(fd);
-        Axios.post("http://localhost:5000/sell/imageupload", fd, {
+        const imageNames = [];
+        // var userName = "noUser";
+        // get username of the user
+        Axios.get("http://localhost:5000/profile/getUserData", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
         })
-        Axios.post("http://localhost:5000/sell", {
-            category: category,
-            title: title,
-            desc: desc,
-            price: price,
+        .then((res)=>{
+            // console.log(res);
+            let data = res.data.result;
+            // console.log(data.username);
+            // userName = data.username;
+            // setuserName(data.username);
+            // console.log(userName);
+            for(let i=0; i<images.length; i++) {
+                fd.append('images', images[i]);
+                imageNames.push(images[i].name);
+            }
+            // console.log(fd);
+            Axios.post("http://localhost:5000/sell/imageupload", fd, {
+                headers: {
+                    "x-access-token": localStorage.getItem("token"),
+                    "Content-Type": "multipart/form-data",
+                }
+            })
+            Axios.post("http://localhost:5000/sell", {
+                category: category,
+                title: title,
+                desc: desc, 
+                price: price,
+                imageNames: imageNames,
+                owner: data.username,
             }, 
-        {
-            headers: {
-                "x-access-token": localStorage.getItem("token"),
-            } 
-        })
-        .then((res) => {
-            console.log(res);
-            alert("Item Uploaded Successfully!");
-            history.push("/");
-        })
+            {
+                headers: {
+                    "x-access-token": localStorage.getItem("token"),
+                } 
+            })
+            .then((res) => {
+                console.log(res);
+                if(res.status === 200) {
+                    alert("Item Uploaded Successfully!");
+                    history.push("/");
+                }
+                else {
+                    alert("Some error occured! Try Again");
+                }
+            })
+        }) 
+        // fd.append('category', category);
+        // fd.append('title', title);
+        // fd.append('desc', desc);
+        // fd.append('price', price);
         e.preventDefault();
     }
 
