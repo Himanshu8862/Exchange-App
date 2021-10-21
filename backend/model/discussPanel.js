@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const panelSchema = mongoose.Schema({
     author: String,
-    date:{
-        type: new Date(),
-    },
+    title:String,
+    time:String,
+   
+  
     // time:{
     //     type: new time(),
     // },
