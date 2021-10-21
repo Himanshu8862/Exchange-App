@@ -1,9 +1,10 @@
 import express from "express";
 import {uploadItem} from "../controllers/uploadItem.js";
 import multer from "multer";
+import { verifyJwt } from "../middleware/validateUser.js";
 
 const imageStorage = multer.diskStorage({
-    destination: 'public/images',
+    destination: '../frontend/public/Assets/Images',
     filename: (req, file, cb) => {
         cb(null, file.originalname);
     }
@@ -24,7 +25,7 @@ const imageUpload = multer({
 
 const router = express.Router();
 
-router.post("/", uploadItem);
+router.post("/", verifyJwt ,uploadItem);
 router.post("/imageupload", imageUpload.array('images', 10), (req, res) => {
     console.log(req.files);
     

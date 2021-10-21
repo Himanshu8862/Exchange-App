@@ -27,10 +27,6 @@ export default function SellItem(props) {
         .then((res)=>{
             // console.log(res);
             let data = res.data.result;
-            // console.log(data.username);
-            // userName = data.username;
-            // setuserName(data.username);
-            // console.log(userName);
             for(let i=0; i<images.length; i++) {
                 fd.append('images', images[i]);
                 imageNames.push(images[i].name);
@@ -66,10 +62,6 @@ export default function SellItem(props) {
                 }
             })
         }) 
-        // fd.append('category', category);
-        // fd.append('title', title);
-        // fd.append('desc', desc);
-        // fd.append('price', price);
         e.preventDefault();
     }
 

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import  Axios  from 'axios';
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
 
 export default function ProductPageLeft() {
@@ -9,15 +10,28 @@ export default function ProductPageLeft() {
         getDataDB();
     },[]);
 
-    function getDataDB(){
-        
-    }
+    let [item, setItems] = useState([]);
+    let [imageUrl,setImageUrl] = useState("");
 
+    function getDataDB(){
+        let url = 'http://localhost:5000/products/getProductData?' + "id=" +  query.get("id");
+        Axios.get(url, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+        .then((res)=>{
+            console.log(res.data.result);
+            setItems(res.data.result);
+            let url = "/assets/images/"+res.data.result.images[0];
+            setImageUrl(url);
+        }) 
+    }
     return (
         <div>
             <div className="container">
                 <div className="row">
-                    <h3 className="col-6">Iphone 8 (White)</h3>
+                    <h3 className="col-6">{item.title}</h3>
                     <h3 className="col-6 text-end">{query.get("id")}</h3>
                 </div>
                 <div>
@@ -29,7 +43,7 @@ export default function ProductPageLeft() {
                         </div>
                         <div className="carousel-inner">
                             <div className="carousel-item active">
-                            <img src="/assets/images/iphone8-front.jpg" className="d-block w-100" alt="..." height="400px"/>
+                            <img src={imageUrl} className="d-block w-100" alt="..." height="400px"/>
                             </div>
                             <div className="carousel-item">
                             <img src="/assets/images/iphone8_2.jpg" className="d-block w-100" alt="..." height="400px"/>
