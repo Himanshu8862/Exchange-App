@@ -32,9 +32,10 @@ export default function ProductList() {
         }, [],
     );
     let [items, setItems] = useState([]);
+    
 
     function getProductsfromDB(){
-       // window.location.reload();
+       //window.location.reload();
         Axios.get('http://localhost:5000/products/getProducts', {
             headers: {
                 "x-access-token": localStorage.getItem("token"),

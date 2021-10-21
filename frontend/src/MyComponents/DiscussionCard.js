@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Collapse, Button, CardBody, Card } from "reactstrap";
 
-function DiscussionCard(props) {
+export default function DiscussionCard(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [userComment, setuserComment] = useState("");
   console.log(props);
@@ -20,10 +20,16 @@ function DiscussionCard(props) {
     setuserComment("");
     console.log("you clicked the form ", req, props);
     axios
-      .post("http://localhost:5000/discussion/addComment", req)
+      .post("http://localhost:5000/discussion/addComment", req, 
+      {
+          headers: {
+              "x-access-token": localStorage.getItem("token"),
+          } 
+      })
       .then((res) => {
         console.log(res);
         console.log("comment added");
+        window.location.reload();
       });
   }
 
@@ -117,4 +123,4 @@ function DiscussionCard(props) {
   );
 }
 
-export default DiscussionCard;
+

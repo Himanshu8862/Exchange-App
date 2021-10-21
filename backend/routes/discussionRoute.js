@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyJwt } from "../middleware/validateUser.js";
 const router = express.Router();
 import {
   addComment,
@@ -8,7 +9,7 @@ import {
 
 
 router.get("/view", viewDiscussion);
-router.post("/addComment", addComment);
-router.post("/addPost", addPost);
+router.post("/addComment", verifyJwt, addComment);
+router.post("/addPost", verifyJwt, addPost);
 
 export default router;

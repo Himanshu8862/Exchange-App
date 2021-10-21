@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import axios from "axios";
 
 function NewPost() {
   const [title, setTitle] = useState("");
+  let history = useHistory();
   const [discription, setDiscription] = useState("");
 
   // handle submit form
@@ -19,10 +21,16 @@ function NewPost() {
 
     // post request to the server
     axios
-      .post("http://localhost:5000/discussion/addPost", req)
+      .post("http://localhost:5000/discussion/addPost", req, 
+      {
+          headers: {
+              "x-access-token": localStorage.getItem("token"),
+          } 
+      })
       .then((res) => {
         console.log(res);
         console.log("comment added");
+        history.push("/discuss");
       })
       .catch((err) => console.error(err));
 

@@ -14,7 +14,11 @@ function Discussion() {
 
     // get Discussions 
     const getDiscussions=()=>{
-        axios.get("http://localhost:5000/discussion/view")
+        axios.get("http://localhost:5000/discussion/view", {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
         .then( (res)=>{
             console.log("view data: ",res)
             setDiscussions (res.data)
@@ -41,7 +45,7 @@ function Discussion() {
                         )
                     })
                 }
-            </div >
+            </div>
         </div>
     );
 }

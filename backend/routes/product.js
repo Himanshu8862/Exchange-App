@@ -11,7 +11,7 @@ router.get("/", (req,res) => {
 
 router.get("/viewCart", verifyJwt, viewCart);
 router.post("/addToCart", verifyJwt, addToCart);
-router.get("/getProducts", verifyJwt, getProductDetails);
+router.get("/getProducts", getProductDetails);
 router.get("/getProductData", verifyJwt, getProductData);
 
 

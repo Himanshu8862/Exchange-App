@@ -88,6 +88,7 @@ export let getProductDetails = async (req,res) => {
             if(err){
                 console.log(err);
             }else{
+               // console.log(results);
                 return res.status(201).json({auth:true, result: results});
             }
         })
