@@ -1,40 +1,113 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { Collapse, Button, CardBody, Card } from "reactstrap";
 
-function DiscussionCard() {
+function DiscussionCard(props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [userComment, setuserComment] = useState("");
+  console.log(props);
+
+
+  // handle submit form
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let req = {
+      author: "unknown",
+      comment: userComment,
+      id: props.post._id,
+    };
+    setuserComment("");
+    console.log("you clicked the form ", req, props);
+    axios
+      .post("http://localhost:5000/discussion/addComment", req)
+      .then((res) => {
+        console.log(res);
+        console.log("comment added");
+      });
+  }
+
+  // handle Change
+  function handleChange(e) {
+    setuserComment(e.target.value);
+  }
+
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
-    <div className="container border border-primary rounded my-3">
+    <div className="container border border-dark rounded">
       <div className="row">
         <div className="row-md-12">
-          <div className="row mb-4">
+          <div className="row ">
             <div className=" col card-header">
               <div className="media flex-wrap w-100 align-items-center">
                 {" "}
-                <p className="fs-3 fw-bold text-center">I Need a Bicycle</p>
-                
+                <p className="fs-3 fw-bold text-center">{props.post.title}</p>
                 <div className="media-body ml-3">
                   {" "}
-                  <a href="javascript:void(0)" data-abc="true">
-                    Tom Harry
-                  </a>
-                  <div className="text-muted small">13 days ago</div>
+                  <span>{props.post.author}</span>
+                  <span className="text-muted small inline-block mx-3">
+                    {props.post.time}
+                  </span>
                 </div>
-              
               </div>
             </div>
             <div className="card-body">
-            
-              <p>
-                {" "}
-                Hello Everyone!!
-                I need a bicycle. If anyone have it, please upload, I want to buy.{" "}
-              </p>
+              <p> {props.post.post} </p>
             </div>
-            <div className="card-footer d-flex flex-wrap justify-content-end align-items-center px-0 pt-0 pb-3">
-              <div className="px-4 pt-3">
-                {" "}
-                <button type="button" className="btn btn-primary">
-                  <i className="ion ion-md-create"></i>&nbsp; Reply
-                </button>{" "}
+            <div className="card-footer">
+              <div className="">
+                <Button
+                  color="primary"
+                  onClick={toggle}
+                  style={{ marginBottom: "1rem" }}
+                >
+                  Comments
+                </Button>
+                <Collapse isOpen={isOpen}>
+                  <p className="text-center text-decoration-underline ">
+                    Comments({props.post.comments.length})
+                  </p>
+                  <div>
+                    {props.post.comments.map(function (comments) {
+                      return (
+                        <div className="col bg-white my-2 p-2 rounded">
+                          <div></div>
+                          <p className="fs-6  my-0 ">
+                            {" "}
+                            <i
+                              class="bi bi-person-circle"
+                              aria-hidden="true"
+                            ></i>{" "}
+                            {comments.author}
+                          </p>
+                          <p className="text-secondary ">{comments.comment}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Collapse>
+                <div>
+                  <form onSubmit={handleSubmit}>
+                    <div className="input-group mb-3">
+                      <input
+                        type="text"
+                        value={userComment}
+                        onChange={handleChange}
+                        className="form-control"
+                        placeholder="Type Message here..."
+                        aria-label="Recipient's username"
+                        aria-describedby="basic-addon2"
+                      />
+                      <button
+                        type="submit"
+                        className="px-1 btn btn-outline-success"
+                      >
+                        Comment <i className="fas fa-paper-plane"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

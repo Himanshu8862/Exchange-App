@@ -24,6 +24,7 @@ export default function Register() {
             console.log(res);
             localStorage.setItem("token", res.data.token);
             history.push('/');
+            window.location.reload();
 
             //this.props.history.push('/cart')
         }) 

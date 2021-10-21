@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
-
+import { Link } from 'react-router-dom';
 
 
 export default function UserDetails() {
@@ -43,27 +43,27 @@ export default function UserDetails() {
                 </li>
                 <li>
                     <div className="nav-link text-white">
-                        {/* <svg className="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg> */}
+                        {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#speedometer2"></use></svg> */}
                         Address
                     </div>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        {/* <svg className="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg> */}
+                    <Link to="#" className="nav-link text-white">
+                        {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#table"></use></svg> */}
                         Edit Profile
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        {/* <svg className="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg> */}
+                    <Link to="#" className="nav-link text-white">
+                        {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#grid"></use></svg> */}
                         Cart
-                    </a>
+                    </Link>
                 </li>
                 <li>
-                    <a href="#" className="nav-link text-white">
-                        {/* <svg className="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg> */}
+                    <Link to="#" className="nav-link text-white">
+                        {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#people-circle"></use></svg> */}
                         View Requests
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>

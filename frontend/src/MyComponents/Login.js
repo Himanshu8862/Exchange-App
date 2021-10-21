@@ -16,6 +16,7 @@ export default function Login() {
             //setToken(res.data.token);
             localStorage.setItem("token", res.data.token);
             history.push('/');
+            window.location.reload();
         }) 
         e.preventDefault();       
     };
