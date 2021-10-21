@@ -1,15 +1,51 @@
-import React, { useState } from "react";
+import Axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import ProductItem from "./ProductItem";
 
 
 export default function DisplaySeller(props) {
     const [isOpen, setIsOpen] = useState(false);
+    useEffect( ()=>{
+        getProductDetails();
+        }, [],
+    );
+    let [items, setItems] = useState([]);
+    let [status, setStatus] = useState("request");
+    function getProductDetails(){
+        let url = 'http://localhost:5000/products/getRequestProduct?oid='+props.id;
+        Axios.get(url, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+        .then((res)=>{
+            console.log(res);
+            setItems(res.data.result);
+        }) 
+    }
 
     const toggle = () => setIsOpen(!isOpen);
 
     function makeRequest(){
-                
+        Axios.post("http://localhost:5000/products/makeRequest", {
+            id: props.id,
+            
+        },{headers: {
+            "x-access-token": localStorage.getItem("token"),
+        }})
+        .then((res)=>{
+            console.log(res);
+            setStatus("pending");
+        }) 
+                                
+    }
+    function calucateTotal(){
+        let total = 0;
+        items.map((item)=>{
+            total += Number(item.price);
+        })
+        return total;
     }
 
     return (
@@ -17,7 +53,7 @@ export default function DisplaySeller(props) {
             <div className="fs-3">{props.seller}</div>
             <div className="d-flex justify-content-between py-2">
                 <div className="">SubTotal</div>
-                <div className="">{props.total}</div>
+                <div className="">{calucateTotal()}</div>
             </div>
             <div>
                 <div color="primary" onClick={toggle} style={{ marginBottom: "1rem" }} >
@@ -31,21 +67,22 @@ export default function DisplaySeller(props) {
                                    <p className="fw-bold">Product Image</p> 
                                 </div>
                                 <div>
-                                    <p className="fw-bold" >Name & Discription</p>
-
+                                    <p className="fw-bold" >Name </p>
+                                </div>
+                                <div>
+                                    <p className="fw-bold" > Description</p>
                                 </div>
                                 <div >
                                     <p className="fw-bold">Price</p>
                                 </div>
-                                <div className="fw-bold">Quantity</div>
-                                <div className="fw-bold">Total</div>
+
                             </div>
                             {
-                                props.products.map(function (d) {
+                                items.map(function (d) {
                                     return (
                                         <>
                                         <hr/>
-                                        <ProductItem name={d.name} discription={d.discription} price={d.price} quantity={d.quantity} />
+                                        <ProductItem name={d.title} discription={d.desc} price={d.price} imageUrl={d.images[0]}  />
                                         
                                         </>
                                     )
@@ -57,8 +94,8 @@ export default function DisplaySeller(props) {
             </div>
             <div className="d-flex py-2 justify-content-between">
                 <div>
-                    <button type="button" onClick={makeRequest} className={props.status==="pending" ?" btn btn-warning":" btn btn-success"}>
-                        {props.status}
+                    <button type="button" onClick={makeRequest} className={status==="pending" ?" btn btn-warning":" btn btn-success"}>
+                        {status}
                     </button>
                 </div>
                 <div>
@@ -66,7 +103,7 @@ export default function DisplaySeller(props) {
                     <button
                         type="button"
                         className="btn btn-primary"
-                        disabled={props.status === "pending"}
+                        disabled={status === "pending"}
                         disables >
                         Make Offer
                     </button>
@@ -76,17 +113,17 @@ export default function DisplaySeller(props) {
                     <button
                         type="button"
                         className="btn btn-danger"
-                        disabled={props.status === "pending"}
+                        disabled={status === "pending"}
                     >
                         Cancel
                     </button>
                 </div>
                 <div>
-                    <Link to={props.status === "accepted" ? "/payment" : "#"}>
+                    <Link to={status === "accepted" ? "/payment" : "#"}>
                         <button
                             type="button"
                             className="btn btn-success"
-                            disabled={props.status === "pending"}
+                            disabled={status === "pending"}
                         >
                             Pay
                         </button>

@@ -54,13 +54,7 @@ export default function UserDetails() {
                     </Link>
                 </li>
                 <li>
-                    <Link to="#" className="nav-link text-white">
-                        {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#grid"></use></svg> */}
-                        Cart
-                    </Link>
-                </li>
-                <li>
-                    <Link to="#" className="nav-link text-white">
+                    <Link to="/request" className="nav-link text-white">
                         {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#people-circle"></use></svg> */}
                         View Requests
                     </Link>

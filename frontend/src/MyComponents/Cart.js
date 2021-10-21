@@ -8,8 +8,7 @@ export default function Cart() {
         getCartDetails();
     },[]);
 
-    let [orders, setOrdersReg] = useState();
-    let details = [];
+    let [orders, setOrders] = useState([]);
 
     function getCartDetails(){
         Axios.get("http://localhost:5000/products/viewCart", {
@@ -18,8 +17,8 @@ export default function Cart() {
                 }
             })
             .then((res)=>{
-                details = res.data.result;
-                
+                console.log(res.data.result);
+                setOrders(res.data.result);
             }) 
     }
 
@@ -93,10 +92,10 @@ export default function Cart() {
             <p className="fs-2">Cart</p>
             <div className="Cart bg-primary rounded">
                 <div className="row m-2">
-                    {props.map(function (d) {
+                    { orders.map(function (d) {
                         return (
                             <div className="row p-3 rounded">
-                                <DisplaySeller seller={d.seller} total={d.total} products={d.products} status={d.status} Offer={d.Offer} />
+                                <DisplaySeller seller={d.seller}  status={d.decision} id={d._id} />
                             </div>
                         )
                     })}
