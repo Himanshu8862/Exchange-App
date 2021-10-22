@@ -34,7 +34,8 @@ function App() {
 	const [searchText, setsearchText] = useState("");
 	const [filterPrice, setfilterPrice] = useState(-1);
 	const [filterRatings, setfilterRatings] = useState(0);
-	const [filterLocation, setfilterLocation] = useState("");
+	const [filterLocation, setfilterLocation] = useState(new Set());
+	const [category, setcategory] = useState("");
 
   return (
     <Router>
@@ -90,7 +91,7 @@ function App() {
 				<NewPost />
 			</Route>
 			<Route exact path="/">
-				<MainPage searchText = {searchText} filterPrice = {filterPrice} filterRatings = {filterRatings}
+				<MainPage searchText = {searchText} category = {category} setcategory = {setcategory} filterPrice = {filterPrice} filterRatings = {filterRatings}
 						filterLocation = {filterLocation} setfilterPrice = {setfilterPrice} setfilterRatings = {setfilterRatings}
 						setfilterLocation = {setfilterLocation} />
 			</Route>

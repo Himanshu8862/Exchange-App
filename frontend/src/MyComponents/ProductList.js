@@ -25,7 +25,10 @@ export default function ProductList(props) {
     //         price: 350,
     //     },
     // ];
-    // console.log(props.searchText)
+    console.log(props.searchText);
+    console.log(props.filterPrice);
+    // console.log(props.filterRatings);
+    // console.log(props.filterLocation);
 
     useEffect( ()=>{
             getProductsfromDB();
@@ -63,12 +66,33 @@ export default function ProductList(props) {
             <div className="album bg-light">
                 <div className="container text-decoration-none ">
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                    {items.filter((val) => {
-                        if(props.searchText=="")
+                    {items
+                    .filter((val) => {
+                        if(props.searchText==="")
                             return val;
                         else if(val.title.toLowerCase().includes(props.searchText.toLowerCase()))
                             return val;
                     })
+                    .filter((val) => {
+                        if(props.filterPrice === -1)
+                            return val;
+                        else if(val.price <= props.filterPrice)
+                            return val;
+                    })
+                    // enable when ratings are added for users
+                    // .filter((val) => {
+                    //     if(props.filterRatings === 0)
+                    //         return val;
+                    //     else if(val.rating >= props.filterRatings)
+                    //         return val;
+                    // })
+                    // Enable when location is added for users
+                    // .filter((val) => {
+                    //     if(props.filterLocation.empty())
+                    //         return val;
+                    //     else if(props.filterLocation.has(val.location))
+                    //         return val;
+                    // })
                     .map((item) => {
                         let imageUrl = "/assets/images/"+item.images[0];
                         return (

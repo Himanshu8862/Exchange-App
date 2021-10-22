@@ -5,17 +5,23 @@ export default function Filters(props) {
     var minPrice = 0, maxPrice = 100000;
     const [price, setPrice] = useState(0);
     const [rating, setRating] = useState(0);
-    const [location, setLocation] = useState([]);
+    const [location, setLocation] = useState(new Set());
 
     // var a = ["delhi", "mumbai", "bengaluru"];
-    if(a.find((cities) => {
-        return cities==="chennai";
-    }))
-        console.log("found");
-    else
-        console.log("not found!");
+    // if(a.find((cities) => {
+    //     return cities==="chennai";
+    // }))
+    //     console.log("found");
+    // else
+    //     console.log("not found!");
 
     function setFilters(e) {
+        // console.log("Price: ", price);
+        // console.log("Rating: ", rating);
+        // console.log("Location: ", location);
+        props.setfilterPrice(price);
+        props.setfilterRatings(rating);
+        props.setfilterLocation(location);
         e.preventDefault();
     }
 
@@ -50,31 +56,31 @@ export default function Filters(props) {
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={(e) => {setRating(0)}} />
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     All
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={(e) => {setRating(4.5)}}/>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     4.5 stars and above
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={(e) => {setRating(4)}}/>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     4 stars and above
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={(e) => {setRating(3)}}/>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     3 stars and above
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={(e) => {setRating(2)}}/>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                     2 stars and above
                                 </label>
@@ -92,32 +98,80 @@ export default function Filters(props) {
                         <div class="accordion-body">
                             <div class="form-check">
                             <input class="form-check-input" type="checkbox" value=""
-                            onChange={ location.find((cities) => { if(cities==="delhi") return }) === undefined ?
-                                setLocation(location.push("delhi")) : location.splice()} id="brand1"/>
+                            onChange={
+                                (e) => {
+                                    if(e.target.checked) {
+                                        location.add("delhi");
+                                    }
+                                    else {
+                                        location.delete("delhi");
+                                    }
+                                }
+                                } id="brand1"/>
                             <label class="form-check-label" for="brand1">
                                 Delhi
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="brand2" />
+                            <input class="form-check-input" type="checkbox" value=""
+                            onChange={
+                                (e) => {
+                                    if(e.target.checked) {
+                                        location.add("mumbai");
+                                    }
+                                    else {
+                                        location.delete("mumbai");
+                                    }
+                                }
+                                } id="brand2" />
                             <label class="form-check-label" for="brand2">
                                 Mumbai
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="brand3" />
+                            <input class="form-check-input" type="checkbox" value=""
+                            onChange={
+                                (e) => {
+                                    if(e.target.checked) {
+                                        location.add("kolkata");
+                                    }
+                                    else {
+                                        location.delete("kolkata");
+                                    }
+                                }
+                                } id="brand3" />
                             <label class="form-check-label" for="brand3">
                                 Kolkata
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="brand4" />
+                            <input class="form-check-input" type="checkbox" value=""
+                            onChange={
+                                (e) => {
+                                    if(e.target.checked) {
+                                        location.add("bengaluru");
+                                    }
+                                    else {
+                                        location.delete("bengaluru");
+                                    }
+                                }
+                                } id="brand4" />
                             <label class="form-check-label" for="brand4">
                                 Bengaluru
                             </label>
                             </div>
                             <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="brand5" />
+                            <input class="form-check-input" type="checkbox" value=""
+                            onChange={
+                                (e) => {
+                                    if(e.target.checked) {
+                                        location.add("chennai");
+                                    }
+                                    else {
+                                        location.delete("chennai");
+                                    }
+                                }
+                                } id="brand5" />
                             <label class="form-check-label" for="brand5">
                                 Chennai
                             </label>
