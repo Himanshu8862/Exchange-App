@@ -11,8 +11,6 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
-import jwt from "jsonwebtoken";
-
 dotenv.config();
 const app = express();
 app.use(

@@ -19,12 +19,15 @@ import Cart from './MyComponents/Cart';
 import Discussion from './MyComponents/Discussion';
 import NewPost from './MyComponents/NewPost';
 import RequestPage from './MyComponents/RequestPage';
+import io from "socket.io-client";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
 import { useState } from 'react';
+
+const socket = io.connect("http://localhost:3001/");
 
 function App() {
 
@@ -48,7 +51,7 @@ function App() {
 				<ProductBody />
 			</Route>
 			<Route exact path="/chatbox">
-				<ChatBox />
+				<ChatBox socket = {socket}/>
 			</Route>
 			<Route exact path="/faqs">
 				<FaqPage />
