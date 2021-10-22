@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ChatList from './ChatList'
 import MessageBox from './MessageBox'
 
-export default function ChatBox() {
+export default function ChatBox(props) {
     return (
         <div>
             <h1 className="text-center my-5">Chat Box</h1>
             <div className="container my-5 body-background">
                 <div className="row shadow-md">
-                    <div className="col-5">
-                        <ChatList />
+                    <div className="col-5" >
+                        <ChatList socket={props.socket}/>
                     </div>
                     <div className="col-7">
-                        <MessageBox />
+                        <MessageBox socket={props.socket}/>
                     </div>
                 </div>
             </div>

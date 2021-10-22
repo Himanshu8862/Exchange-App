@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-export default function MessageBox() {
+
+export default function MessageBox(props) {
+    
+
+    let [mess, setMess] = useState("");
+
+    function sendMessage(){
+        let data = {
+            author: "admin",
+            mess : mess,
+        }
+        let room = "123";
+        let socket = props.socket;
+        socket.emit("send_message", data, room);
+    }
+    useEffect( () => {
+        getMessage();
+    }, [] );
+
+    function getMessage(){
+        let socket = props.socket;
+        socket.on("receive_message", (data) => {
+            console.log(data);
+        })
+    }
+
     return (
         <div className="my-5 me-3">
             <div className="container">
@@ -27,11 +52,11 @@ export default function MessageBox() {
                     {/* <input  type="text" name="message" id="msg_1" placeholder="Type message here..." className="col-12"/> */}
                     <div class="input-group">
                     {/* <span class="input-group-text">With textarea</span> */}
-                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                    <textarea class="form-control" onChange={(e)=>{ setMess(e.target.value) }} aria-label="With textarea"></textarea>
                     </div>
                 </form>
                 <div className="col-2">
-                <button type="submit" className="btn btn-lg my-1 px-4 btn-success">Send</button>
+                <button type="submit" onClick={sendMessage} className="btn btn-lg my-1 px-4 btn-success">Send</button>
                 </div>
             </div>
         </div>
