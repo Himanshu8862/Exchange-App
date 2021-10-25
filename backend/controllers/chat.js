@@ -1,6 +1,7 @@
 import Product from "../model/products.js";
 import Chat from "../model/chat.js";
 import User from "../model/users.js";
+import { ObjectId } from "bson";
 
 export let createChat = async (req,res) => {
     try {
@@ -69,16 +70,35 @@ export let getChatList = async (req,res) => {
 export let addChats = async (req,res) => {
     try {
         let id = req.body.id;
-        let chats = req.body.chats;        
-        Chat.findById(id,(err,item) => {
-            if(err){
-                console.log(err);
-            }else{
-                item.chats.push(chats);
-                item.save();
-                return res.status(201).json({auth:true, result: item});
-            }
-        })
+        let chats = req.body.chats; 
+        if(!Array.isArray(chats)){
+            Chat.findById(id,(err,item) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    item.chats.push(chats);
+                    item.save();
+                    return res.status(201).json({auth:true, result: item});
+                }
+            })
+        }else{
+            Chat.update({ "_id": ObjectId(id)
+              }, {
+                $push: {
+                  chats: { $each : chats }
+                }
+              }, (err,res) => {
+                  if(err){
+                      console.log(err);
+                  }else{
+                      console.log(res);
+                  }
+              })
+              console.log(req.user);
+
+        }
+
+        
         //Chat.findByIdAndUpdate(id, {})
     } catch (error) {
         console.log(error);        

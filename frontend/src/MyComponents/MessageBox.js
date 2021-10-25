@@ -11,16 +11,17 @@ export default function MessageBox(props) {
     let [messagesFromDB, setMessagesFromDB] = useState([]);
     let [addToDB, setAddtoDb] = useState(true);
     let [firstTime, setFirstTime] = useState(true)
+    let [isTwo, setisTwo] = useState(false)
 
     function sendMessage(){
         let data = {
-            author: "admin",
+            author: props.user,
             mess : mess,
         }
         let room = props.sender._id;
         let socket = props.socket;
         let message = {
-            sender : false,
+            sender : props.user,
             text : mess,
         }
         let update_messages = [...messages,message];
@@ -38,6 +39,7 @@ export default function MessageBox(props) {
                 console.log(res);                
             }) 
         }
+        console.log(messages);
         
     }
     useEffect( () => {
@@ -64,23 +66,48 @@ export default function MessageBox(props) {
     function getMessage(messages){
         setSender(props.sender);
         let socket = props.socket;
-        socket.on("check_users", (len) => {
-            console.log(len);
-            if(len === 2){
-                setAddtoDb(false);
-            }else{
-                setAddtoDb(true);
-            }
-        })
         socket.on("receive_message", (data) => {
             console.log(data);
             let message = {
-                sender : true,
+                sender : props.user === props.sender.author1 ? props.sender.author2 : props.sender.author1,
                 text : data.mess,
             }
             let update_messages = [...messages,message];
             setMessages(update_messages);
         })
+        socket.on("check_users", (len) => {
+            console.log(len);
+            if(len === 2){
+                setAddtoDb(false);
+                setisTwo(true);
+            }else{
+                setAddtoDb(true);
+                if(isTwo){
+                    setisTwo(false);
+                    console.log(messages);
+                    console.log("Message is posted by " + props.user);
+                    // Axios.post("http://localhost:5000/chat/addChats", {
+                    //     id: props.sender._id,
+                    //     chats : messages,
+                    // },{headers: {
+                    //     "x-access-token": localStorage.getItem("token"),
+                    // }})
+                    // .then((res)=>{
+                    //     console.log(res);                
+                    // }) 
+                    // setMessages([]);
+                }
+            }
+        })
+        // socket.on("receive_message", (data) => {
+        //     console.log(data);
+        //     let message = {
+        //         sender : props.user === props.sender.author1 ? props.sender.author2 : props.sender.author1,
+        //         text : data.mess,
+        //     }
+        //     let update_messages = [...messages,message];
+        //     setMessages(update_messages);
+        // })
     }
 
     return (
@@ -90,14 +117,14 @@ export default function MessageBox(props) {
             </div>
             <div className="container bg-light py-3 message-box overflow-auto">
             {  messagesFromDB.map((message) => {
-                if(message.sender){
+                if(message.sender !== props.user){
                     return  <h4 className="">{message.text}</h4>
                 }else{
                     return <h4 className="text-end my-3 ">{message.text}</h4>
                 }
             })}
             {messages.map((message) => {
-                if(message.sender){
+                if(message.sender !== props.user){
                     return  <h4 className="">{message.text}</h4>
                 }else{
                     return <h4 className="text-end my-3 ">{message.text}</h4>

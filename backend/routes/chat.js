@@ -8,6 +8,8 @@ const app = express();
 
 app.use(cors());
 
+let rooms = new Map();
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -19,15 +21,16 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
    // socket.join("123");
-    socket.on("join_room", async (data) => {
+    socket.on("join_room", async (data,user) => {
         socket.join(data);
-        console.log(socket.rooms);
+        rooms.set(socket.id,data);
+        console.log(rooms);
         const sockets = await io.in(data).fetchSockets().then((clients) =>{
             console.log(clients.length);
             io.to(data).emit("check_users", clients.length);
         });
         
-        socket.to(data).emit("receive_message", "User joined");
+       // socket.to(data).emit("receive_message", "User joined");
         
         console.log(`User ${socket.id} connected at room ${data}`);
     })
@@ -43,8 +46,16 @@ io.on("connection", (socket) => {
         socket.to(room).emit("receive_message", data);
     })
     
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
         console.log("User Disconnected", socket.id);
+        let room_needed = rooms.get(socket.id);
+        rooms.delete(socket.id);
+        const sockets = await io.in(room_needed).fetchSockets().then((clients) =>{
+            console.log(clients.length);
+            io.to(room_needed).emit("check_users", clients.length);
+        });
+
+        
     })
 })
 
