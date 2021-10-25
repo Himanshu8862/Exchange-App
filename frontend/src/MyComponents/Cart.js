@@ -17,8 +17,9 @@ export default function Cart() {
                 }
             })
             .then((res)=>{
-                console.log(res.data.result);
+                console.log("res is ",res.data.result);
                 setOrders(res.data.result);
+                console.log("ordrs are: ", orders)
             }) 
     }
 

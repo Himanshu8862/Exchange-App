@@ -1,13 +1,35 @@
-import './PaymentOption.css'
-import {
-  Link
-} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 function PaymentOption(props) {
-  let src="/"+props.goto;
+  const location = useLocation();
+  let data = location.state;
+
+  let [items, setItems] = useState([]);
+
+  function GetItems() {
+    setItems(data);
+  }
+  useEffect(() => {
+    GetItems();
+  }, []);
+
+  let src = "/" + props.goto;
   return (
-    <div className="child">
-      <Link to={src}><p className="text-dark fs-5 text-decoration-none">{props.title}</p></Link>
+    <div className="row ml-3">
+      <Link
+        to={{
+          pathname: src,
+          state: items,
+        }}
+      >
+        <div
+          className="d-flex align-items-center justify-content-center border border-dark  bg-info  rounded"
+          style={{ width: "18rem", height: "18rem" }}
+        >
+          <p className="text-center text-white fw-bold">{props.title}</p>
+        </div>
+      </Link>
     </div>
   );
 }

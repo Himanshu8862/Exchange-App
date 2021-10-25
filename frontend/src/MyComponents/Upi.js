@@ -1,6 +1,26 @@
 import {Link} from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 
 function Upi() {
+    // get the state data
+  const location = useLocation();
+  let props = location.state;
+
+  // items state 
+  let [items, setItems] = useState([]);
+
+  function GetItems() {
+    setItems(props);
+  }
+
+  useEffect(() => {
+    GetItems();
+  }, []);
+
+  console.log("data is: ", items)
+
     return (
         <div className="conainer px-5 my-5 min-height">
             <h4 className="text-left lg">Payment</h4>
