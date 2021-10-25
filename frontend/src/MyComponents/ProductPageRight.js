@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import Axios from 'axios';
 
 export default function ProductPageRight() {
 
     let [cartFlag, setCartFlag] = useState(false);
     let query = new URLSearchParams(useLocation().search);
+    let history = useHistory();
 
     function addToCart() {
         let id = query.get("id");
@@ -20,6 +21,19 @@ export default function ProductPageRight() {
             console.log(res);
         }) 
         setCartFlag(!cartFlag);
+    }
+
+    function createChat(){
+        let id = query.get("id");
+        Axios.post("http://localhost:5000/chat/createChat", {
+            id: id,
+        },{headers: {
+            "x-access-token": localStorage.getItem("token"),
+        }})
+        .then((res)=>{
+            console.log(res);
+            history.push("/chatbox");                 
+        }) 
     }
 
     return (
@@ -42,7 +56,7 @@ export default function ProductPageRight() {
                 <div className="container text-center">
                     <div>
                         <Link to="/chatbox">
-                        <button className="btn btn-primary mx-5 my-3 px-5 py-2">Chat With Seller</button>
+                        <button className="btn btn-primary mx-5 my-3 px-5 py-2" onClick={createChat}>Chat With Seller</button>
                         </Link>
                     </div>
                     <div>

@@ -19,11 +19,16 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
    // socket.join("123");
-    socket.on("join_room", (data) => {
+    socket.on("join_room", async (data) => {
         socket.join(data);
         console.log(socket.rooms);
-        socket.to(data).emit("receive_message", "User has joined");
-        //socket.broadcast.to(data).emit("receive_message", "New user has joined the room!");
+        const sockets = await io.in(data).fetchSockets().then((clients) =>{
+            console.log(clients.length);
+            io.to(data).emit("check_users", clients.length);
+        });
+        
+        socket.to(data).emit("receive_message", "User joined");
+        
         console.log(`User ${socket.id} connected at room ${data}`);
     })
     socket.on("send_message", (data, room) => {
