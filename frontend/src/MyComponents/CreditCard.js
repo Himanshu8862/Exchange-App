@@ -7,7 +7,8 @@ export default function CreditCard() {
   // get the state data
   const location = useLocation();
   let props = location.state.data;
-  console.log("state contain: ", location.state)
+  console.log("state contain: ", location.state);
+  location.state.method = "credit card";
 
   // items state
   let [items, setItems] = useState([]);
@@ -104,7 +105,7 @@ export default function CreditCard() {
           className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none"
           to={{
             pathname: "/paymentsuccess",
-            state: items,
+            state: location.state,
           }}
         >
           Proceed

@@ -32,7 +32,7 @@ function Checkout() {
     <div className="d-sm-flex flex-column m-5 justify-content-center">
       <h4 className="d-flex justify-content-between align-items-center mb-3">
         <span className="text-primary">Summery</span>
-        <span className="badge bg-primary rounded-pill">3</span>
+        <span className="badge bg-primary rounded-pill">{items.length}</span>
       </h4>
       <ul className="list-group mb-3">
         {items.map(function (d) {

@@ -6,7 +6,8 @@ import { useLocation } from "react-router-dom";
 function DebitCards() {
     // get the state data
   const location = useLocation();
-  let props = location.state;
+  let props =location.state.data;
+  location.state.method="Debit Card"
 
   // items state 
   let [items, setItems] = useState([]);
@@ -21,6 +22,7 @@ function DebitCards() {
 }, []);
 
 console.log("data is: ", items)
+console.log("state contains: ",location.state)
     return (
         <div className="conainer px-5 my-5 min-height">
             <h4 className="text-left lg">Payment</h4>
@@ -75,7 +77,15 @@ console.log("data is: ", items)
             </div>
             <div class="d-flex justify-content-between">
                 <Link className="fs-6 bg-primary text-dark px-5 py-2 rounded-pill text-decoration-none" to="/cart">Back to cart</Link>
-                <Link className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none" to="/paymentsuccess">Proceed</Link>
+                <Link
+          className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none"
+          to={{
+            pathname: "/paymentsuccess",
+            state: location.state,
+          }}
+        >
+          Proceed
+        </Link>
             </div>
 
         </div>

@@ -5,7 +5,8 @@ import { useLocation } from "react-router-dom";
 function InternetBanking() {
   // get the state data
   const location = useLocation();
-  let props = location.state;
+  let props =location.state.data;
+  location.state.method="Internet Banking"
 
   // items state
   let [items, setItems] = useState([]);
@@ -19,6 +20,7 @@ function InternetBanking() {
   }, []);
 
   console.log("data is: ", items);
+  console.log("IB state: ", location.state)
 
   return (
     <div className="conainer px-5 my-5 min-height">
@@ -48,7 +50,10 @@ function InternetBanking() {
         </Link>
         <Link
           className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none"
-          to="/paymentsuccess"
+          to={{
+            pathname: "/paymentsuccess",
+            state: location.state,
+          }}
         >
           Proceed
         </Link>
