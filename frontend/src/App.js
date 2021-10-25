@@ -25,14 +25,21 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import { useState } from 'react';
 
 const socket = io.connect("http://localhost:3001/");
 
 function App() {
 
+	const [searchText, setsearchText] = useState("");
+	const [filterPrice, setfilterPrice] = useState(-1);
+	const [filterRatings, setfilterRatings] = useState(0);
+	const [filterLocation, setfilterLocation] = useState(new Set());
+	const [category, setcategory] = useState("");
+
   return (
     <Router>
-        <Header />
+        <Header setsearchText = {setsearchText} />
         <Switch> 
 			
 			<Route exact path="/login">
@@ -84,9 +91,11 @@ function App() {
 				<NewPost />
 			</Route>
 			<Route exact path="/">
-				<MainPage />
+				<MainPage searchText = {searchText} category = {category} setcategory = {setcategory} filterPrice = {filterPrice} filterRatings = {filterRatings}
+						filterLocation = {filterLocation} setfilterPrice = {setfilterPrice} setfilterRatings = {setfilterRatings}
+						setfilterLocation = {setfilterLocation} />
 			</Route>
-			<Route exact exact path="/request">
+			<Route exact path="/request">
 				<RequestPage />
 			</Route>
         </Switch>
