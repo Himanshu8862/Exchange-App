@@ -16,7 +16,7 @@ function PaymentOption(props) {
 
   let src = "/" + props.goto;
   return (
-    <div className="row ml-3">
+    <div className="row mx-3">
       <Link
         to={{
           pathname: src,
