@@ -25,7 +25,10 @@ export default function ProductList(props) {
     //         price: 350,
     //     },
     // ];
-
+    console.log(props.searchText);
+    console.log(props.filterPrice);
+    // console.log(props.filterRatings);
+    // console.log(props.filterLocation);
 
     useEffect(() => {
         getProductsfromDB();

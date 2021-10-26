@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link,useHistory } from "react-router-dom";
 
-export default function Header() {
+export default function Header(props) {
 	let history = useHistory();
 	var myStyles = {
 		width: "400px",
 	}
+	const [input, setinput] = useState("");
 
 	function logout(){
 		localStorage.removeItem("token");
@@ -49,8 +50,8 @@ export default function Header() {
 
 					<ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content mb-md-0">
 					<li><Link to="/" className="nav-link px-5 text-white">EXCHANGE APP</Link></li>
-					<form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" >
-					<input type="search" className="form-control form-control-dark" style={myStyles} placeholder="Search..." aria-label="Search"/>
+					<form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" onSubmit={props.setsearchText(input)} >
+					<input type="search" className="form-control form-control-dark" style={myStyles} onChange={(e) => {setinput(e.target.value)}} placeholder="Search..." aria-label="Search"/>
 					</form>
 					<li><Link to="/discuss" className="nav-link px-5 text-white">Discussion Panel</Link></li>
 					<li><Link to="/cart" className="nav-link px-5 text-white">Cart</Link></li>

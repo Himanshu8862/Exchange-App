@@ -7,6 +7,7 @@ import userRoutes from "./routes/profile.js";
 import authRoutes from "./routes/auth.js"
 import uploadRoutes from "./routes/uploadItem.js"
 import discussionRoute from "./routes/discussionRoute.js" 
+import chatRoutes from "./routes/chats.js";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
@@ -20,6 +21,7 @@ app.use(
         credentials: true,
     })
 );
+//app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,6 +53,7 @@ app.use("/products", productRoutes);
 app.use("/sell", uploadRoutes);
 app.use("/discussion",discussionRoute);
 app.use("/", authRoutes);
+app.use("/chat", chatRoutes);
 
 app.get("/",(req,res)=>{
     res.send('Working!!');
