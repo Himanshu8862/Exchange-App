@@ -25,17 +25,48 @@ export default function ProductList(props) {
     //         price: 350,
     //     },
     // ];
+
+    // enable when ratings are added for users
+                    // .filter((val) => {
+                    //     if(props.filterRatings === 0)
+                    //         return val;
+                    //     else {
+                    //         console.log(sellerRating);
+                    //         Axios.get('http://localhost:5000/getUser', {username: val.owner})
+                    //         .then((res) => {
+                    //             setsellerRating(res.data.result.rating);
+                    //         })
+                    //         console.log(sellerRating);
+                    //         if(sellerRating >= props.filterRatings)
+                    //             return val;
+                    //     }
+                    // })
+                    // Enable when location is added for users
+                    // .filter((val) => {
+                    //     if(props.filterLocation.size === 0)
+                    //         return val;
+                    //     else {
+                    //         // Axios.get('http://localhost:5000/getUser', {username: val.owner})
+                    //         // .then((res) => {
+                    //         //     setsellerLocation(res.data.result.location);
+                    //         // })
+                    //         console.log(sellerLocation);
+                    //         // if(props.filterLocation.has(sellerLocation))
+                    //             return val;
+                    //     }
+                    // })
     console.log(props.searchText);
     console.log(props.filterPrice);
-    // console.log(props.filterRatings);
-    // console.log(props.filterLocation);
+    console.log(props.filterRatings);
+    console.log(props.filterLocation);
 
     useEffect( ()=>{
             getProductsfromDB();
         }, [],
     );
     let [items, setItems] = useState([]);
-    
+    let [sellerRating, setsellerRating] = useState(0);
+    let [sellerLocation, setsellerLocation] = useState("");
 
     function getProductsfromDB(){
        //window.location.reload();
@@ -74,25 +105,38 @@ export default function ProductList(props) {
                             return val;
                     })
                     .filter((val) => {
-                        if(props.filterPrice === -1)
+                        if(props.filterPrice === 0)
                             return val;
                         else if(val.price <= props.filterPrice)
                             return val;
                     })
-                    // enable when ratings are added for users
-                    // .filter((val) => {
-                    //     if(props.filterRatings === 0)
-                    //         return val;
-                    //     else if(val.rating >= props.filterRatings)
-                    //         return val;
-                    // })
-                    // Enable when location is added for users
-                    // .filter((val) => {
-                    //     if(props.filterLocation.empty())
-                    //         return val;
-                    //     else if(props.filterLocation.has(val.location))
-                    //         return val;
-                    // })
+                    .filter((val) => {
+                        if(props.filterRatings === 0)
+                            return val;
+                        else {
+                            console.log(val.owner);
+                            Axios.post('http://localhost:5000/getUser', {username: val.owner})
+                            .then((res) => {
+                                setsellerRating(res.data.result.rating);
+                            })
+                            console.log(sellerRating);
+                            if(sellerRating >= props.filterRatings)
+                                return val;
+                        }
+                    })
+                    .filter((val) => {
+                        if(props.filterLocation.size === 0)
+                            return val;
+                        else {
+                            Axios.post('http://localhost:5000/getUser', {username: val.owner})
+                            .then((res) => {
+                                setsellerLocation(res.data.result.location);
+                            })
+                            console.log(sellerLocation);
+                            if(props.filterLocation.has(sellerLocation))
+                                return val;
+                        }
+                    })
                     .map((item) => {
                         let imageUrl = "/assets/images/"+item.images[0];
                         return (

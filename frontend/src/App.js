@@ -32,7 +32,7 @@ const socket = io.connect("http://localhost:3001/");
 function App() {
 
 	const [searchText, setsearchText] = useState("");
-	const [filterPrice, setfilterPrice] = useState(-1);
+	const [filterPrice, setfilterPrice] = useState(0);
 	const [filterRatings, setfilterRatings] = useState(0);
 	const [filterLocation, setfilterLocation] = useState(new Set());
 	const [category, setcategory] = useState("");
