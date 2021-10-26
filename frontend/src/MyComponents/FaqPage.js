@@ -6,8 +6,8 @@ export default function FaqPage() {
             <h1 className="text-center my-5">FAQs</h1>
             <div className="container mb-5">
                 <ul class="list-group">
-                <li class="list-group-item list-group-item-warning fs-5">Q. Question</li>
-                <li class="list-group-item list-group-item-info mb-4">Answer</li>
+                {/* <li class="list-group-item list-group-item-warning fs-5">Q. Question</li>
+                <li class="list-group-item list-group-item-info mb-4">Answer</li> */}
                 <li class="list-group-item list-group-item-warning fs-5">Q. How to post an item for sale?</li>
                 <li class="list-group-item list-group-item-info mb-4">Login to the website, then use Sell option on header to open the form, fill necessary details and click</li>
                 <li class="list-group-item list-group-item-warning fs-5">Q. How to use Discussion Panel?</li>

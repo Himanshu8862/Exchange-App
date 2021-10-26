@@ -23,16 +23,21 @@ import Checkout from './MyComponents/Checkout';
 import io from "socket.io-client";
 import "bootstrap-icons/font/bootstrap-icons.css"
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+	BrowserRouter as Router,
+	Switch,
+	Route,
 } from "react-router-dom";
-import { useState } from 'react';
+
+import React, {useState} from 'react'
+=======
+
 
 const socket = io.connect("http://localhost:3001/");
 
 function App() {
 
+
+=======
 	const [searchText, setsearchText] = useState("");
 	const [filterPrice, setfilterPrice] = useState(-1);
 	const [filterRatings, setfilterRatings] = useState(0);
@@ -108,6 +113,7 @@ function App() {
         <Footer/>
     </Router>
   );
+
 }
 
 export default App;
