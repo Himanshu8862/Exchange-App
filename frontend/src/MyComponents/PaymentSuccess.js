@@ -33,24 +33,44 @@ function PaymentSuccess() {
           Payment Successful <i class="bi bi-check-circle"></i>
         </div>
         <div class="col p-3 mt-5">
-          <div className="d-flex justify-content-between">
-            <p className="text">Transaction ID</p>
-            <p className="text">TX129283891934</p>
-          </div>
+         
 
           <div className="d-flex justify-content-between">
             <p className="text">Seller</p>
             <p className="text">{location.state.data[0].owner}</p>
           </div>
+          <p className="text-secondary fw-bold">Products</p>
+         
+         
 
-          <div className="d-flex justify-content-between">
-            <p className="text">Payment Type</p>
-            <p className="text">{location.state.method}</p>
-          </div>
+          
+          {items.map(function (d) {
+            return (
+             
+                <div className="d-flex justify-content-between">
+                  <p className="text">{d.title}</p>
+                  <p className="text">{d.price}</p>
+                </div>
+              
+            );
+          })}
           <div className="d-flex justify-content-between">
             <p className="text fw-bold">Amount</p>
             <p className="text fw-bold">{location.state.total}</p>
           </div>
+
+        
+          <div className="d-flex justify-content-between">
+            <p className="text">Payment Type</p>
+            <p className="text">{location.state.method}</p>
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <p className="text">Transaction ID</p>
+            <p className="text">TX129283891934</p>
+          </div>
+
+         
         </div>
         <div class="col p-3 mt-5">
           <div className="d-flex justify-content-between">
