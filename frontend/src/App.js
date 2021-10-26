@@ -19,18 +19,25 @@ import Cart from './MyComponents/Cart';
 import Discussion from './MyComponents/Discussion';
 import NewPost from './MyComponents/NewPost';
 import RequestPage from './MyComponents/RequestPage';
+import Checkout from './MyComponents/Checkout';
 import io from "socket.io-client";
+import "bootstrap-icons/font/bootstrap-icons.css"
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+	BrowserRouter as Router,
+	Switch,
+	Route,
 } from "react-router-dom";
-import { useState } from 'react';
+
+import React, {useState} from 'react'
+=======
+
 
 const socket = io.connect("http://localhost:3001/");
 
 function App() {
 
+
+=======
 	const [searchText, setsearchText] = useState("");
 	const [filterPrice, setfilterPrice] = useState(0);
 	const [filterRatings, setfilterRatings] = useState(0);
@@ -87,6 +94,9 @@ function App() {
 			<Route exact path="/discuss">
 				<Discussion />
 			</Route>
+			<Route exact path="/checkout">
+				<Checkout />
+			</Route>
 			<Route exact path="/newpost">
 				<NewPost />
 			</Route>
@@ -98,10 +108,12 @@ function App() {
 			<Route exact path="/request">
 				<RequestPage />
 			</Route>
+			
         </Switch>
         <Footer/>
     </Router>
   );
+
 }
 
 export default App;

@@ -15,6 +15,7 @@ export default function MainPage(props) {
             <div className="container-fluid py-5">
 					<div className="row">
 						<div className="col-3 sticky-sm-top">
+      
 							<Categories setcategory = {props.setcategory} />
 							<Filters setfilterPrice = {props.setfilterPrice} setfilterRatings = {props.setfilterRatings}
 							setfilterLocation = {props.setfilterLocation}/>

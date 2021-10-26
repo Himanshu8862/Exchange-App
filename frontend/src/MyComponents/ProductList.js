@@ -60,26 +60,27 @@ export default function ProductList(props) {
     console.log(props.filterRatings);
     console.log(props.filterLocation);
 
-    useEffect( ()=>{
-            getProductsfromDB();
-        }, [],
+    useEffect(() => {
+        getProductsfromDB();
+    }, [],
     );
     let [items, setItems] = useState([]);
     let [sellerRating, setsellerRating] = useState(0);
     let [sellerLocation, setsellerLocation] = useState("");
 
-    function getProductsfromDB(){
-       //window.location.reload();
+
+    function getProductsfromDB() {
+        //window.location.reload();
         Axios.get('http://localhost:5000/products/getProducts', {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
         })
-        .then((res)=>{
-            let returned_items = res.data.result;
-            setItems(returned_items);
-            console.log(returned_items);
-        }) 
+            .then((res) => {
+                let returned_items = res.data.result;
+                setItems(returned_items);
+                console.log(returned_items);
+            })
 
     }
 
@@ -89,8 +90,9 @@ export default function ProductList(props) {
     //     history.push({pathname: "/product",search: params.toString()});
     // }
 
-    
-//onClick={productPage(item.id)}
+
+    //onClick={productPage(item.id)}
+    console.log(props.category);
 
     return (
         <div>
@@ -103,6 +105,12 @@ export default function ProductList(props) {
                             return val;
                         else if(val.title.toLowerCase().includes(props.searchText.toLowerCase()))
                             return val;
+                    })
+                    .filter((item) =>{
+                        if(props.category==="")
+                            return item;
+                        else if(item.category === props.category)
+                            return item;
                     })
                     .filter((val) => {
                         if(props.filterPrice === 0)
@@ -155,9 +163,9 @@ export default function ProductList(props) {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
-                        );
-                    })}     
+                            </Link>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

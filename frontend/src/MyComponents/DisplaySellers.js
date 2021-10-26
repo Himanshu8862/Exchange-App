@@ -6,43 +6,45 @@ import ProductItem from "./ProductItem";
 
 export default function DisplaySeller(props) {
     const [isOpen, setIsOpen] = useState(false);
-    useEffect( ()=>{
+    useEffect(() => {
         getProductDetails();
-        }, [],
+    }, [],
     );
     let [items, setItems] = useState([]);
     let [status, setStatus] = useState("request");
-    function getProductDetails(){
-        let url = 'http://localhost:5000/products/getRequestProduct?oid='+props.id;
+    function getProductDetails() {
+        let url = 'http://localhost:5000/products/getRequestProduct?oid=' + props.id;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
         })
-        .then((res)=>{
-            console.log(res);
-            setItems(res.data.result);
-        }) 
+            .then((res) => {
+                console.log(res);
+                setItems(res.data.result);
+            })
     }
 
     const toggle = () => setIsOpen(!isOpen);
 
-    function makeRequest(){
+    function makeRequest() {
         Axios.post("http://localhost:5000/products/makeRequest", {
             id: props.id,
-            
-        },{headers: {
-            "x-access-token": localStorage.getItem("token"),
-        }})
-        .then((res)=>{
-            console.log(res);
-            setStatus("pending");
-        }) 
-                                
+
+        }, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+            .then((res) => {
+                console.log(res);
+                setStatus("pending");
+            })
+
     }
-    function calucateTotal(){
+    function calucateTotal() {
         let total = 0;
-        items.map((item)=>{
+        items.map((item) => {
             total += Number(item.price);
         })
         return total;
@@ -64,13 +66,13 @@ export default function DisplaySeller(props) {
                         <div className="card-body">
                             <div className="d-flex justify-content-between">
                                 <div>
-                                   <p className="fw-bold">Product Image</p> 
+                                    <p className="fw-bold">Product Image</p>
                                 </div>
                                 <div>
-                                    <p className="fw-bold" >Name </p>
+                                    <p className="fw-bold">Name </p>
                                 </div>
                                 <div>
-                                    <p className="fw-bold" > Description</p>
+                                    <p className="fw-bold">Description</p>
                                 </div>
                                 <div >
                                     <p className="fw-bold">Price</p>
@@ -81,9 +83,9 @@ export default function DisplaySeller(props) {
                                 items.map(function (d) {
                                     return (
                                         <>
-                                        <hr/>
-                                        <ProductItem name={d.title} discription={d.desc} price={d.price} imageUrl={d.images[0]}  />
-                                        
+                                            <hr />
+                                            <ProductItem name={d.title} discription={d.desc} price={d.price} imageUrl={d.images[0]} />
+
                                         </>
                                     )
                                 })
@@ -94,19 +96,19 @@ export default function DisplaySeller(props) {
             </div>
             <div className="d-flex py-2 justify-content-between">
                 <div>
-                    <button type="button" onClick={makeRequest} className={status==="pending" ?" btn btn-warning":" btn btn-success"}>
+                    <button type="button" onClick={makeRequest} className={status === "pending" ? " btn btn-warning" : " btn btn-success"}>
                         {status}
                     </button>
                 </div>
                 <div>
-                <Link to={props.status === "accepted" ? "/chatbox" : "#"}>
-                    <button
-                        type="button"
-                        className="btn btn-primary"
-                        disabled={status === "pending"}
-                        disables >
-                        Make Offer
-                    </button>
+                    <Link to={props.status === "accepted" ? "/chatbox" : "#"}>
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            disabled={status === "pending"}
+                            disables >
+                            Make Offer
+                        </button>
                     </Link>
                 </div>
                 <div>
@@ -119,17 +121,22 @@ export default function DisplaySeller(props) {
                     </button>
                 </div>
                 <div>
-                    <Link to={status === "accepted" ? "/payment" : "#"}>
+                    <Link to={
+                        {
+                            pathname: "/checkout",
+                            state:  items ,
+                        }}
+                    >
                         <button
                             type="button"
                             className="btn btn-success"
                             disabled={status === "pending"}
                         >
-                            Pay
+                            Checkout
                         </button>
                     </Link>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

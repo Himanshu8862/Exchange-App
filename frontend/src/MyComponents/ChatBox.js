@@ -1,18 +1,49 @@
-import React, { useEffect } from 'react'
+import Axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import ChatList from './ChatList'
 import MessageBox from './MessageBox'
 
 export default function ChatBox(props) {
+
+    let [username, setUsername] = useState("");
+    let [chatList, setChatList] = useState([]);
+    let [choosenChat, setChoosenChat] = useState({});
+    let [showBox, setShowBox] = useState(false);
+    useEffect(()=>{
+        getChatList();
+        console.log(choosenChat);
+    },[])
+
+    function getChatList(){
+        Axios.get("http://localhost:5000/chat/getChatList", {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+        .then((res)=>{
+            console.log(res);  
+            setUsername(res.data.current_user);    
+            setChatList(res.data.result);          
+        }) 
+    }
+
+    function chatChoose(chat){
+        console.log(chat);
+        setChoosenChat(chat);
+        setShowBox(true);
+    }
+
     return (
         <div>
             <h1 className="text-center my-5">Chat Box</h1>
             <div className="container my-5 body-background">
                 <div className="row shadow-md">
                     <div className="col-5" >
-                        <ChatList socket={props.socket}/>
+                        <ChatList socket={props.socket} chatList={chatList} user={username} setChat={chatChoose}/>
                     </div>
                     <div className="col-7">
-                        <MessageBox socket={props.socket}/>
+                    {showBox ? <MessageBox socket={props.socket} sender={choosenChat} user={username} /> : <></>}
+                        
                     </div>
                 </div>
             </div>
