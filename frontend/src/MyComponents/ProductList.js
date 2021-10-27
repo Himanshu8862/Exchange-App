@@ -5,31 +5,74 @@ import { Link } from 'react-router-dom';
 export default function ProductList(props) {
 
 
+
+    // enable when ratings are added for users
+                    // .filter((val) => {
+                    //     if(props.filterRatings === 0)
+                    //         return val;
+                    //     else {
+                    //         console.log(sellerRating);
+                    //         Axios.get('http://localhost:5000/getUser', {username: val.owner})
+                    //         .then((res) => {
+                    //             setsellerRating(res.data.result.rating);
+                    //         })
+                    //         console.log(sellerRating);
+                    //         if(sellerRating >= props.filterRatings)
+                    //             return val;
+                    //     }
+                    // })
+                    // Enable when location is added for users
+                    // .filter((val) => {
+                    //     if(props.filterLocation.size === 0)
+                    //         return val;
+                    //     else {
+                    //         // Axios.get('http://localhost:5000/getUser', {username: val.owner})
+                    //         // .then((res) => {
+                    //         //     setsellerLocation(res.data.result.location);
+                    //         // })
+                    //         console.log(sellerLocation);
+                    //         // if(props.filterLocation.has(sellerLocation))
+                    //             return val;
+                    //     }
+                    // })
     console.log(props.searchText);
     console.log(props.filterPrice);
+    console.log(props.filterRatings);
+    console.log(props.filterLocation);
 
-    useEffect( ()=>{
-            getProductsfromDB();
-        }, [],
+    useEffect(() => {
+        getProductsfromDB();
+    }, [],
     );
     let [items, setItems] = useState([]);
-    
+    let [sellerRating, setsellerRating] = useState(0);
+    let [sellerLocation, setsellerLocation] = useState("");
 
-    function getProductsfromDB(){
-       //window.location.reload();
-       let token = localStorage.getItem("token");
+
+    function getProductsfromDB() {
+        //window.location.reload();
         Axios.get('http://localhost:5000/products/getProducts', {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
         })
-        .then((res)=>{
-            let returned_items = res.data.result;
-            setItems(returned_items);
-            console.log(returned_items);
-        }) 
+            .then((res) => {
+                let returned_items = res.data.result;
+                setItems(returned_items);
+                console.log(returned_items);
+            })
 
     }
+
+    // function productPage(id){
+    //     const params = new URLSearchParams();
+    //     params.append("id",id);
+    //     history.push({pathname: "/product",search: params.toString()});
+    // }
+
+
+    //onClick={productPage(item.id)}
+    console.log(props.category);
 
     return (
         <div>
@@ -43,26 +86,45 @@ export default function ProductList(props) {
                         else if(val.title.toLowerCase().includes(props.searchText.toLowerCase()))
                             return val;
                     })
+                    .filter((item) =>{
+                        if(props.category==="")
+                            return item;
+                        else if(item.category === props.category)
+                            return item;
+                    })
                     .filter((val) => {
-                        if(props.filterPrice === -1)
+                        if(props.filterPrice === 0)
                             return val;
                         else if(val.price <= props.filterPrice)
                             return val;
                     })
-                    // enable when ratings are added for users
-                    // .filter((val) => {
-                    //     if(props.filterRatings === 0)
-                    //         return val;
-                    //     else if(val.rating >= props.filterRatings)
-                    //         return val;
-                    // })
-                    // Enable when location is added for users
-                    // .filter((val) => {
-                    //     if(props.filterLocation.empty())
-                    //         return val;
-                    //     else if(props.filterLocation.has(val.location))
-                    //         return val;
-                    // })
+                    .filter((val) => {
+                        if(props.filterRatings === 0)
+                            return val;
+                        else {
+                            console.log(val.owner);
+                            Axios.post('http://localhost:5000/getUser', {username: val.owner})
+                            .then((res) => {
+                                setsellerRating(res.data.result.rating);
+                            })
+                            console.log(sellerRating);
+                            if(sellerRating >= props.filterRatings)
+                                return val;
+                        }
+                    })
+                    .filter((val) => {
+                        if(props.filterLocation.size === 0)
+                            return val;
+                        else {
+                            Axios.post('http://localhost:5000/getUser', {username: val.owner})
+                            .then((res) => {
+                                setsellerLocation(res.data.result.location);
+                            })
+                            console.log(sellerLocation);
+                            if(props.filterLocation.has(sellerLocation))
+                                return val;
+                        }
+                    })
                     .map((item) => {
                         let imageUrl = "/assets/images/"+item.images[0];
                         return (
@@ -80,9 +142,9 @@ export default function ProductList(props) {
                                     </div>
                                 </div>
                             </div>
-                        </Link>
-                        );
-                    })}     
+                            </Link>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

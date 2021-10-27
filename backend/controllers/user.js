@@ -87,3 +87,16 @@ export let getUserData = async (req,res) => {
         }
     });
 }
+
+export let getUserByUsername = async (req, res) => {
+    // console.log(req.query);
+    let username = req.body.username;
+    User.findOne({username: username}).then((result) => {
+        if(result) {
+            res.status(200).json({result: result});
+        }
+        else {
+            res.status(400).json({msg: "user doesn't exist"});
+        }
+    });
+}
