@@ -11,8 +11,9 @@ export default function DisplaySeller(props) {
     }, [],
     );
     let [items, setItems] = useState([]);
-    let [status, setStatus] = useState("request");
+    let [status, setStatus] = useState("");
     function getProductDetails() {
+        setStatus(props.status);
         let url = 'http://localhost:5000/products/getRequestProduct?oid=' + props.id;
         Axios.get(url, {
             headers: {
@@ -30,7 +31,6 @@ export default function DisplaySeller(props) {
     function makeRequest() {
         Axios.post("http://localhost:5000/products/makeRequest", {
             id: props.id,
-
         }, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -137,6 +137,6 @@ export default function DisplaySeller(props) {
                     </Link>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

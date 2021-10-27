@@ -28,28 +28,30 @@ export default function MessageBox(props) {
         setMessages(update_messages);
         setMess("");
         socket.emit("send_message", data, room);
-        if(addToDB){
-            Axios.post("http://localhost:5000/chat/addChats", {
-                id: props.sender._id,
-                chats : message,
-            },{headers: {
-                "x-access-token": localStorage.getItem("token"),
-            }})
-            .then((res)=>{
-                console.log(res);                
-            }) 
-        }
-        console.log(messages);
+        // if(addToDB){
+        //     Axios.post("http://localhost:5000/chat/addChats", {
+        //         id: props.sender._id,
+        //         chats : message,
+        //     },{headers: {
+        //         "x-access-token": localStorage.getItem("token"),
+        //     }})
+        //     .then((res)=>{
+        //         console.log(res);                
+        //     }) 
+        // }
+        // console.log(messages);
         
     }
     useEffect( () => {
         getMessage(messages);
+        console.log(firstTime);
         if(firstTime){
+            getMessagesFromDB();
             setFirstTime(false);
-            getMessagesFromDB(messagesFromDB);
         }
     }, [messages] );
-    function getMessagesFromDB(messagesFromDB){
+
+    function getMessagesFromDB(){
         let url = "http://localhost:5000/chat/getMessagesFromDB?id=" + props.sender._id;
         Axios.get(url, {
             headers: {
@@ -58,8 +60,7 @@ export default function MessageBox(props) {
         })
         .then((res)=>{
             console.log(res);  
-            setMessagesFromDB(res.data.result);
-                   
+            setMessagesFromDB(res.data.result);        
         }) 
     }
 
@@ -75,30 +76,30 @@ export default function MessageBox(props) {
             let update_messages = [...messages,message];
             setMessages(update_messages);
         })
-        socket.on("check_users", (len) => {
-            console.log(len);
-            if(len === 2){
-                setAddtoDb(false);
-                setisTwo(true);
-            }else{
-                setAddtoDb(true);
-                if(isTwo){
-                    setisTwo(false);
-                    console.log(messages);
-                    console.log("Message is posted by " + props.user);
-                    // Axios.post("http://localhost:5000/chat/addChats", {
-                    //     id: props.sender._id,
-                    //     chats : messages,
-                    // },{headers: {
-                    //     "x-access-token": localStorage.getItem("token"),
-                    // }})
-                    // .then((res)=>{
-                    //     console.log(res);                
-                    // }) 
-                    // setMessages([]);
-                }
-            }
-        })
+        // socket.on("check_users", (len) => {
+        //     console.log(len);
+        //     if(len === 2){
+        //         setAddtoDb(false);
+        //         setisTwo(true);
+        //     }else{
+        //         setAddtoDb(true);
+        //         if(isTwo){
+        //             setisTwo(false);
+        //             console.log(messages);
+        //             console.log("Message is posted by " + props.user);
+        //             // Axios.post("http://localhost:5000/chat/addChats", {
+        //             //     id: props.sender._id,
+        //             //     chats : messages,
+        //             // },{headers: {
+        //             //     "x-access-token": localStorage.getItem("token"),
+        //             // }})
+        //             // .then((res)=>{
+        //             //     console.log(res);                
+        //             // }) 
+        //             // setMessages([]);
+        //         }
+        //     }
+        // })
         // socket.on("receive_message", (data) => {
         //     console.log(data);
         //     let message = {
@@ -117,10 +118,10 @@ export default function MessageBox(props) {
             </div>
             <div className="container bg-light py-3 message-box overflow-auto">
             {  messagesFromDB.map((message) => {
-                if(message.sender !== props.user){
-                    return  <h4 className="">{message.text}</h4>
+                if(message.author !== props.user){
+                    return  <h4 className="">{message.mess}</h4>
                 }else{
-                    return <h4 className="text-end my-3 ">{message.text}</h4>
+                    return <h4 className="text-end my-3 ">{message.mess}</h4>
                 }
             })}
             {messages.map((message) => {

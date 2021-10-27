@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router';
 import Axios from 'axios';
@@ -10,6 +10,7 @@ export default function ProductPageRight() {
     let history = useHistory();
 
     function addToCart() {
+        
         let id = query.get("id");
         Axios.post("http://localhost:5000/products/addToCart", {
             id: id,
@@ -21,9 +22,12 @@ export default function ProductPageRight() {
             console.log(res);
         }) 
         setCartFlag(!cartFlag);
+      
+        
     }
 
     function createChat(){
+        
         let id = query.get("id");
         Axios.post("http://localhost:5000/chat/createChat", {
             id: id,
@@ -34,6 +38,7 @@ export default function ProductPageRight() {
             console.log(res);
             history.push("/chatbox");                 
         }) 
+        
     }
 
     return (

@@ -6,7 +6,7 @@ const router = express.Router();
 
 // http://localhost:5000/chat
 router.post("/createChat", verifyJwt, createChat);
-router.post("/addChats", verifyJwt, addChats);
+router.post("/addChats",  addChats);
 router.get("/getChatList", verifyJwt, getChatList);
 router.get("/getMessagesFromDB", verifyJwt, getMessagesFromDB);
 

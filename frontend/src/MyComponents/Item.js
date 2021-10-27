@@ -1,20 +1,43 @@
-import React from 'react'
+import Axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Item() {
+
+    useEffect( () => {
+        getOwnItems();
+    },[] )
+
+    let [items, setItems] = useState([]);
+
+    function getOwnItems(){
+        Axios.get('http://localhost:5000/products/getOwnItems', {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+        .then((res)=>{
+            let returned_items = res.data.result;
+            setItems(returned_items);
+            console.log(returned_items);
+        }) 
+    }
+
     return (
         <div>
             <div className="album rounded bg-light">
                 <div className="container p-3">
 
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                        <div className="col">
-                            <Link to="/product" className="text-decoration-none text-dark">
+                     { items.map((item)=>{
+                         let url = "/assets/images/" + item.images[0];
+                        return <div className="col">
+                            <Link to="#" className="text-decoration-none text-dark">
                             <div className="card shadow-sm ">
-                                <img src="/assets/images/book1.jpg" alt="item" className="card-image"/>
+                                <img src={url} alt="item" className="card-image"/>
 
                                 <div className="card-body">
-                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p className="card-text">{ item.desc }</p>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="btn-group">
                                             <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
@@ -26,6 +49,9 @@ export default function Item() {
                             </div>
                             </Link>
                         </div>
+
+                     }) }
+                        
                         <div className="col">
                             <Link to="/product" className="text-decoration-none text-dark">
                             <div className="card shadow-sm ">

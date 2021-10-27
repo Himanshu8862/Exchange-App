@@ -10,6 +10,7 @@ export default function Register() {
     const [passwordReg, setPasswordReg] = useState("");
     const [cpasswordReg, setCpasswordReg] = useState("");
     const [emailReg, setEmailReg] = useState("");
+    const [errmsg, seterrmsg] = useState("");
 
 
     const register = (e) => {
@@ -22,9 +23,13 @@ export default function Register() {
         })
         .then((res)=>{
             console.log(res);
-            localStorage.setItem("token", res.data.token);
-            history.push('/');
-            window.location.reload();
+            if(res.data.auth){
+                localStorage.setItem("token", res.data.token);
+                history.push('/');
+                window.location.reload();
+            }else{
+                seterrmsg(res.data.msg);
+            }
 
             //this.props.history.push('/cart')
         }) 
@@ -80,8 +85,9 @@ export default function Register() {
                         placeholder="Password" />
                         <label htmlFor="floatingPassword">Confirm Password</label>
                     </div>
-                    <button
-                    className="w-50 mt-4 mb-2 btn btn-primary" type="submit">Sign up</button>
+                    { errmsg !== "" ? <div class="alert alert-danger alert-dismissible fade show">
+                        <strong>Error!</strong> {errmsg} </div> : <></> }
+                    <button className="w-50 mt-4 mb-2 btn btn-primary" type="submit">Sign up</button>
                    
                     <div className="row container">
                         <div className="col-10 text-white mt-2 mb-3">Already a user? </div>

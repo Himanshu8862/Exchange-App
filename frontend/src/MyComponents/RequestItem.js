@@ -9,7 +9,9 @@ export default function RequestItem(props) {
         }, [],
     );
     let [items, setItems] = useState([]);
+    let [userDecision, setuserDecision] = useState("");
     function getProductDetails(){
+        setuserDecision(props.item.decision);
         let url = 'http://localhost:5000/products/getRequestProduct?oid='+props.item._id;
         Axios.get(url, {
             headers: {
@@ -20,6 +22,19 @@ export default function RequestItem(props) {
             console.log(res);
             setItems(res.data.result);
         }) 
+    }
+    function chooseDecision(decision){
+            Axios.post("http://localhost:5000/products/chooseDecision", {
+                id: props.item._id,
+                decision : decision,
+            },{headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }})
+            .then((res)=>{
+                console.log(res);                
+            }) 
+            setuserDecision(decision)
+        
     }
 
     return (
@@ -52,10 +67,10 @@ export default function RequestItem(props) {
                     </table>
                     <div className="d-flex py-2 justify-content-between">
                         <div>
-                            <Link to="#"><button className="btn btn-sm btn-success">Accept</button></Link>
+                            <Link to="#"><button onClick={() => {chooseDecision("accepted")}} className="btn btn-sm btn-success" disabled={userDecision !== "pending"}>{userDecision === 'pending'? 'Accept' : userDecision}</button></Link>
                         </div>
                         <div>
-                            <Link to="#"><button className="btn btn-sm btn-danger">Reject</button></Link>
+                            <Link to="#"><button onclick={() => {chooseDecision("rejected")}} className="btn btn-sm btn-danger" disabled={userDecision !== "pending"}>{userDecision === 'pending'? 'Reject' : userDecision}</button></Link>
                         </div>
                     </div>
 

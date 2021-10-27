@@ -19,28 +19,31 @@ export let addToCart = async (req,res) => {
                         console.log(err);
                     }else{
                         seller_name = item.owner;
+                        Order.findOne({seller: seller_name, buyer: user.username}, (err, order) => {
+                            if(err){
+                                console.log(err);
+                            }else{
+                                if(order){
+                                    order.items.push(pid);
+                                    order.save();
+                                    console.log(order);
+                                    return res.status(201).json({auth:true, result: order});
+                                }else{
+                                    let items = [];
+                                    items.push(pid);
+                                    let new_order = new Order({
+                                        buyer : user.username,
+                                        seller : seller_name,
+                                        items : items,
+                                    });
+                                    new_order.save();
+                                    return res.status(201).json({auth:true, result: new_order});
+                                }
+                            }                    
+                        });
                     }
                 });
-                Order.findOne({seller: seller_name, buyer: user.username}, (err, order) => {
-                    if(err){
-                        console.log(err);
-                    }else{
-                        if(order){
-                            order.items.push(pid);
-                            order.save();
-                        }else{
-                            let items = [];
-                            items.push(pid);
-                            let new_order = new Order({
-                                buyer : user.username,
-                                seller : seller_name,
-                                items : items,
-                            });
-                            new_order.save();
-                            return res.status(201).json({auth:true, result: new_order});
-                        }
-                    }                    
-                });
+                
             }
         });
         
@@ -185,5 +188,49 @@ export let makeRequest = async (req,res) => {
         
     } catch (error) {
         console.log(error);
+    }
+}
+
+export let chooseDecision = async(req,res) => {
+    try {
+        
+        let oid = req.body.id;
+        let decision = req.body.decision;
+        Order.findById(oid, (err,order) => {
+            if(err){
+                console.log(err);
+            }else{
+                order.decision = decision;
+                order.save();
+                return res.status(201).json({auth:true, result: order});
+            }
+        })
+
+    } catch (error) {
+        console.log(error);        
+    }
+}
+
+export let getOwnItems = async (req,res) => {
+    try {
+
+        let id = req.user;
+        User.findById(id, (err,user)=>{
+            if(err){
+                console.log(err);
+            }else{
+                Product.find({owner : user.username}, (err,results) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        return res.status(201).json({auth:true, result: results});
+                    }
+                })
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        
     }
 }
