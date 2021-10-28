@@ -50,6 +50,21 @@ export default function DisplaySeller(props) {
         return total;
     }
 
+    function cancelOrder(){
+        Axios.post("http://localhost:5000/products/cancelOrder", {
+            id: props.id,
+        }, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            window.location.reload();
+        })
+
+    }
+
     return (
         <div className="bg-light rounded">
             <div className="fs-3">{props.seller}</div>
@@ -96,12 +111,15 @@ export default function DisplaySeller(props) {
             </div>
             <div className="d-flex py-2 justify-content-between">
                 <div>
-                    <button type="button" onClick={makeRequest} className={status === "pending" ? " btn btn-warning" : " btn btn-success"}>
+                    <button type="button" 
+                    disabled={status === "accepted"}
+                    onClick={makeRequest} 
+                    className={status === "pending" ? " btn btn-warning" : " btn btn-success"}>
                         {status}
                     </button>
                 </div>
                 <div>
-                    <Link to={props.status === "accepted" ? "/chatbox" : "#"}>
+                    <Link to= "/chatbox">
                         <button
                             type="button"
                             className="btn btn-primary"
@@ -113,9 +131,10 @@ export default function DisplaySeller(props) {
                 </div>
                 <div>
                     <button
+                        onClick={cancelOrder}
                         type="button"
                         className="btn btn-danger"
-                        disabled={status === "pending"}
+                        disabled={status === "pending" || status === "accepted"}
                     >
                         Cancel
                     </button>
@@ -130,7 +149,7 @@ export default function DisplaySeller(props) {
                         <button
                             type="button"
                             className="btn btn-success"
-                            disabled={status === "pending"}
+                            disabled={status === "pending"|| status === "Request" || status === "rejected"}
                         >
                             Checkout
                         </button>

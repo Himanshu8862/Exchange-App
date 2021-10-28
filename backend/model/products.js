@@ -8,6 +8,7 @@ const productSchema = mongoose.Schema({
     images: Array,
     category: String,
     date: Date,
+    onSale : Boolean
 });
 
 const Product = mongoose.model('Product', productSchema);

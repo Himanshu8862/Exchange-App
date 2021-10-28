@@ -23,68 +23,6 @@ export default function Cart() {
             }) 
     }
 
-    let props = [{
-        seller: "seller1",
-        total: "1200",
-        products: [
-            {
-                name: "Product1",
-                discription: "dis1 ",
-                price: "300",
-                quantity: "4"
-            },
-            {
-                name: "Product2",
-                discription: "dis1 ",
-                price: "240",
-                quantity: "1"
-            }
-            ,
-            {
-                name: "Product-3",
-                discription: "dis1 ",
-                price: "260",
-                quantity: "1"
-            }
-        ],
-        status: "accepted",
-        Offer: "available"
-    },
-    {
-        seller: "seller2",
-        total: "1200",
-        products: [
-            {
-                name: "Product-1",
-                discription: "dis1 ",
-                price: "200",
-                quantity: "4"
-            },
-            {
-                name: "Product-2",
-                discription: "dis1 ",
-                price: "250",
-                quantity: "5"
-            }
-            
-        ],
-        status: "pending",
-        Offer: "available"
-    },
-    {
-        seller: "seller3",
-        total: "1200",
-        products: [
-            {
-                name: "Product-1",
-                discription: "dis1 ",
-                price: "200",
-                quantity: "1"
-            }
-        ],
-        status: "pending",
-        Offer: "available"
-    }];
 
 
     return (

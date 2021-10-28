@@ -3,15 +3,32 @@ import { Link } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router';
 import Axios from 'axios';
 
-export default function ProductPageRight() {
+export default function ProductPageRight(props) {
 
     let [cartFlag, setCartFlag] = useState(false);
-    let query = new URLSearchParams(useLocation().search);
+    let [user, setUser] = useState("");
+   // let query = new URLSearchParams(useLocation().search);
     let history = useHistory();
+
+    useEffect(()=>{
+       checkCart();
+    })
+    function checkCart(){
+        let url = 'http://localhost:5000/products/checkCart?id='+props.item._id+'&seller='+props.item.owner;
+        Axios.get(url, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+            .then((res) => {
+                setCartFlag(res.data.result);  
+                setUser(res.data.current_user);              
+            })
+    }
 
     function addToCart() {
         
-        let id = query.get("id");
+        let id = props.item._id;
         Axios.post("http://localhost:5000/products/addToCart", {
             id: id,
             
@@ -28,7 +45,7 @@ export default function ProductPageRight() {
 
     function createChat(){
         
-        let id = query.get("id");
+        let id = props.item._id;
         Axios.post("http://localhost:5000/chat/createChat", {
             id: id,
         },{headers: {
@@ -61,15 +78,23 @@ export default function ProductPageRight() {
                 <div className="container text-center">
                     <div>
                         <Link to="/chatbox">
-                        <button className="btn btn-primary mx-5 my-3 px-5 py-2" onClick={createChat}>Chat With Seller</button>
+                        { user !== props.item.owner ?  
+                        <button className="btn btn-primary mx-5 my-3 px-5 py-2" onClick={createChat}>Chat With Seller</button> :
+                        <button className="btn btn-primary mx-5 my-3 px-5 py-2" disabled>Chat With Seller</button> }
+                       
                         </Link>
                     </div>
                     <div>
-                    { !cartFlag ? 
+                    { user !== props.item.owner ? (!cartFlag ? 
+                        <button className="btn btn-success mx-5 my-3 px-5 py-2" onClick={addToCart}>Add to Cart</button>
+                        :  
+                        <button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Added to Cart</button>) : 
+                        (<button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Add to Cart</button>) }
+                    {/* { !cartFlag ? 
                         <button className="btn btn-success mx-5 my-3 px-5 py-2" onClick={addToCart}>Add to Cart</button>
                         :  
                         <button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Added to Cart</button>
-                         }
+                         } */}
                         
                     </div>
                 </div>

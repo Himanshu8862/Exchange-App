@@ -11,7 +11,7 @@ export default function UserDetails() {
 
     let [username, setusernameReg] = useState("");
     let [email, setemailReg] = useState("");
-    let details = [];
+    let [details, setdetails] = useState([]);
     
     function getUserDetails(){
         Axios.get("http://localhost:5000/profile/getUserData", {
@@ -20,10 +20,10 @@ export default function UserDetails() {
                 }
             })
             .then((res)=>{
-                details = res.data.result;
-                setusernameReg(details.username);
-                setemailReg(details.email);
-                console.log(username);
+                let details1 = res.data.result;
+                setusernameReg(details1.username);
+                setemailReg(details1.email);
+                setdetails(res.data.result);
             }) 
     }
 
@@ -37,8 +37,7 @@ export default function UserDetails() {
             <ul className="nav nav-pills flex-column mb-auto">
                 <li className="nav-item">
                     <div className="nav-link text-white" aria-current="page">
-                        {/* <svg className="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg> */}
-                        {email}
+                        Email : {email}
                     </div>
                 </li>
                 <li>
@@ -48,7 +47,7 @@ export default function UserDetails() {
                     </div>
                 </li>
                 <li>
-                    <Link to="#" className="nav-link text-white">
+                    <Link to={{pathname : "/editprofile", state : details}} className="nav-link text-white">
                         {/* <svg className="bi me-2" width="16" height="16"><use xlinLink:to="#table"></use></svg> */}
                         Edit Profile
                     </Link>

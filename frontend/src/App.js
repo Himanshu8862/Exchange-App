@@ -29,6 +29,7 @@ import {
 } from "react-router-dom";
 
 import React, {useState} from 'react'
+import EditProfile from './MyComponents/EditProfile';
 
 
 const socket = io.connect("http://localhost:3001/");
@@ -108,7 +109,12 @@ function App() {
 						setfilterLocation = {setfilterLocation} />
 			</Route>
 			<Route exact path="/request">
-				<RequestPage />
+			{ isAuthenticated ? <RequestPage /> : <Login />}
+				
+			</Route>
+			<Route exact path="/editprofile">
+			{ isAuthenticated ? <EditProfile /> : <Login />}
+				
 			</Route>
 			
         </Switch>

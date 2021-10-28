@@ -64,14 +64,7 @@ export default function ProductList(props) {
 
     }
 
-    // function productPage(id){
-    //     const params = new URLSearchParams();
-    //     params.append("id",id);
-    //     history.push({pathname: "/product",search: params.toString()});
-    // }
-
-
-    //onClick={productPage(item.id)}
+    
     console.log(props.category);
 
     return (
@@ -128,7 +121,8 @@ export default function ProductList(props) {
                     .map((item) => {
                         let imageUrl = "/assets/images/"+item.images[0];
                         return (
-                            <Link to={`/product?id=${item._id}`} className="text-decoration-none text-dark">
+                            //{{path : `/product?id=${item._id}`, state: item}}
+                            <Link to={{pathname : `/product`, state: item}} className="text-decoration-none text-dark">
                             <div className="col">
                                 <div className="card shadow-sm" >
                                     <img src={imageUrl} alt="..." className="card-image" />

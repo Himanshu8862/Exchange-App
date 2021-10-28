@@ -2,9 +2,9 @@ import  Axios  from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router';
 
-export default function ProductPageLeft() {
+export default function ProductPageLeft(props) {
 
-    let query = new URLSearchParams(useLocation().search);
+    //let query = new URLSearchParams(useLocation().search);
 
     useEffect(()=>{
         getDataDB();
@@ -14,25 +14,28 @@ export default function ProductPageLeft() {
     let [imageUrl,setImageUrl] = useState("");
 
     function getDataDB(){
-        let url = 'http://localhost:5000/products/getProductData?' + "id=" +  query.get("id");
-        Axios.get(url, {
-            headers: {
-                "x-access-token": localStorage.getItem("token"),
-            }
-        })
-        .then((res)=>{
-            console.log(res.data.result);
-            setItems(res.data.result);
-            let url = "/assets/images/"+res.data.result.images[0];
-            setImageUrl(url);
-        }) 
+        // let url = 'http://localhost:5000/products/getProductData?' + "id=" +  query.get("id");
+        // Axios.get(url, {
+        //     headers: {
+        //         "x-access-token": localStorage.getItem("token"),
+        //     }
+        // })
+        // .then((res)=>{
+        //     console.log(res.data.result);
+        //     setItems(res.data.result);
+        //     let url = "/assets/images/"+res.data.result.images[0];
+        //     setImageUrl(url);
+        // }) 
+        setItems(props.item)
+        let url = "/assets/images/"+props.item.images[0];
+        setImageUrl(url);
     }
     return (
         <div>
             <div className="container">
                 <div className="row">
                     <h3 className="col-6">{item.title}</h3>
-                    <h3 className="col-6 text-end">{query.get("id")}</h3>
+                    <h3 className="col-6 text-end">{item._id}</h3>
                 </div>
                 <div>
                     <div id="carouselExampleIndicators" className="carousel slide my-3" data-bs-ride="carousel">
@@ -63,16 +66,14 @@ export default function ProductPageLeft() {
                     </div>
                 </div>
                 <div>
-                    <h2>Price: ₹ 20000</h2>
+                    <h2>Price: ₹ {item.price}</h2>
                 </div>
                 <hr />
                 <div>
+                    <h2>Owner : {item.owner}</h2>
                     <h2 className="my-3">Description:</h2>
                     <div className="container">
-                        <p>Model: iPhone 8</p>
-
-                        <p>Storage: 64 Gb</p>
-
+                        <p> {item.desc} </p>
                         <p>Color: Black/White/Gold/Red</p>
 
                         <p>Warranty: 1 month</p>

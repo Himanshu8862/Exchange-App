@@ -86,14 +86,15 @@ export let viewCart = async (req,res) => {
 
 export let getProductDetails = async (req,res) => {
     try {
-        Product.find({}, (err,results) => {
-            if(err){
-                console.log(err);
-            }else{
-               // console.log(results);
-                return res.status(201).json({auth:true, result: results});
-            }
-        })
+            Product.find({}, (err,results) => {
+                if(err){
+                    console.log(err);
+                }else{
+                   // console.log(results);
+                    return res.status(201).json({auth:true, result: results});
+                }
+            })
+        
 
     } catch (error) {
         console.log(error);        
@@ -228,6 +229,66 @@ export let getOwnItems = async (req,res) => {
                 })
             }
         })
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export let checkCart = async (req,res) => {
+    try {
+        
+        let pid = req.query.id;
+        let seller = req.query.seller;
+        User.findById(req.user, (err,user)=>{
+            if(err){
+                console.log(err);
+            }else{
+                let buyer = user.username;
+                Order.findOne({seller : seller, buyer : buyer}, (err,order) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        if(order){
+                            let flag=false;
+                            order.items.forEach(element => {
+                                if(element === pid){
+                                    flag=true;
+                                }                                
+                            });
+                            if(!flag)
+                            return res.status(201).json({auth:true, result: false, current_user : user.username});
+                            else 
+                            return res.status(201).json({auth:true, result: true, current_user : user.username});
+
+                            
+                        }else{
+                            return res.status(201).json({auth:true, result: false, current_user : user.username});
+                        }
+                    }
+                })
+            }
+        })
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export let cancelOrder = async (req,res) => {
+    try {
+
+        let oid = req.body.id;
+        Order.findByIdAndDelete(oid, (err,data) => {
+            if(err){
+                console.log(err);
+            }else{
+                console.log('Item Deleted from database');
+                return res.status(201).json({auth:true, result : data, msg : 'Item Deleted from database'});
+            }
+        }) 
         
     } catch (error) {
         console.log(error);
