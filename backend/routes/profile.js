@@ -1,9 +1,10 @@
 import express from "express";
-import { registerUser, loginUser, getUserData } from "../controllers/user.js";
+import { getUserData, saveChanges } from "../controllers/user.js";
 import { verifyJwt } from "../middleware/validateUser.js";
 const router = express.Router();
 
 router.get("/getUserData", verifyJwt, getUserData);
+router.post("/saveChanges", verifyJwt, saveChanges);
 // http://localhost:5000/
 
 

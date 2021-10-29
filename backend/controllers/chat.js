@@ -1,6 +1,7 @@
 import Product from "../model/products.js";
 import Chat from "../model/chat.js";
 import User from "../model/users.js";
+import Order from "../model/order.js";
 import { ObjectId } from "bson";
 
 export let createChat = async (req,res) => {
@@ -119,5 +120,60 @@ export let getMessagesFromDB = async (req,res) => {
 
     } catch (error) {
         console.log(error);        
+    }
+}
+
+export let provideDiscount = async (req,res) => {
+    try {
+
+        let id = req.user;
+        User.findById(id,(err,user)=>{
+            if(err){
+                console.log(err);
+            }else{
+                let seller = user.username;
+                let buyer = req.query.a1;
+                console.log(seller, buyer);
+                Order.findOne({seller : seller, buyer : buyer}, (err,found) => {
+                    if(err){
+                        console.log(err);
+                    }else if(found){
+                        return res.status(201).json({auth:true, result: found});
+                    }else{
+                        return res.status(201).json({auth:false, msg: "You are restricted to create coupon!!"});
+                    }
+                })
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export let createCoupon = async (req,res) => {
+    try {
+
+        let oid = req.body.oid;
+        let coupon = req.body.coupon;
+        let price = req.body.price;
+
+        Order.findById(oid,(err,order) => {
+            if(err){
+                console.log(err);
+            }else{
+                let discount = {
+                    coupon : coupon,
+                    price : price,
+                }
+                order.discountCoupon = discount;
+                order.save();
+                return res.status(201).json({auth:true, result: order});
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
     }
 }

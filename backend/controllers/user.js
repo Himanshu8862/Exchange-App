@@ -100,3 +100,27 @@ export let getUserByUsername = async (req, res) => {
         }
     });
 }
+
+export let saveChanges = async (req,res) => {
+    try {
+        console.log(req.body);
+        let name = req.body.name;
+        let phone = req.body.phone;
+        let city = req.body.city;
+        let id = req.user;
+        User.findByIdAndUpdate(id, { name: name, phone : phone, locationUrl : city },
+                            function (err, docs) {
+        if (err){
+            console.log(err)
+        }
+        else{
+            res.status(200).json({auth: true, result: docs});
+            console.log("Updated User : ", docs);
+        }
+});
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
