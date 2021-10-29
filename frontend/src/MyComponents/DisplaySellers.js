@@ -143,7 +143,7 @@ export default function DisplaySeller(props) {
                     <Link to={
                         {
                             pathname: "/checkout",
-                            state:  items ,
+                            state:  { items : items, order : props.order},
                         }}
                     >
                         <button

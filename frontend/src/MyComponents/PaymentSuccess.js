@@ -10,14 +10,32 @@ function PaymentSuccess() {
 
   // items state
   let [items, setItems] = useState([]);
+  let [firstTime, setFirstTime] = useState(true);
 
   function GetItems() {
+    console.log(location.state);
     setItems(props);
   }
 
   useEffect(() => {
     GetItems();
+    if(firstTime){
+      setFirstTime(false)
+      orderSuccess();
+    }
   }, []);
+
+  function orderSuccess(){
+    // let url = 'http://localhost:5000/products/orderSuccess?oid=' + location.state.orderID;
+    //   Axios.get(url, {
+    //       headers: {
+    //           "x-access-token": localStorage.getItem("token"),
+    //       }
+    //   })
+    //       .then((res) => {
+    //           console.log(res);
+    //       })
+  }
 
   console.log("data is: ", items);
   console.log("state is; ", location.state);
@@ -58,6 +76,10 @@ function PaymentSuccess() {
             <p className="text fw-bold">Amount</p>
             <p className="text fw-bold">{location.state.total}</p>
           </div>
+          { location.state.discountTotal !=='' ? (<div className="d-flex justify-content-between">
+            <p className="text fw-bold">Discount Amount</p>
+            <p className="text fw-bold">{location.state.discountTotal}</p>
+          </div>) : (<></>) }
 
         
           <div className="d-flex justify-content-between">
@@ -67,7 +89,7 @@ function PaymentSuccess() {
 
           <div className="d-flex justify-content-between">
             <p className="text">Transaction ID</p>
-            <p className="text">TX129283891934</p>
+            <p className="text">{location.state.order._id}</p>
           </div>
 
          

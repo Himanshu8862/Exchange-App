@@ -34,7 +34,7 @@ export default function Cart() {
                     { orders.map(function (d) {
                         return (
                             <div className="row p-3 rounded">
-                                <DisplaySeller seller={d.seller}  status={d.decision} id={d._id} />
+                                <DisplaySeller order={d} seller={d.seller}  status={d.decision} id={d._id} />
                             </div>
                         )
                     })}

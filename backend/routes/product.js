@@ -1,6 +1,7 @@
 import express from "express";
 import { addToCart, viewCart, getProductDetails, getProductData, 
-    getRequestDetails, getRequestProduct, makeRequest, chooseDecision, getOwnItems, checkCart, cancelOrder } from "../controllers/product.js";
+    getRequestDetails, getRequestProduct, makeRequest, chooseDecision, 
+    getOwnItems, checkCart, cancelOrder, orderSuccess } from "../controllers/product.js";
 import { verifyJwt } from "../middleware/validateUser.js";
 const router = express.Router();
 
@@ -25,6 +26,7 @@ router.post("/chooseDecision", verifyJwt, chooseDecision);
 router.get("/getOwnItems", verifyJwt, getOwnItems);
 router.get("/checkCart", verifyJwt, checkCart);
 router.post("/cancelOrder", verifyJwt, cancelOrder);
+router.post("/orderSuccess", verifyJwt, orderSuccess);
 
 
 

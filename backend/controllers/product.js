@@ -1,6 +1,8 @@
 import User from "../model/users.js";
 import Order from "../model/order.js";
 import Product from "../model/products.js"
+import async from "async";
+import { ObjectId } from "bson";
 
 export let addToCart = async (req,res) => {
 
@@ -290,6 +292,58 @@ export let cancelOrder = async (req,res) => {
             }
         }) 
         
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export let orderSuccess = async (req,res) => {
+    try {
+        let oid = req.query.oid;
+        let total = req.body.total;
+        let disprice = req.body.disprice;
+        let order = req.body.order;
+        let paymentType = req.body.method;
+        let transaction = {
+            seller : order.seller,
+            orderID : order._id,
+            total : total,
+            discountTotal : disprice,
+            paymentType : paymentType,
+        }
+        User.findById(req.user, (err,user)=>{
+            if(err){
+                console.log(err);
+            }else{
+                user.previousOrder.push(transaction);
+                user.save();
+                async.eachSeries(order.items, function updateObject (obj, done) {
+                Product.update({ "_id": ObjectId(obj._id)}, { $set : { onSale : false }}, done);
+                }, function allDone (err) {
+                    if(err){
+                        console.log(err);
+                    }
+                    // this will be called when all the updates are done or an error occurred during the iteration
+                });
+
+            }
+        })
+        // Order.findById(oid,(err,order)=>{
+        //     if(err){
+        //         console.log(err);
+        //     }else{
+        //         async.eachSeries(order.items, function updateObject (obj, done) {
+        //             Product.update({ "_id": ObjectId(obj._id)}, { $set : { onSale : false }}, done);
+        //         }, function allDone (err) {
+        //             if(err){
+        //                 console.log(err);
+        //             }
+        //             // this will be called when all the updates are done or an error occurred during the iteration
+        //         });
+
+        //     }
+        // })        
     } catch (error) {
         console.log(error);
         
