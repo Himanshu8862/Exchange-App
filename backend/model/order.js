@@ -8,6 +8,7 @@ const orderSchema = mongoose.Schema({
         type : String,
         default : "Request",
     },
+    discountCoupon : Object,
 });
 
 const Order = mongoose.model('Order', orderSchema);

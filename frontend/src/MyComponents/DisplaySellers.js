@@ -11,8 +11,9 @@ export default function DisplaySeller(props) {
     }, [],
     );
     let [items, setItems] = useState([]);
-    let [status, setStatus] = useState("request");
+    let [status, setStatus] = useState("");
     function getProductDetails() {
+        setStatus(props.status);
         let url = 'http://localhost:5000/products/getRequestProduct?oid=' + props.id;
         Axios.get(url, {
             headers: {
@@ -30,7 +31,6 @@ export default function DisplaySeller(props) {
     function makeRequest() {
         Axios.post("http://localhost:5000/products/makeRequest", {
             id: props.id,
-
         }, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -48,6 +48,21 @@ export default function DisplaySeller(props) {
             total += Number(item.price);
         })
         return total;
+    }
+
+    function cancelOrder(){
+        Axios.post("http://localhost:5000/products/cancelOrder", {
+            id: props.id,
+        }, {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            }
+        })
+        .then((res) => {
+            console.log(res);
+            window.location.reload();
+        })
+
     }
 
     return (
@@ -96,12 +111,15 @@ export default function DisplaySeller(props) {
             </div>
             <div className="d-flex py-2 justify-content-between">
                 <div>
-                    <button type="button" onClick={makeRequest} className={status === "pending" ? " btn btn-warning" : " btn btn-success"}>
+                    <button type="button" 
+                    disabled={status === "accepted"}
+                    onClick={makeRequest} 
+                    className={status === "pending" ? " btn btn-warning" : " btn btn-success"}>
                         {status}
                     </button>
                 </div>
                 <div>
-                    <Link to={props.status === "accepted" ? "/chatbox" : "#"}>
+                    <Link to= "/chatbox">
                         <button
                             type="button"
                             className="btn btn-primary"
@@ -113,9 +131,10 @@ export default function DisplaySeller(props) {
                 </div>
                 <div>
                     <button
+                        onClick={cancelOrder}
                         type="button"
                         className="btn btn-danger"
-                        disabled={status === "pending"}
+                        disabled={status === "pending" || status === "accepted"}
                     >
                         Cancel
                     </button>
@@ -124,19 +143,19 @@ export default function DisplaySeller(props) {
                     <Link to={
                         {
                             pathname: "/checkout",
-                            state:  items ,
+                            state:  { items : items, order : props.order},
                         }}
                     >
                         <button
                             type="button"
                             className="btn btn-success"
-                            disabled={status === "pending"}
+                            disabled={status === "pending"|| status === "Request" || status === "rejected"}
                         >
                             Checkout
                         </button>
                     </Link>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

@@ -1,6 +1,5 @@
 import express from "express";
 import { registerUser, loginUser, getUserByUsername } from "../controllers/user.js";
-import { verifyJwt } from "../middleware/validateUser.js";
 const router = express.Router();
 
 router.get("/login", (req,res) => {

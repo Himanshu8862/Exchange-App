@@ -5,11 +5,6 @@ import Filters from './Filters'
 import Sliders from './Sliders'
 
 export default function MainPage(props) {
-	// useEffect( ()=>{
-	// 		window.location.reload();
-	// 	}, [],
-	// );
-
     return (
         <div>
             <div className="container-fluid py-5">

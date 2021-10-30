@@ -6,6 +6,7 @@ export default function Login() {
     let history = useHistory();
     const [passwordReg, setPasswordReg] = useState("");
     const [emailReg, setEmailReg] = useState("");
+    const [errmsg, seterrmsg] = useState("");
     const login = (e) => {
         Axios.post("http://localhost:5000/login", {
             email: emailReg,
@@ -14,9 +15,13 @@ export default function Login() {
         .then((res)=>{
             console.log(res);
             //setToken(res.data.token);
-            localStorage.setItem("token", res.data.token);
-            history.push('/');
-            window.location.reload();
+            if(res.data.auth){
+                localStorage.setItem("token", res.data.token);
+                history.push('/');
+                window.location.reload();
+            }else{
+                seterrmsg(res.data.msg);
+            }
         }) 
         e.preventDefault();       
     };
@@ -46,7 +51,8 @@ export default function Login() {
                         placeholder="Password" />
                         <label htmlFor="floatingPassword">Password</label>
                     </div>
-                    
+                    { errmsg !== "" ? <div class="alert alert-danger alert-dismissible fade show">
+                        <strong>Error!</strong> {errmsg} </div> : <></> }
                     <button className="w-50 mt-5 mb-5 btn btn-primary" type="submit">Sign in</button>
                     
                     <br />

@@ -29,6 +29,8 @@ import {
 } from "react-router-dom";
 
 import React, {useState} from 'react'
+import EditProfile from './MyComponents/EditProfile';
+import Coupon from './MyComponents/Coupon';
 
 
 const socket = io.connect("http://localhost:3001/");
@@ -40,6 +42,10 @@ function App() {
 	const [filterRatings, setfilterRatings] = useState(0);
 	const [filterLocation, setfilterLocation] = useState(new Set());
 	const [category, setcategory] = useState("");
+	const [isAuthenticated, setAuthenticated] = useState(() => {
+		const token = localStorage.getItem("token");
+		return token !== null;
+	  });
 
   return (
     <Router>
@@ -56,46 +62,47 @@ function App() {
 				<ProductBody />
 			</Route>
 			<Route exact path="/chatbox">
-				<ChatBox socket = {socket}/>
+				{ isAuthenticated ?  <ChatBox socket = {socket}/> : <Login/>}
+				
 			</Route>
 			<Route exact path="/faqs">
 				<FaqPage />
 			</Route>
 			<Route exact path="/profile">
-				<ProfilePage />
+			{ isAuthenticated ? <ProfilePage /> : <Login /> }	
 			</Route>
 			<Route exact path="/sell">
-				<SellItem />
+			{ isAuthenticated ? <SellItem /> : <Login /> }
 			</Route>
 			<Route exact path="/payment">
-				<Payment />
+			{ isAuthenticated ? <Payment/> : <Login /> }
 			</Route>
 			<Route exact path="/debitcard">
-				<DebitCards />
+			{ isAuthenticated ?	<DebitCards /> : <Login /> }
 			</Route>
 			<Route exact path="/creditcard">
-				<CreditCard />
+			{ isAuthenticated ? <CreditCard/> : <Login /> }
 			</Route>
 			<Route exact path="/cart">
-				<Cart />
+			{ isAuthenticated ? <Cart /> : <Login /> }
 			</Route>
 			<Route exact path="/paymentsuccess">
-				<PaymentSuccess />
+			{ isAuthenticated ?  <PaymentSuccess /> : <Login />}	
 			</Route>
 			<Route exact path="/internetbanking">
-				<InternetBanking />
+			{ isAuthenticated ?  <InternetBanking /> : <Login />}
 			</Route>
 			<Route exact path="/upi">
-				<Upi />
+			{ isAuthenticated ?  <Upi /> : <Login />}
 			</Route>
 			<Route exact path="/discuss">
 				<Discussion />
 			</Route>
 			<Route exact path="/checkout">
-				<Checkout />
+			{ isAuthenticated ?  <Checkout /> : <Login />}
 			</Route>
 			<Route exact path="/newpost">
-				<NewPost />
+			{ isAuthenticated ? <NewPost /> : <Login />}
 			</Route>
 			<Route exact path="/">
 				<MainPage searchText = {searchText} category = {category} setcategory = {setcategory} filterPrice = {filterPrice} filterRatings = {filterRatings}
@@ -103,7 +110,15 @@ function App() {
 						setfilterLocation = {setfilterLocation} />
 			</Route>
 			<Route exact path="/request">
-				<RequestPage />
+			{ isAuthenticated ? <RequestPage /> : <Login />}
+				
+			</Route>
+			<Route exact path="/editprofile">
+			{ isAuthenticated ? <EditProfile /> : <Login />}
+				
+			</Route>
+			<Route exact path="/generateCoupon">
+			{ isAuthenticated ? <Coupon /> : <Login />}
 			</Route>
 			
         </Switch>

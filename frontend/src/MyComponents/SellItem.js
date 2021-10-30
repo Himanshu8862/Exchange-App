@@ -44,7 +44,6 @@ export default function SellItem(props) {
                 desc: desc, 
                 price: price,
                 imageNames: imageNames,
-                owner: data.username,
             }, 
             {
                 headers: {

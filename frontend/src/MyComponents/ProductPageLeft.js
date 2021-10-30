@@ -44,6 +44,7 @@ export default function ProductPageLeft(props) {
                 </div>
                 <hr />
                 <div>
+                    <h2>Owner : {item.owner}</h2>
                     <h2 className="my-3">Description:</h2>
                     <div className="container">
                         <p className="fs-4">{props.description}</p>

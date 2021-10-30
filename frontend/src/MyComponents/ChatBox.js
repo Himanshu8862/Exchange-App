@@ -30,7 +30,7 @@ export default function ChatBox(props) {
     function chatChoose(chat){
         console.log(chat);
         setChoosenChat(chat);
-        setShowBox(true);
+        setShowBox(!showBox);
     }
 
     return (
