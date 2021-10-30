@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router';
 import Axios from 'axios';
 
-export default function ProductPageRight() {
+export default function ProductPageRight(props) {
 
     let [cartFlag, setCartFlag] = useState(false);
     let query = new URLSearchParams(useLocation().search);
     let history = useHistory();
+    let base_dir = "/assets/images/";
 
     function addToCart() {
         let id = query.get("id");
@@ -41,15 +42,21 @@ export default function ProductPageRight() {
             <div className="container">
                 <div className="mb-5">
                     <h3>All Photos</h3>
-                    <div className="row my-3 bg-dark">
-                        <img src="/assets/images/iphone8_2.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/iphone8-front.jpg" alt="..." className="col-4 my-1 grid-image" />
+                    <div className="row my-3 ">
+                        {
+                            props.images.map((image) => {
+                                return (<img src={base_dir + image} alt="..." className="col-6 my-1" height="100px" onClick={(e) => {props.setImage(image)}} />)
+                            })
+                        }
+                        
+                        {/*<img src={base_dir + props.images[0]} alt="..." className="col-4 my-1 grid-image" />
+                         <img src="/assets/images/iphone8-front.jpg" alt="..." className="col-4 my-1 grid-image" />
                         <img src="/assets/images/iphone-8-back.jpg" alt="..." className="col-4 my-1 grid-image" />
                         <img src="/assets/images/iphone8_1.jpg" alt="..." className="col-4 my-1 grid-image" />
                         <img src="/assets/images/phone1.jpg" alt="..." className="col-4 my-1 grid-image" />
                         <img src="/assets/images/phone2.jpg" alt="..." className="col-4 my-1 grid-image" />
                         <img src="/assets/images/phone3.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/phone4.jpg" alt="..." className="col-4 my-1 grid-image" />
+                        <img src="/assets/images/phone4.jpg" alt="..." className="col-4 my-1 grid-image" /> */}
                     </div>
                 </div>
                 <hr />
