@@ -32,22 +32,20 @@ export default function ProductPageLeft(props) {
         <div>
             <div className="container">
                 <div className="row">
-                    <h3 className="col-6">{props.title}</h3>
-                    <h3 className="col-6 text-end">Seller: {props.owner}</h3>
+                    <h3 className="col-6">{props.item.title}</h3>
+                    <h3 className="col-6 text-end">Seller: {props.item.owner}</h3>
                 </div>
-                {console.log(props.image)}
                 <div className="bg-dark text-center my-3">
                     <img src={base_dir + props.image} height="400px" alt="..."/>
                 </div>
                 <div>
-                    <h2>Price: ₹ {props.price}</h2>
+                    <h2>Price: ₹ {props.item.price}</h2>
                 </div>
                 <hr />
                 <div>
-                    <h2>Owner : {item.owner}</h2>
                     <h2 className="my-3">Description:</h2>
                     <div className="container">
-                        <p className="fs-4">{props.description}</p>
+                        <p className="fs-4">{props.item.desc}</p>
                     </div>
                 </div>
             </div>

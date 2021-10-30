@@ -66,7 +66,7 @@ export default function ProductPageRight(props) {
                     <h3>All Photos</h3>
                     <div className="row my-3 ">
                         {
-                            props.images.map((image) => {
+                            props.item.images.map((image) => {
                                 return (<img src={base_dir + image} alt="..." className="col-6 my-1" height="100px" onClick={(e) => {props.setImage(image)}} />)
                             })
                         }

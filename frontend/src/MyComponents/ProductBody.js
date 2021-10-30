@@ -9,16 +9,17 @@ export default function ProductBody() {
         console.log(location.state);
         return location.state;
     })
+    let [image, setImage] = useState(item.images[0]);
 
     return (
         <div>
             <div className="container my-5">
                 <div className="row">
                     <div className="col-8">
-                        <ProductPageLeft item={item} />
+                        <ProductPageLeft item={item} image = {image} />
                     </div>
                     <div className="col-4">
-                        <ProductPageRight  item={item}/>
+                        <ProductPageRight  item={item} setImage = {setImage}/>
                     </div>
                 </div>
             </div>
