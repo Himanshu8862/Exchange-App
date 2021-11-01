@@ -50,7 +50,7 @@ export default function Login() {
                     <button className="w-50 mt-5 mb-5 btn btn-primary" type="submit">Sign in</button>
                     
                     <br />
-                    <Link to="#" className="text-white">Forgot Password</Link>
+                    <Link to="/forgotpassword" className="text-white">Forgot Password</Link>
                     <br />
                     <div className="row container text-center">
                         <div className="col-10 text-white mt-2 mb-3">Dont have an account? </div>

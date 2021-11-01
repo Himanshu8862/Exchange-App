@@ -28,6 +28,7 @@ import {
   Route,
 } from "react-router-dom";
 import { useState } from 'react';
+import ForgotPassword from './MyComponents/ForgotPassword';
 
 const socket = io.connect("http://localhost:3001/");
 
@@ -49,6 +50,9 @@ function App() {
 			</Route>
 			<Route exact path="/register">
 				<Register />
+			</Route>
+			<Route exact path="/forgotpassword">
+				<ForgotPassword/>
 			</Route>
 			<Route exact path="/product">
 				<ProductBody />
