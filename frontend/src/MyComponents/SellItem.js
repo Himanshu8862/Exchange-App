@@ -11,13 +11,11 @@ export default function SellItem(props) {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [price, setPrice] = useState(0);
-    const [images, setImages] = useState();
+    const [images, setImages] = useState([]);
 
     const upload = (e) => {
         //console.log({category: category, title: title, desc: desc, images: images, price: price});
-        if(images.size() == 0){
-            seterrmsg("Minimum one image is required!!");
-        }
+        
         const fd = new FormData();
         const imageNames = [];
         // var userName = "noUser";
@@ -65,6 +63,9 @@ export default function SellItem(props) {
                 }
             })
         }) 
+
+        
+        
         e.preventDefault();
     }
 

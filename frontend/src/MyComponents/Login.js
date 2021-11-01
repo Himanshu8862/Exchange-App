@@ -8,21 +8,26 @@ export default function Login() {
     const [emailReg, setEmailReg] = useState("");
     const [errmsg, seterrmsg] = useState("");
     const login = (e) => {
-        Axios.post("http://localhost:5000/login", {
-            email: emailReg,
-            password: passwordReg,
-        })
-        .then((res)=>{
-            console.log(res);
-            //setToken(res.data.token);
-            if(res.data.auth){
-                localStorage.setItem("token", res.data.token);
-                history.push('/');
-                window.location.reload();
-            }else{
-                seterrmsg(res.data.msg);
-            }
-        }) 
+        if(passwordReg === "" || emailReg === ""){
+            seterrmsg("All fields are required!!");
+        }else{
+            Axios.post("http://localhost:5000/login", {
+                email: emailReg,
+                password: passwordReg,
+            })
+            .then((res)=>{
+                console.log(res);
+                //setToken(res.data.token);
+                if(res.data.auth){
+                    localStorage.setItem("token", res.data.token);
+                    history.push('/');
+                    window.location.reload();
+                }else{
+                    seterrmsg(res.data.msg);
+                }
+            }) 
+        }
+        
         e.preventDefault();       
     };
 
