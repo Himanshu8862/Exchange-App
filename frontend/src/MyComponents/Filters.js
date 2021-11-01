@@ -16,9 +16,9 @@ export default function Filters(props) {
     //     console.log("not found!");
 
     function setFilters(e) {
-        // console.log("Price: ", price);
-        // console.log("Rating: ", rating);
-        // console.log("Location: ", location);
+        console.log("Price: ", price);
+        console.log("Rating: ", rating);
+        console.log("Location: ", location);
         props.setfilterPrice(price);
         props.setfilterRatings(rating);
         props.setfilterLocation(location);
@@ -102,9 +102,11 @@ export default function Filters(props) {
                                 (e) => {
                                     if(e.target.checked) {
                                         location.add("delhi");
+                                        setLocation(location);
                                     }
                                     else {
                                         location.delete("delhi");
+                                        setLocation(location);
                                     }
                                 }
                                 } id="brand1"/>
@@ -118,9 +120,11 @@ export default function Filters(props) {
                                 (e) => {
                                     if(e.target.checked) {
                                         location.add("mumbai");
+                                        setLocation(location);
                                     }
                                     else {
                                         location.delete("mumbai");
+                                        setLocation(location);
                                     }
                                 }
                                 } id="brand2" />
@@ -134,9 +138,11 @@ export default function Filters(props) {
                                 (e) => {
                                     if(e.target.checked) {
                                         location.add("kolkata");
+                                        setLocation(location);
                                     }
                                     else {
                                         location.delete("kolkata");
+                                        setLocation(location);
                                     }
                                 }
                                 } id="brand3" />
@@ -150,9 +156,11 @@ export default function Filters(props) {
                                 (e) => {
                                     if(e.target.checked) {
                                         location.add("bengaluru");
+                                        setLocation(location);
                                     }
                                     else {
                                         location.delete("bengaluru");
+                                        setLocation(location);
                                     }
                                 }
                                 } id="brand4" />
@@ -166,9 +174,11 @@ export default function Filters(props) {
                                 (e) => {
                                     if(e.target.checked) {
                                         location.add("chennai");
+                                        setLocation(location);
                                     }
                                     else {
                                         location.delete("chennai");
+                                        setLocation(location);
                                     }
                                 }
                                 } id="brand5" />
