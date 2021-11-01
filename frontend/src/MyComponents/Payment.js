@@ -21,12 +21,12 @@ function Payment() {
           <i class="bi bi-arrow-left"></i>
           Back to cart
         </Link>
-        <Link
+        {/* <Link
           className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none"
           to="/checkout"
         >
           Proceed
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

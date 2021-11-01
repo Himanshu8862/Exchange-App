@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Filters(props) {
-    var minPrice = 0, maxPrice = 100000;
+    // var minPrice = 0, maxPrice = 100000;
     const [price, setPrice] = useState(0);
     const [rating, setRating] = useState(0);
     const [location, setLocation] = useState(new Set());
@@ -27,7 +27,7 @@ export default function Filters(props) {
 
     return (
         <div className="container my-5">
-            <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+            <div className="d-flex flex-column flex-shrink-0 p-3 rounded text-white bg-dark">
             <span className="fs-4 mb-3">Filters</span>
             <form onSubmit={setFilters}>
             <div class="accordion" id="accordionExample">
@@ -40,10 +40,10 @@ export default function Filters(props) {
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                     <label for="customRange1" class="form-label row">
-                        <div className="col-6">{minPrice}</div>
-                        <div className="col-6 text-end">{maxPrice}</div>
+                        <div className="col-6">{props.minPrice}</div>
+                        <div className="col-6 text-end">{Math.min(props.maxPrice, Math.max(props.minPrice, price))}</div>
                     </label>
-                    <input type="range" min={minPrice} max={maxPrice} onChange = {(e) => {setPrice(e.target.value)}} class="w-100" id="customRange1"/>
+                    <input type="range" min={props.minPrice} max={props.maxPrice} onChange = {(e) => {setPrice(e.target.value)}} class="w-100" id="customRange1"/>
                     </div>
                     </div>
                 </div>

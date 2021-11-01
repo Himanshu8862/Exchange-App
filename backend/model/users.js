@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-//import passportLocalMongoose from "passport-local-mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = mongoose.Schema({
@@ -11,16 +10,8 @@ const userSchema = mongoose.Schema({
     locationUrl: String,
     phone: String,
     name: String,
-    cart: Array,
-    discountCoupon: Array,  //object {seller:name,discount:text}
     previousOrder: Array,
-    itemsOnSale: Array,
     rating: Number,
-    requests: Array, //with respect to buyers
-    // lastseen_date: {
-    //   type: new Date(),
-    // }
-    //lastseen_time: new Time(), 
 });
 
 userSchema.methods.generateHash = function(password) {

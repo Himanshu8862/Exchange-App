@@ -9,14 +9,25 @@ function Checkout() {
 
   // items state 
   let [items, setItems] = useState([]);
+  let [coup, setcoup] = useState("");
+  let [disprice, setdisprice] = useState("");
 
   function GetItems() {
-    setItems(props);
+    setItems(props.items);
   }
 
   useEffect(() => {
     GetItems();
   }, []);
+
+  function checkCoupon(e){
+
+    if(props.order.discountCoupon.coupon === coup){
+      setdisprice(props.order.discountCoupon.price);
+    }
+
+    e.preventDefault();
+  }
 
 
   function calucateTotal() {
@@ -31,7 +42,7 @@ function Checkout() {
   return (
     <div className="d-sm-flex flex-column m-5 justify-content-center">
       <h4 className="d-flex justify-content-between align-items-center mb-3">
-        <span className="text-primary">Summery</span>
+        <span className="text-primary">Summary</span>
         <span className="badge bg-primary rounded-pill">{items.length}</span>
       </h4>
       <ul className="list-group mb-3">
@@ -53,16 +64,21 @@ function Checkout() {
             <span>Total (Rs)</span>
             <strong>{calucateTotal()}</strong>
           </li>
+          { disprice !== "" ? (<li className="list-group-item d-flex justify-content-between">
+            <span>Total with discount (Rs)</span>
+            <strong>{disprice}</strong>
+          </li>) : (<></>) }
       </ul>
 
       <form className="card p-2">
         <div className="input-group">
           <input
             type="text"
+            onChange={(e)=>{ setcoup(e.target.value); }}
             className="form-control"
             placeholder="Promo code"
           />
-          <button type="submit" className="btn btn-secondary">
+          <button type="submit" className="btn btn-secondary" onClick={checkCoupon}>
             Redeem
           </button>
         </div>
@@ -83,6 +99,8 @@ function Checkout() {
                 state: {
                   data: items,
                   total:calucateTotal(),
+                  discountTotal : disprice,
+                  order : props.order,
                 }
             }}
         >
