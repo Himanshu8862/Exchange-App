@@ -157,17 +157,17 @@
                 <% var sum=0; items.forEach(item => { %>
 				<tr class="item">
 					<td><%= item.title %></td>
-					<td>$<%= item.price %></td>
+					<td>₹ <%= item.price %></td>
 				</tr>
                 <% }); %>
 				<tr class="total">
 					<td></td>
-					<td>Total: $<%= total %></td>
+					<td>Total: ₹ <%= total %></td>
 				</tr>
                 <% if(disprice!==''){ %>
                 <tr class="total">
 					<td></td>
-					<td>Discount Price: $<%= disprice %></td>
+					<td>Discount Price: ₹ <%= disprice %></td>
 				</tr>
                 <% } %>
 			</table>

@@ -34,6 +34,7 @@ import Coupon from './MyComponents/Coupon';
 import PDF from './MyComponents/PDF';
 import ForgotPassword from './MyComponents/ForgotPassword';
 import ResetPassword from './MyComponents/ResetPassword';
+import EditProduct from './MyComponents/EditProduct';
 
 
 const socket = io.connect("http://localhost:3001/");
@@ -131,6 +132,9 @@ function App() {
 			</Route>
 			<Route exact path="/pdf">
 			{ isAuthenticated ? <PDF /> : <Login />}
+			</Route>
+			<Route exact path="/editProduct">
+			{ isAuthenticated ? <EditProduct/> : <Login />}
 			</Route>
 			
         </Switch>

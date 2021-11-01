@@ -6,7 +6,8 @@ import Axios from 'axios';
 
 export default function SellItem(props) {
     var history = useHistory();
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState("Books");
+    const [errmsg, seterrmsg] = useState("");
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [price, setPrice] = useState(0);
@@ -14,6 +15,9 @@ export default function SellItem(props) {
 
     const upload = (e) => {
         //console.log({category: category, title: title, desc: desc, images: images, price: price});
+        if(images.size() == 0){
+            seterrmsg("Minimum one image is required!!");
+        }
         const fd = new FormData();
         const imageNames = [];
         // var userName = "noUser";
@@ -82,11 +86,11 @@ export default function SellItem(props) {
                         </ul>
                     </div>
                     <div className="form-floating mt-4">
-                        <input type="itemTitle" className="form-control" onChange={(e) => {setTitle(e.target.value)}} placeholder="name@example.com" />
+                        <input type="text" className="form-control" onChange={(e) => {setTitle(e.target.value)}} placeholder="name@example.com" required/>
                         <label htmlFor="floatingInput">Title</label>
                     </div>
                     <div className="form-floating mt-4">
-                        <textarea type="Description" className="form-control" onChange={(e) => {setDesc(e.target.value)}} placeholder="name@example.com" />
+                        <textarea type="text" className="form-control" onChange={(e) => {setDesc(e.target.value)}} placeholder="name@example.com" required/>
                         <label htmlFor="floatingInput">Description</label>
                     </div>
                     <div className="form-floating mt-4">
@@ -94,10 +98,12 @@ export default function SellItem(props) {
                         <label htmlFor="formFileMultiple" className="form-label">Upload pictures</label>
                     </div>
                     <div className="form-floating mb-3 mt-4">
-                        <input type="price" className="form-control" onChange={(e) => {setPrice(e.target.value)}} placeholder="Price" />
+                        <input type="number" className="form-control" onChange={(e) => {setPrice(e.target.value)}} placeholder="Price" required/>
                         <label htmlFor="floatingPrice">Price</label>
                     </div>
                     <div className="row">
+                    { errmsg !== "" ? <div class="alert alert-danger alert-dismissible fade show">
+                        <strong>Error!</strong> {errmsg} </div> : <></> }
                         <div className="col-6">
                         <button className="mt-2 btn-success mb-4 btn btn-primary" type="submit">Submit</button>
                         </div>

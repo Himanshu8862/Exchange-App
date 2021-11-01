@@ -4,24 +4,26 @@ import Axios from 'axios';
 
 
 
-export default function EditProfile() {
+export default function EditProduct() {
     var history = useHistory();
     let location = useLocation();
-    const [name, setName] = useState("");
-    const [city, setCity] = useState("");
-    const [phone, setPhone] = useState("");
+    const [title, setTitle] = useState("");
+    const [desc, setdesc] = useState("");
+    const [price, setprice] = useState("");
 
     function saveChanges(e){
-        Axios.post("http://localhost:5000/profile/saveChanges", {
-            name : name === "" ? location.state.name : name,
-            city : city === "" ? location.state.city : city,
-            phone : phone === ""? location.state.phone : phone,
+        let url = 'http://localhost:5000/products/saveProductChanges' ;
+        Axios.post(url, {
+            id : location.state._id,
+            title : title === "" ? location.state.title : title,
+            desc : desc === "" ? location.state.desc : desc,
+            price : price === "" ? location.state.price : price,
         }, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
         })
-        .then((res) => {
+        .then((res)=>{
             console.log(res);
             if(res.status === 200) {
                 alert("Changes made Successfully!");
@@ -30,8 +32,7 @@ export default function EditProfile() {
             else {
                 alert("Some error occured! Try Again");
             }
-            
-        })
+        }) 
         e.preventDefault();
     }
     
@@ -42,22 +43,18 @@ export default function EditProfile() {
         <div className="text-center container w-25 rounded bg-dark">
             <div className="form-signin my-5 p-3">
                 <form onSubmit={saveChanges}>
-                    <h1 className="h3 mb-4 pt-3 fw-normal text-white">Edit Profile</h1>
+                    <h1 className="h3 mb-4 pt-3 fw-normal text-white">Edit Product</h1>
                     <div className="form-floating mt-4">
-                        <input type="Description" className="form-control" placeholder="name@example.com" disabled/>
-                        <label htmlFor="floatingInput">{location.state.username}</label>
+                        <input type="itemTitle" className="form-control" onChange={(e) => {setTitle(e.target.value)}} defaultValue={location.state.title} placeholder="name@example.com" />
+                        <label htmlFor="floatingInput">Provide Title</label>
                     </div>
                     <div className="form-floating mt-4">
-                        <input type="itemTitle" className="form-control" onChange={(e) => {setCity(e.target.value)}} defaultValue={location.state.locationUrl} placeholder="name@example.com" />
-                        <label htmlFor="floatingInput">Provide City</label>
-                    </div>
-                    <div className="form-floating mt-4">
-                        <input type="text" className="form-control" onChange={(e) => {setPhone(e.target.value)}} defaultValue={location.state.phone} placeholder="name@example.com" />
-                        <label htmlFor="floatingInput">Phone Number</label>
+                        <input type="text" className="form-control" onChange={(e) => {setdesc(e.target.value)}} defaultValue={location.state.desc} placeholder="name@example.com" />
+                        <label htmlFor="floatingInput">Description</label>
                     </div>
                     <div className="form-floating mb-3 mt-4">
-                        <input type='text' className="form-control" onChange={(e) => {setName(e.target.value)}} defaultValue={location.state.name} placeholder="Price" />
-                        <label htmlFor="floatingPrice">Name</label>
+                        <input type='text' className="form-control" onChange={(e) => {setprice(e.target.value)}} defaultValue={location.state.price} placeholder="Price" />
+                        <label htmlFor="floatingPrice">Price</label>
                     </div>
                     <div className="row">
                         <div className="col-6">

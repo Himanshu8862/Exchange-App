@@ -100,7 +100,7 @@ export default function DiscussionCard(props) {
                         type="text"
                         value={userComment}
                         onChange={handleChange}
-                        className="form-control"
+                        className="form-control required"
                         placeholder="Type Message here..."
                         aria-label="Recipient's username"
                         aria-describedby="basic-addon2"

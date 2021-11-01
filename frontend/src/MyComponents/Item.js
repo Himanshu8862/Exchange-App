@@ -22,6 +22,18 @@ export default function Item() {
             console.log(returned_items);
         }) 
     }
+    // function editProduct(id){
+    //     let url = 'http://localhost:5000/products/getOwnItems?id=' +id;
+    //     Axios.get(url, {
+    //         headers: {
+    //             "x-access-token": localStorage.getItem("token"),
+    //         }
+    //     }) 
+    //     .then((res)=>{
+    //         console.log(res);
+    //     }) 
+
+    // }
 
     return (
         <div>
@@ -40,8 +52,7 @@ export default function Item() {
                                     <p className="card-text">{ item.desc }</p>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Delete</button>
+                                            <Link to={{pathname : "/editProduct", state : item}} type="button"  className="btn btn-sm btn-outline-secondary">Edit</Link>
                                         </div>
                                         
                                     </div>
@@ -52,42 +63,6 @@ export default function Item() {
 
                      }) }
                         
-                        <div className="col">
-                            <Link to="/product" className="text-decoration-none text-dark">
-                            <div className="card shadow-sm ">
-                            <img src="/assets/images/oneplus7t.jpg" alt="item" className="card-image"/>
-
-                                <div className="card-body">
-                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Delete</button>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            </Link>
-                        </div>
-                        <div className="col">
-                            <Link to="/product" className="text-decoration-none text-dark">
-                            <div className="card shadow-sm ">
-                            <img src="/assets/images/shirt2.jpg" alt="item" className="card-image"/>
-
-                                <div className="card-body">
-                                    <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Delete</button>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>
