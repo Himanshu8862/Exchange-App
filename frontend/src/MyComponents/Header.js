@@ -54,8 +54,9 @@ export default function Header(props) {
 					<input type="search" className="form-control form-control-dark" style={myStyles} onChange={(e) => {setinput(e.target.value)}} placeholder="Search..." aria-label="Search"/>
 					</form>
 					<li><Link to="/discuss" className="nav-link px-5 text-white">Discussion Panel</Link></li>
-					<li><Link to="/cart" className="nav-link px-5 text-white">Cart</Link></li>
+					<li><Link to="/cart" className="nav-link px-3 text-white">Cart</Link></li>
 					<li><Link to="/sell" className="nav-link px-5 text-white">Sell</Link></li>
+					<li><Link to="/chatbox" className="nav-link px-3 text-white">Chats</Link></li>
 					<li><Link to="/faqs" className="nav-link px-5 text-white">FAQs</Link></li>
 					</ul>
 					<CheckLogin />

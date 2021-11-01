@@ -1,20 +1,26 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Axios from "axios";
 
 function PaymentSuccess() {
   // get the state data
   const location = useLocation();
+  let history = useHistory();
   let props = location.state.data;
 
   // items state
   let [items, setItems] = useState([]);
+  let [url, seturl] = useState("");
   let [firstTime, setFirstTime] = useState(true);
+  let [file, setfile] = useState(false);
 
   function GetItems() {
     console.log(location.state);
     setItems(props);
+    let link = "./../../../backend/public/uploads/"+location.state.order._id+".pdf";
+    seturl(link);
   }
 
   useEffect(() => {
@@ -26,16 +32,63 @@ function PaymentSuccess() {
   }, []);
 
   function orderSuccess(){
-    // let url = 'http://localhost:5000/products/orderSuccess?oid=' + location.state.orderID;
-    //   Axios.get(url, {
-    //       headers: {
-    //           "x-access-token": localStorage.getItem("token"),
-    //       }
-    //   })
-    //       .then((res) => {
-    //           console.log(res);
-    //       })
+    let url = 'http://localhost:5000/products/orderSuccess' ;
+      Axios.post(url, {
+        order : location.state.order,
+        total  : location.state.total,
+        disprice : location.state.discountTotal,
+        method : location.state.method,        
+      },{
+          headers: {
+              "x-access-token": localStorage.getItem("token"),
+          }
+      })
+          .then((res) => {
+              console.log(res);
+          })
   }
+
+  async function generatePDF(){
+    let url = 'http://localhost:5000/products/generatePDF' ;
+    
+      await Axios.post(url, {
+        order : location.state.order,
+        total  : location.state.total,
+        disprice : location.state.discountTotal,
+        method : location.state.method,   
+        items : items,     
+      },{
+          headers: {
+              "x-access-token": localStorage.getItem("token"),
+          }
+      })
+          .then((res) => {
+            history.push("/");
+              
+              // const file = new Blob([res.data.result.data], { type: "application/pdf" });
+              // const fileURL = URL.createObjectURL(file);
+              // const pdfWindow = window.open();
+              // pdfWindow.location.href = fileURL;             
+            
+              console.log(res);
+
+          })
+
+  }
+
+  // function viewPDF(){
+  //   let url = 'http://localhost:5000/products/viewPDF?oid='+location.state.order._id;
+  //   Axios.get(
+  //     url, 
+  //     {responseType: 'blob',
+  //       headers: {
+  //         "x-access-token": localStorage.getItem("token"),
+  //     }
+  //   } // !!!
+  //   ).then((response) => {
+  //     window.open(URL.createObjectURL(response.data));
+  //   })
+  // }
 
   console.log("data is: ", items);
   console.log("state is; ", location.state);
@@ -96,13 +149,16 @@ function PaymentSuccess() {
         </div>
         <div class="col p-3 mt-5">
           <div className="d-flex justify-content-between">
+          
             <Link
               className="fs-6 bg-primary text-white px-5 py-2 rounded-pill text-decoration-none"
-              to="/profile"
+              onClick={generatePDF}
+              to="/"
             >
               Generate Invoice{" "}
               <i class="bi bi-file-earmark-arrow-down-fill"></i>
             </Link>
+            
             <Link
               className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none"
               to="/"

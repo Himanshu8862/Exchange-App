@@ -31,6 +31,7 @@ import {
 import React, {useState} from 'react'
 import EditProfile from './MyComponents/EditProfile';
 import Coupon from './MyComponents/Coupon';
+import PDF from './MyComponents/PDF';
 
 
 const socket = io.connect("http://localhost:3001/");
@@ -119,6 +120,9 @@ function App() {
 			</Route>
 			<Route exact path="/generateCoupon">
 			{ isAuthenticated ? <Coupon /> : <Login />}
+			</Route>
+			<Route exact path="/pdf">
+			{ isAuthenticated ? <PDF /> : <Login />}
 			</Route>
 			
         </Switch>
