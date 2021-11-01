@@ -3,6 +3,10 @@ import Order from "../model/order.js";
 import Product from "../model/products.js"
 import async from "async";
 import { ObjectId } from "bson";
+import pdf from "html-pdf";
+import fs from "fs";
+
+const options  = {format : 'A4'};
 
 export let addToCart = async (req,res) => {
 
@@ -88,7 +92,7 @@ export let viewCart = async (req,res) => {
 
 export let getProductDetails = async (req,res) => {
     try {
-            Product.find({}, (err,results) => {
+            Product.find({onSale : true}, (err,results) => {
                 if(err){
                     console.log(err);
                 }else{
@@ -155,7 +159,7 @@ export let getRequestProduct = async (req,res) =>{
                 console.log(err);
             }else if(order){
                 let items = order.items;
-                Product.find().where('_id').in(items).exec((err, records) => {
+                Product.find({onSale : true}).where('_id').in(items).exec((err, records) => {
                     if(err){
                         console.log(err);
                     }else{
@@ -300,7 +304,6 @@ export let cancelOrder = async (req,res) => {
 
 export let orderSuccess = async (req,res) => {
     try {
-        let oid = req.query.oid;
         let total = req.body.total;
         let disprice = req.body.disprice;
         let order = req.body.order;
@@ -312,40 +315,82 @@ export let orderSuccess = async (req,res) => {
             discountTotal : disprice,
             paymentType : paymentType,
         }
-        User.findById(req.user, (err,user)=>{
+        User.findById(req.user, async (err,user)=>{
             if(err){
                 console.log(err);
             }else{
                 user.previousOrder.push(transaction);
                 user.save();
-                async.eachSeries(order.items, function updateObject (obj, done) {
-                Product.update({ "_id": ObjectId(obj._id)}, { $set : { onSale : false }}, done);
-                }, function allDone (err) {
+                Order.findByIdAndDelete(order._id, async (err,result)=>{
                     if(err){
                         console.log(err);
+                    }else{
+                        console.log('Item deleted');
+                        await order.items.forEach(async (obj)=> {
+                            console.log(obj);
+                        await Product.findByIdAndUpdate(obj, { $set : { onSale : false }},{ multi: true });
+                            // this will be called when all the updates are done or an error occurred during the iteration
+                        });
                     }
-                    // this will be called when all the updates are done or an error occurred during the iteration
-                });
+                })
+                
 
             }
-        })
-        // Order.findById(oid,(err,order)=>{
-        //     if(err){
-        //         console.log(err);
-        //     }else{
-        //         async.eachSeries(order.items, function updateObject (obj, done) {
-        //             Product.update({ "_id": ObjectId(obj._id)}, { $set : { onSale : false }}, done);
-        //         }, function allDone (err) {
-        //             if(err){
-        //                 console.log(err);
-        //             }
-        //             // this will be called when all the updates are done or an error occurred during the iteration
-        //         });
-
-        //     }
-        // })        
+        })   
     } catch (error) {
         console.log(error);
         
+    }
+}
+
+export let generatePDF = async (req,res) => {
+    try {
+        let total = req.body.total;
+        let disprice = req.body.disprice;
+        let order = req.body.order;
+        let paymentType = req.body.method;
+        let items = req.body.items;
+        console.log(req.body);
+        //res.render("paydone");
+
+        res.render("paydone", {order : order, total : total, disprice : disprice, paymentType : paymentType, items : items}, async (err,html) => {
+            let fn = './public/uploads/'+ order._id + '.pdf';
+            await pdf.create(html,options).toFile(fn,(err,result)=>{
+                if(err){
+                    console.log(err);
+                }else{
+                    var file = fs.readFileSync(fn);
+                    
+                    res.header('content-type','application/pdf');
+                    console.log('receipt generated');
+                   // res.send(file);
+                    
+                //    return res.status(201).json({auth:true, result : file});
+                }
+            });
+        });
+
+
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export let viewPDF = async (req,res) => {
+    try {
+        let oid = req.query.oid;
+        let fn = './public/uploads/'+ oid + '.pdf';
+        var file = fs.readFileSync(fn);
+                    
+        res.header('content-type','application/pdf');
+        res.send(file);
+       // console.log('receipt generated');
+       // return res.status(201).json({auth:true, result : file});
+        
+    } catch (error) {
+        console.log(error);
+
     }
 }

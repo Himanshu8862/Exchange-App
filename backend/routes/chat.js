@@ -47,7 +47,12 @@ io.on("connection", (socket) => {
     socket.on("send_message", async (data, room) => {
         console.log(data);
         let temp = room_messages.get(room);
-        temp.push(data);
+        if(room_messages.has(room)){
+            temp.push(data);
+        }else{
+            temp = [];
+            temp.push(data);
+        }
         room_messages.set(room,temp);
         //testing
         const sockets = await io.in(room).fetchSockets().then(async (clients) =>{
@@ -55,6 +60,7 @@ io.on("connection", (socket) => {
             io.to(room).emit("check_users", clients.length);
             let chats = room_messages.get(room);
             if(clients.length === 1 && typeof(chats)!=='undefined'){
+                console.log('Messages added to DB 1');
                 sendMessagesToDB(room, chats)  
                 room_messages.set(room,[]);   
             }
@@ -68,12 +74,15 @@ io.on("connection", (socket) => {
     socket.on("disconnect", async () => {
         console.log("User Disconnected", socket.id);
         let room_needed = rooms.get(socket.id);
+        console.log(`${socket.id} left the room ${room_needed}`);
         rooms.delete(socket.id);
+        socket.leave(room_needed);
         const sockets = await io.in(room_needed).fetchSockets().then(async (clients) =>{
             console.log(clients.length);
             io.to(room_needed).emit("check_users", clients.length);
             let chats = room_messages.get(room_needed);
             if(clients.length === 0 && typeof(chats)!=='undefined'){
+                console.log('Messages added to DB 2');
                 sendMessagesToDB(room_needed, chats)  
                 room_messages.set(room_needed,[]);   
             }

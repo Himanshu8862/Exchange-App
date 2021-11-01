@@ -124,3 +124,22 @@ export let saveChanges = async (req,res) => {
         
     }
 }
+
+export let getPrevOrders = async (req,res) =>{
+    try {
+
+        let id = req.user;
+        User.findById(id, (err,user)=>{
+            if(err){
+                console.log(err);
+            }else{
+                console.log(user);
+                return res.status(200).json({auth: true, result: user.previousOrder});
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
