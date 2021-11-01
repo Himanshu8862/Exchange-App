@@ -40,8 +40,13 @@ export default function Item() {
             <div className="album rounded bg-light">
                 <div className="container p-3">
 
-                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-                     { items.map((item)=>{
+                    
+                     {items.length===0 ? <div className="text-center">
+                                            <p className="fs-3">You haven't put any item for selling yet!!</p>
+                                            <p className="fs-4">To start selling, Click <Link to="/sell">here</Link></p>
+                                         </div> :
+                        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                      {items.map((item)=>{
                          let url = "/assets/images/" + item.images[0];
                         return <div className="col">
                             <Link to="#" className="text-decoration-none text-dark">
@@ -60,10 +65,9 @@ export default function Item() {
                             </div>
                             </Link>
                         </div>
-
                      }) }
-                        
-                    </div>
+                     </div>
+                    }
                 </div>
             </div>
         </div>
