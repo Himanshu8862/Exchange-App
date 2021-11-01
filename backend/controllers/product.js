@@ -226,7 +226,7 @@ export let getOwnItems = async (req,res) => {
             if(err){
                 console.log(err);
             }else{
-                Product.find({owner : user.username}, (err,results) => {
+                Product.find({owner : user.username, onSale : true}, (err,results) => {
                     if(err){
                         console.log(err);
                     }else{
@@ -392,5 +392,28 @@ export let viewPDF = async (req,res) => {
     } catch (error) {
         console.log(error);
 
+    }
+}
+
+export let saveProductChanges = async (req,res) => {
+    try {
+        let id = req.body.id;
+        let title = req.body.title;
+        let desc = req.body.desc;
+        let price = req.body.price;
+        Product.findByIdAndUpdate(id, { title: title, price : price, desc : desc },
+            function (err, docs) {
+            if (err){
+            console.log(err)
+            }
+            else{
+            res.status(200).json({auth: true, result: docs});
+            console.log("Updated Item : ", docs);
+            }
+        })
+        
+    } catch (error) {
+        console.log(error);
+        
     }
 }

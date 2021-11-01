@@ -69,14 +69,15 @@ function NewPost() {
           </div>
           <div classNames="mb-3">
             <div className="form-group">
-              <label for="exampleInputPassword1">Post Discription</label>
+              <label for="exampleInputPassword1">Post Description</label>
               <textarea
-                className="form-control"
+                className="form-control required"
                 placeHolder="Post Body goes here"
                 id="floatingTextarea2"
                 style={{ height: "100px" }}
                 value={discription}
                 onChange={handleDiscriptionChange}
+                
               ></textarea>
             </div>
           </div>

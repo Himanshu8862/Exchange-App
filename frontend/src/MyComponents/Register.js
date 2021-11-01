@@ -14,25 +14,32 @@ export default function Register() {
 
 
     const register = (e) => {
-        Axios.post("http://localhost:5000/register", {
-            username: usernameReg,
-            email: emailReg,
-            password: passwordReg,
-            cpassword: cpasswordReg
-            
-        })
-        .then((res)=>{
-            console.log(res);
-            if(res.data.auth){
-                localStorage.setItem("token", res.data.token);
-                history.push('/');
-                window.location.reload();
-            }else{
-                seterrmsg(res.data.msg);
-            }
+        if(usernameReg === "" || emailReg === ""||passwordReg === ""){
+            seterrmsg("All fields are required!");
+        }else if(passwordReg.length < 6){
+            seterrmsg("Password must be atleast 6 characters");
+        }
+        else{
+            Axios.post("http://localhost:5000/register", {
+                username: usernameReg,
+                email: emailReg,
+                password: passwordReg,
+                cpassword: cpasswordReg
+                
+            })
+            .then((res)=>{
+                console.log(res);
+                if(res.data.auth){
+                    localStorage.setItem("token", res.data.token);
+                    history.push('/');
+                    window.location.reload();
+                }else{
+                    seterrmsg(res.data.msg);
+                }
+            }) 
 
-            //this.props.history.push('/cart')
-        }) 
+        }
+        
         e.preventDefault();       
     };
 

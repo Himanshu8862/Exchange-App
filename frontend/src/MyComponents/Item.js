@@ -22,6 +22,18 @@ export default function Item() {
             console.log(returned_items);
         }) 
     }
+    // function editProduct(id){
+    //     let url = 'http://localhost:5000/products/getOwnItems?id=' +id;
+    //     Axios.get(url, {
+    //         headers: {
+    //             "x-access-token": localStorage.getItem("token"),
+    //         }
+    //     }) 
+    //     .then((res)=>{
+    //         console.log(res);
+    //     }) 
+
+    // }
 
     return (
         <div>
@@ -45,8 +57,7 @@ export default function Item() {
                                     <p className="card-text">{ item.desc }</p>
                                     <div className="d-flex justify-content-between align-items-center">
                                         <div className="btn-group">
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Edit</button>
-                                            <button type="button" className="btn btn-sm btn-outline-secondary">Delete</button>
+                                            <Link to={{pathname : "/editProduct", state : item}} type="button"  className="btn btn-sm btn-outline-secondary">Edit</Link>
                                         </div>
                                         
                                     </div>

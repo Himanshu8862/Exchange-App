@@ -24,6 +24,7 @@ export default function RequestItem(props) {
         }) 
     }
     function chooseDecision(decision){
+        console.log(decision);
             Axios.post("http://localhost:5000/products/chooseDecision", {
                 id: props.item._id,
                 decision : decision,
@@ -70,7 +71,7 @@ export default function RequestItem(props) {
                             <Link to="#"><button onClick={() => {chooseDecision("accepted")}} className="btn btn-sm btn-success" disabled={userDecision !== "pending"}>{userDecision === 'pending'? 'Accept' : userDecision}</button></Link>
                         </div>
                         <div>
-                            <Link to="#"><button onclick={() => {chooseDecision("rejected")}} className="btn btn-sm btn-danger" disabled={userDecision !== "pending"}>{userDecision === 'pending'? 'Reject' : userDecision}</button></Link>
+                            <Link to="#"><button onClick={() => {chooseDecision("rejected")}} className="btn btn-sm btn-danger"  disabled={userDecision !== "pending"}>{userDecision === 'pending'? 'Reject' : userDecision}</button></Link>
                         </div>
                     </div>
 

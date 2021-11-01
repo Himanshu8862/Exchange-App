@@ -19,26 +19,12 @@ export default function ChatList(props) {
                 return <Link to="#" onClick={() => {props.setChat(chat)}} className="list-group-item list-group-item-action" >
                     <div className="d-flex w-100 justify-content-between" onClick={() => {joinRoom(chat._id,author)}}>
                     <h5  className="mb-2">{author}</h5>
-                    <small>few seconds ago</small>
+                    <small></small>
                     </div>
                     <p className="ms-2 mb-1">Tap to chat</p>
                 </Link>
             })}
 
-                <Link to="#" className="list-group-item list-group-item-action">
-                    <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-2">Abhinav Gupta</h5>
-                    <small className="text-muted">few days ago</small>
-                    </div>
-                    <p className="ms-2 mb-1">The bicycle is in great condition as you can tell from the pictures</p>
-                </Link>
-                <Link to="#" className="list-group-item list-group-item-action">
-                    <div className="d-flex w-100 justify-content-between">
-                    <h5 className="mb-2">Arnab Das</h5>
-                    <small className="text-muted">few days ago</small>
-                    </div>
-                    <p className="ms-2 mb-1">Sorry, I only have a white Iphone at the moment</p>
-                </Link>
             </div>
         </div>
     )

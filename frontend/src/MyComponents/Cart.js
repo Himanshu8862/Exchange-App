@@ -28,7 +28,6 @@ export default function Cart() {
     return (
         <div className="col my-5 container">
             <h1 className="text-center fs-5"> <img src="/assets/images/cart.png" alt="Cart-logo"/></h1>
-            <p className="fs-2">Cart</p>
             <div className="Cart bg-primary rounded">
                 <div className="row m-2">
                     { orders.map(function (d) {
