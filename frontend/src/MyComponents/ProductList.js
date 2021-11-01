@@ -39,15 +39,14 @@ export default function ProductList(props) {
     console.log(props.filterPrice);
     console.log(props.filterRatings);
     console.log(props.filterLocation);
+    let min = Infinity, max = 0;
 
     useEffect(() => {
         getProductsfromDB();
     }, [],
     );
     let [items, setItems] = useState([]);
-    let [sellerRating, setsellerRating] = useState(0);
-    let [sellerLocation, setsellerLocation] = useState("");
-
+    let [sellers, setsellers] = useState({});
 
     function getProductsfromDB() {
         //window.location.reload();
@@ -60,6 +59,22 @@ export default function ProductList(props) {
                 let returned_items = res.data.result;
                 setItems(returned_items);
                 console.log(returned_items);
+                
+                for(let i in returned_items) {
+                    min = Math.min(min, returned_items[i].price);
+                    max = Math.max(max, returned_items[i].price);
+                    console.log(returned_items[i]);
+                    if(sellers[returned_items[i].owner] === undefined) {
+                        Axios.post('http://localhost:5000/getUser', {username: returned_items[i].owner})
+                        .then((res) => {
+                            let prev_sellers = sellers;
+                            prev_sellers[returned_items[i].owner] = res.data.result;
+                            setsellers(prev_sellers);
+                        })
+                    }
+                }
+                props.setminPrice(min);
+                props.setmaxPrice(max);
             })
 
     }
@@ -71,7 +86,7 @@ export default function ProductList(props) {
         <div>
             <div className="album bg-light">
                 <div className="container text-decoration-none ">
-                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-4 gy-5">
                     {items
                     .filter((val) => {
                         if(props.searchText==="")
@@ -86,7 +101,8 @@ export default function ProductList(props) {
                             return item;
                     })
                     .filter((val) => {
-                        if(props.filterPrice === 0)
+                        console.log(props.filterPrice);
+                        if(props.filterPrice <= 0)
                             return val;
                         else if(val.price <= props.filterPrice)
                             return val;
@@ -95,13 +111,8 @@ export default function ProductList(props) {
                         if(props.filterRatings === 0)
                             return val;
                         else {
-                            console.log(val.owner);
-                            Axios.post('http://localhost:5000/getUser', {username: val.owner})
-                            .then((res) => {
-                                setsellerRating(res.data.result.rating);
-                            })
-                            console.log(sellerRating);
-                            if(sellerRating >= props.filterRatings)
+                            console.log(sellers[val.owner].rating);
+                            if(sellers[val.owner].rating >= props.filterRatings)
                                 return val;
                         }
                     })
@@ -109,12 +120,8 @@ export default function ProductList(props) {
                         if(props.filterLocation.size === 0)
                             return val;
                         else {
-                            Axios.post('http://localhost:5000/getUser', {username: val.owner})
-                            .then((res) => {
-                                setsellerLocation(res.data.result.location);
-                            })
-                            console.log(sellerLocation);
-                            if(props.filterLocation.has(sellerLocation))
+                            console.log(sellers[val.owner].location);
+                            if(props.filterLocation.has(sellers[val.owner].location))
                                 return val;
                         }
                     })
@@ -124,7 +131,7 @@ export default function ProductList(props) {
                             //{{path : `/product?id=${item._id}`, state: item}}
                             <Link to={{pathname : `/product`, state: item}} className="text-decoration-none text-dark">
                             <div className="col">
-                                <div className="card shadow-sm" >
+                                <div className="card shadow border" >
                                     <img src={imageUrl} alt="..." className="card-image" />
                                     <div className="card-body">
                                     <p className="card-text card-title overflow-hidden fs-5">{item.title}</p>

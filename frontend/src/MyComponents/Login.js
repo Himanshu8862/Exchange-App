@@ -53,14 +53,14 @@ export default function Login() {
                     </div>
                     { errmsg !== "" ? <div class="alert alert-danger alert-dismissible fade show">
                         <strong>Error!</strong> {errmsg} </div> : <></> }
-                    <button className="w-50 mt-5 mb-5 btn btn-primary" type="submit">Sign in</button>
+                    <button className="w-50 mt-5 mb-4 btn btn-primary" type="submit">Sign in</button>
                     
                     <br />
-                    <Link to="#" className="text-white">Forgot Password</Link>
+                    <Link to="/forgotpassword" className="text-white">Forgot Password</Link>
                     <br />
                     <div className="row container text-center">
-                        <div className="col-10 text-white mt-2 mb-3">Dont have an account? </div>
-                        <div className="col-2 mt-2"><Link to="/register" className="text-white">Register</Link></div>
+                        <div className="col-9 text-white text-end mt-2 mb-3">Dont have an account? </div>
+                        <div className="text-start col-3 mt-2"><Link to="/register" className="text-white">Register</Link></div>
                         <br />
                     </div>
                 </form>

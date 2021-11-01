@@ -144,7 +144,7 @@ export default function MessageBox(props) {
                     {/* <input  type="text" name="message" id="msg_1" placeholder="Type message here..." className="col-12"/> */}
                     <div class="input-group">
                     {/* <span class="input-group-text">With textarea</span> */}
-                    <textarea class="form-control" onChange={(e)=>{ setMess(e.target.value) }} aria-label="With textarea"></textarea>
+                    <textarea class="form-control" onChange={(e)=>{ setMess(e.target.value) }} aria-label="With textarea"/>
                     </div>
                 </form>
                 <div className="col-2">

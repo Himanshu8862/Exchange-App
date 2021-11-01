@@ -90,8 +90,8 @@ export default function Register() {
                     <button className="w-50 mt-4 mb-2 btn btn-primary" type="submit">Sign up</button>
                    
                     <div className="row container">
-                        <div className="col-10 text-white mt-2 mb-3">Already a user? </div>
-                        <div className="col-2 mt-2"><Link to="/login" className="text-white">Login</Link></div>
+                        <div className="col-8 text-white text-end mt-2 mb-3">Already a user? </div>
+                        <div className="col-4 mt-2 text-start"><Link to="/login" className="text-white">Login</Link></div>
                         <br />
                     </div>
                 </form>
