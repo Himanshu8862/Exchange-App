@@ -1,76 +1,85 @@
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+
 function ForgotPassword() {
-    const [Comment, setComment] = useState("")
-    const [passComment, setpassComment] = useState("")
-    const [newpass, setnewPass] = useState("")
-    const [reenteredpass, setreenteredPass] = useState("")
-    const [flage, setflage] = useState(false)
+  const [comment, setComment] = useState("");
+  const [email, setemail] = useState("");
+  const [validated, setvalidated] = useState(false);
 
-
-    // on submit 
-    function submitHandler(e) {
-        e.preventDefault()
-        console.log("password: ", newpass)
-        console.log("re entered pass: ", reenteredpass)
-        if (newpass === "") {
-            setComment("Password can't be empty")
-        }
-        else if (newpass !== reenteredpass) {
-            setpassComment("passwords didn't match!!")
-        }
-        else {
-            setComment("")
-            setflage(true)
-            setpassComment("")
-            setreenteredPass("")
-            setnewPass("")
-        }
+  // on submit handler
+  function submitHandler(e) {
+    e.preventDefault();
+    console.log("emial: ", email);
+    console.log("comment: ", comment);
+    if (email === "") {
+      setComment("email is required");
+    } else {
+      //1. verify the email in the database
+      // 2. redirect
+      //   also send the email to the next component
+      setvalidated(true)
     }
+  }
 
-    // on change of the password
-    function handlePassword(e) {
-        setnewPass(e.target.value)
-        console.log(newpass)
-        setComment("")
-    }
+  function emailHandler(e) {
+    setemail(e.target.value);
+    setComment("");
+  }
 
-    // on change of the reentered password
-    function handleReenteredPassword(e) {
-        setreenteredPass(e.target.value)
-        console.log(reenteredpass)
-        setpassComment("")
-    }
-
-
-    return (
-        <div className="container m-5">
-
-            {flage ? <div className="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Hurrey!</strong> Your Password has been set successfully .
-                <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div> : ""}
-
-            <h2 className="text-center  ">Reset your password Here</h2>
-            <form onSubmit={submitHandler}>
+  return (
+    <div className="container d-flex flex-column">
+      <div className="row align-items-center justify-content-center my-5">
+        <div className="col-lg-5 col-md-8">
+          <div className="card shadow">
+            <div className="card-body p-6">
+              <div className="mb-4">
+                <h1 className="mb-1 fw-bold">Forgot Password</h1>
+                <p>Fill the form to reset your password.</p>
+              </div>
+              <form onSubmit={submitHandler}>
                 <div className="mb-3">
-                    <label for="exampleInputEmail1" className="form-label">New Password</label>
-                    <input type="password" className="form-control" onChange={handlePassword}
-                        value={newpass}
-                        id="exampleInputEmail1" aria-describedby="emailHelp" />
-                    <div id="emailHelp" className="form-text text-danger">{Comment}</div>
+                  <label for="email" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="form-control"
+                    name="email"
+                    placeholder="Enter Your Email "
+                    required=""
+                    value={email}
+                    onChange={emailHandler}
+                  />
+                  <small className="text-danger">{comment}</small>
                 </div>
-                <div className="mb-3">
-                    <label for="exampleInputPassword1" className="form-label">Re-enter new Password</label>
-                    <input type="password" className="form-control" onChange={handleReenteredPassword}
-                        value={reenteredpass}
-                        id="exampleInputPassword1" />
-                    <div id="emailHelp" className="form-text text-danger">{passComment}</div>
+                <div className="mb-3 d-grid">
+                  {/* <Link to="/resetpassword"> */}
+                  <button type="submit" className="btn btn-primary">
+                    Reset Password
+                  </button>
+                  {/* </Link> */}
                 </div>
-                <button type="submit" className="btn btn-primary ">Reset Password</button>
-            </form>
+                <div className="text-danger"></div>
+              </form>
+              {validated ? (
+                <Redirect
+                  to={{
+                    pathname: "/resetpassword",
+                    state: email,
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default ForgotPassword
+export default ForgotPassword;

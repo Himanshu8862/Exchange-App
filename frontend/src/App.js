@@ -32,6 +32,7 @@ import React, {useState} from 'react'
 import EditProfile from './MyComponents/EditProfile';
 import Coupon from './MyComponents/Coupon';
 import ForgotPassword from './MyComponents/ForgotPassword';
+import ResetPassword from './MyComponents/ResetPassword';
 
 
 const socket = io.connect("http://localhost:3001/");
@@ -61,6 +62,9 @@ function App() {
 			</Route>
 			<Route exact path="/forgotpassword">
 				<ForgotPassword/>
+			</Route>
+			<Route exact path="/resetpassword">
+				<ResetPassword/>
 			</Route>
 			<Route exact path="/product">
 				<ProductBody />
