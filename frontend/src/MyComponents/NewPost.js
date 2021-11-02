@@ -51,8 +51,8 @@ function NewPost() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="m-5 ">
-        <div className="fs-4 text-center pb-3">New Post</div>
+      <div className="m-5 min-height">
+        <h1 className="text-center pb-3">New Post</h1>
         <div className="row border border-dark p-3 rounded">
           <div className="form-group mb-3">
             <label for="formGroupExampleInput" className="form-label">

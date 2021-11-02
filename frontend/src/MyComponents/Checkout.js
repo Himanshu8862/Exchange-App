@@ -40,7 +40,7 @@ function Checkout() {
 
   console.log("checkout: ", props);
   return (
-    <div className="d-sm-flex flex-column m-5 justify-content-center">
+    <div className="d-sm-flex flex-column m-5 justify-content-center min-height">
       <h4 className="d-flex justify-content-between align-items-center mb-3">
         <span className="text-primary">Summary</span>
         <span className="badge bg-primary rounded-pill">{items.length}</span>

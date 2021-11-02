@@ -28,13 +28,18 @@ function Discussion() {
 
     
     return (
-        <div className="col p-3">
+        <div className="col p-3 min-height">
             <div className="d-flex  justify-content-between">
                 <div className="fs-3">Dicussion Panel</div>
                 <Link to="/newpost">
                     <button type="button" class="btn btn-success">New Post</button>
                 </Link>
             </div>
+            { discussions.length === 0 ? <div className="text-center my-5">
+                                        <p className="fs-3">There are no discussions yet!!</p>
+                                        <p className="fs-4">Start a discussion by clicking the green New Post button on top right or</p>
+                                        <p className="fs-4">Wait for users to start a discussion</p>
+                                    </div> : 
             <div className="row m-5">
                 {
                     discussions.map(function (data) {
@@ -46,6 +51,7 @@ function Discussion() {
                     })
                 }
             </div>
+            }
         </div>
     );
 }
