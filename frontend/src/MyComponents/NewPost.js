@@ -21,7 +21,7 @@ function NewPost() {
 
     // post request to the server
     axios
-      .post("http://localhost:5000/discussion/addPost", req, 
+      .post("https://exchange-app-team14.herokuapp.com/discussion/addPost", req, 
       {
           headers: {
               "x-access-token": localStorage.getItem("token"),

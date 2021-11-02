@@ -20,7 +20,7 @@ export default function Register() {
             seterrmsg("Password must be atleast 6 characters");
         }
         else{
-            Axios.post("http://localhost:5000/register", {
+            Axios.post("https://exchange-app-team14.herokuapp.com/register", {
                 username: usernameReg,
                 email: emailReg,
                 password: passwordReg,

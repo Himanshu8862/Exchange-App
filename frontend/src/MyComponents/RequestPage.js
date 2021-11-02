@@ -9,7 +9,7 @@ export default function RequestPage() {
     );
     let [requests, setRequests] = useState([]);
     function getRequests(){
-        Axios.get("http://localhost:5000/products/getRequests", {
+        Axios.get("https://exchange-app-team14.herokuapp.com/products/getRequests", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }

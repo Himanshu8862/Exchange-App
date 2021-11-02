@@ -20,7 +20,7 @@ export default function SellItem() {
         const imageNames = [];
         // var userName = "noUser";
         // get username of the user
-        Axios.get("http://localhost:5000/profile/getUserData", {
+        Axios.get("https://exchange-app-team14.herokuapp.com/profile/getUserData", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
                 'content-type': 'multipart/form-data'
@@ -33,13 +33,13 @@ export default function SellItem() {
                 imageNames.push(images[i].name);
             }
             // console.log(fd);
-            Axios.post("http://localhost:5000/sell/imageupload", fd, {
+            Axios.post("https://exchange-app-team14.herokuapp.com/sell/imageupload", fd, {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),
                     "Content-Type": "multipart/form-data",
                 }
             })
-            Axios.post("http://localhost:5000/sell", {
+            Axios.post("https://exchange-app-team14.herokuapp.com/sell", {
                 category: category,
                 title: title,
                 desc: desc, 

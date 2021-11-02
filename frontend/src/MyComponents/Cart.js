@@ -12,7 +12,7 @@ export default function Cart() {
     let [orders, setOrders] = useState([]);
 
     function getCartDetails(){
-        Axios.get("http://localhost:5000/products/viewCart", {
+        Axios.get("https://exchange-app-team14.herokuapp.com/products/viewCart", {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),
                 }

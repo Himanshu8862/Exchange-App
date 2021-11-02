@@ -43,7 +43,7 @@ export default function MessageBox(props) {
     }, [messages] );
 
     function getMessagesFromDB(){
-        let url = "http://localhost:5000/chat/getMessagesFromDB?id=" + props.sender._id;
+        let url = "https://exchange-app-team14.herokuapp.com/chat/getMessagesFromDB?id=" + props.sender._id;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -88,7 +88,7 @@ export default function MessageBox(props) {
 
     function createCoupon(){
         let sender = props.user === props.sender.author1 ? props.sender.author2 : props.sender.author1;
-        let url = "http://localhost:5000/chat/provideDiscount?a1=" + sender;
+        let url = "https://exchange-app-team14.herokuapp.com/chat/provideDiscount?a1=" + sender;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),

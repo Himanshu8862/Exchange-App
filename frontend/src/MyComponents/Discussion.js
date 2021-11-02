@@ -14,7 +14,7 @@ function Discussion() {
 
     // get Discussions 
     const getDiscussions=()=>{
-        axios.get("http://localhost:5000/discussion/view", {
+        axios.get("https://exchange-app-team14.herokuapp.com/discussion/view", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
