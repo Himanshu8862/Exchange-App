@@ -42,10 +42,6 @@ const socket = io.connect("http://localhost:3001/");
 function App() {
 
 	const [searchText, setsearchText] = useState("");
-	const [filterPrice, setfilterPrice] = useState(0);
-	const [filterRatings, setfilterRatings] = useState(0);
-	const [filterLocation, setfilterLocation] = useState(new Set());
-	const [category, setcategory] = useState("");
 	const [isAuthenticated, setAuthenticated] = useState(() => {
 		const token = localStorage.getItem("token");
 		return token !== null;
@@ -115,9 +111,7 @@ function App() {
 			{ isAuthenticated ? <NewPost /> : <Login />}
 			</Route>
 			<Route exact path="/">
-				<MainPage searchText = {searchText} category = {category} setcategory = {setcategory} filterPrice = {filterPrice} filterRatings = {filterRatings}
-						filterLocation = {filterLocation} setfilterPrice = {setfilterPrice} setfilterRatings = {setfilterRatings}
-						setfilterLocation = {setfilterLocation} />
+				<MainPage searchText = {searchText}/>
 			</Route>
 			<Route exact path="/request">
 			{ isAuthenticated ? <RequestPage /> : <Login />}

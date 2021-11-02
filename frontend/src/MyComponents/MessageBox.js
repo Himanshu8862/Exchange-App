@@ -140,20 +140,22 @@ export default function MessageBox(props) {
                 <h4 className="">Reply2</h4> */}
             </div>
             <div className="row my-2 text-center">
-                <form className="col-10">
+                <div className="col-2">
+                { showcoup ? (<button  onClick={sendCoupon} className="btn btn-sm my-1 px-3 btn-success">Send Coupon</button>) : 
+                (<button type="submit" onClick={createCoupon} className="btn btn-sm my-1 px-3 btn-danger">Create Coupon</button>) }
+                </div>
+                <form className="col-8">
                     {/* <input  type="text" name="message" id="msg_1" placeholder="Type message here..." className="col-12"/> */}
-                    <div class="input-group">
-                    {/* <span class="input-group-text">With textarea</span> */}
-                    <textarea class="form-control" onChange={(e)=>{ setMess(e.target.value) }} aria-label="With textarea"/>
+                    <div className="input-group">
+                    {/* <span className="input-group-text">With textarea</span> */}
+                    <textarea className="form-control" onChange={(e)=>{ setMess(e.target.value) }} aria-label="With textarea"/>
                     </div>
                 </form>
                 <div className="col-2">
                 <button type="submit" onClick={sendMessage} className="btn btn-lg my-1 px-4 btn-success">Send</button>
-                { showcoup ? (<button  onClick={sendCoupon} className="btn btn-lg my-1 px-3 btn-success">Send Coupon</button>) : 
-                (<button type="submit" onClick={createCoupon} className="btn btn-lg my-1 px-3 btn-danger">Create Coupon</button>) }
                 
                 </div>
-                { errmsg !== "" ? <div class="alert alert-danger alert-dismissible fade show">
+                { errmsg !== "" ? <div className="alert alert-danger alert-dismissible fade show">
                         <strong>Error!</strong> {errmsg} </div> : <></> }
                 
             </div>

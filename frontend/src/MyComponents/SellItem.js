@@ -4,7 +4,7 @@ import Axios from 'axios';
 // import { useState } from 'react
 // import './SellItem.css';
 
-export default function SellItem(props) {
+export default function SellItem() {
     var history = useHistory();
     const [category, setCategory] = useState("Books");
     const [errmsg, seterrmsg] = useState("");
@@ -28,7 +28,6 @@ export default function SellItem(props) {
         })
         .then((res)=>{
             // console.log(res);
-            let data = res.data.result;
             for(let i=0; i<images.length; i++) {
                 fd.append('images', images[i]);
                 imageNames.push(images[i].name);
