@@ -11,7 +11,14 @@ const userSchema = mongoose.Schema({
     phone: String,
     name: String,
     previousOrder: Array,
-    rating: Number,
+    rating: {
+      type : Number,
+      default : 0,
+    },
+    count : {
+      type : Number,
+      default : 0,
+    }
 });
 
 userSchema.methods.generateHash = function(password) {

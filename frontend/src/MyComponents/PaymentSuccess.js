@@ -58,6 +58,7 @@ function PaymentSuccess() {
       disprice: location.state.discountTotal,
       method: location.state.method,
       items: items,
+      rating : rating,
     }, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
@@ -65,31 +66,13 @@ function PaymentSuccess() {
     })
       .then((res) => {
         history.push("/");
-
-        // const file = new Blob([res.data.result.data], { type: "application/pdf" });
-        // const fileURL = URL.createObjectURL(file);
-        // const pdfWindow = window.open();
-        // pdfWindow.location.href = fileURL;             
-
         console.log(res);
 
       })
 
   }
 
-  // function viewPDF(){
-  //   let url = 'http://localhost:5000/products/viewPDF?oid='+location.state.order._id;
-  //   Axios.get(
-  //     url, 
-  //     {responseType: 'blob',
-  //       headers: {
-  //         "x-access-token": localStorage.getItem("token"),
-  //     }
-  //   } // !!!
-  //   ).then((response) => {
-  //     window.open(URL.createObjectURL(response.data));
-  //   })
-  // }
+
 
   console.log("data is: ", items);
   console.log("state is; ", location.state);

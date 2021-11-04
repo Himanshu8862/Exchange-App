@@ -5,6 +5,7 @@ const productSchema = mongoose.Schema({
     desc: String,
     price: Number,
     owner: String,
+    rating : Number,
     images: Array,
     category: String,
     date: Date,

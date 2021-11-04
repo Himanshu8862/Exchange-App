@@ -10,11 +10,17 @@ export let uploadItem = async (req, res) => {
             if(err){
                 console.log(err);
             }else if(user){
+                let rating = 0;
+                if(user.count > 0){
+                    rating = user.rating / user.count;
+                }
+                console.log(rating);
                 const item = new Product({
                     title: req.body.title,
                     desc: req.body.desc,
                     price: req.body.price,
                     owner: user.username,
+                    rating : rating,
                     category: req.body.category,
                     date: Date.now(),
                     images : req.files.images

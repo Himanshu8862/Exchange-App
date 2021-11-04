@@ -350,8 +350,18 @@ export let generatePDF = async (req,res) => {
         let order = req.body.order;
         let paymentType = req.body.method;
         let items = req.body.items;
-        console.log(req.body);
+        let rating =  req.body.rating;
+        //console.log(req.body);
         //res.render("paydone");
+        User.findOne({username : order.seller}, (err,user) => {
+            if(err){
+                console.log(err);
+            }else{
+                user.rating += Number(rating);
+                user.count += 1;
+                user.save();
+            }
+        })
 
         res.render("paydone", {order : order, total : total, disprice : disprice, paymentType : paymentType, items : items}, async (err,html) => {
             let fn = './public/uploads/'+ order._id + '.pdf';
