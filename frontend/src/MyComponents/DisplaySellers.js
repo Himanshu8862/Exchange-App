@@ -11,6 +11,7 @@ export default function DisplaySeller(props) {
     }, [],
     );
     let [items, setItems] = useState([]);
+    let [items_noImage, setItemsNoImage] = useState([]);
     let [status, setStatus] = useState("");
     function getProductDetails() {
         setStatus(props.status);
@@ -22,6 +23,18 @@ export default function DisplaySeller(props) {
         })
             .then((res) => {
                 console.log(res);
+                let details = [];
+                for(var i=0; i<res.data.result.length ;i++) {
+                    let obj = {
+                        title : res.data.result[i].title,
+                        desc : res.data.result[i].desc,
+                        price : res.data.result[i].price,
+                        owner : res.data.result[i].owner,
+                        category : res.data.result[i].category,
+                    }
+                    details.push(obj);
+                }
+                setItemsNoImage(details);
                 setItems(res.data.result);
             })
     }
@@ -144,7 +157,7 @@ export default function DisplaySeller(props) {
                     <Link to={
                         {
                             pathname: "/checkout",
-                            state:  { items : items, order : props.order},
+                            state:  { items : items_noImage, order : props.order},
                         }}
                     >
                         <button
