@@ -12,7 +12,7 @@ export default function ProductList(props) {
                     //         return val;
                     //     else {
                     //         console.log(sellerRating);
-                    //         Axios.get('http://localhost:5000/getUser', {username: val.owner})
+                    //         Axios.get('https://exchange-app-team14.herokuapp.com/getUser', {username: val.owner})
                     //         .then((res) => {
                     //             setsellerRating(res.data.result.rating);
                     //         })
@@ -26,7 +26,7 @@ export default function ProductList(props) {
                     //     if(props.filterLocation.size === 0)
                     //         return val;
                     //     else {
-                    //         // Axios.get('http://localhost:5000/getUser', {username: val.owner})
+                    //         // Axios.get('https://exchange-app-team14.herokuapp.com/getUser', {username: val.owner})
                     //         // .then((res) => {
                     //         //     setsellerLocation(res.data.result.location);
                     //         // })
@@ -66,7 +66,7 @@ export default function ProductList(props) {
                     max = Math.max(max, returned_items[i].price);
                     console.log(returned_items[i]);
                     if(sellers[returned_items[i].owner] === undefined) {
-                        Axios.post('http://localhost:5000/getUser', {username: returned_items[i].owner})
+                        Axios.post('https://exchange-app-team14.herokuapp.com/getUser', {username: returned_items[i].owner})
                         .then((res) => {
                             let prev_sellers = sellers;
                             prev_sellers[returned_items[i].owner] = res.data.result;

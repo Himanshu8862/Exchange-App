@@ -4,7 +4,7 @@ import Axios from 'axios';
 // import { useState } from 'react
 // import './SellItem.css';
 
-export default function SellItem(props) {
+export default function SellItem() {
     var history = useHistory();
     const [category, setCategory] = useState("Books");
     const [errmsg, seterrmsg] = useState("");
@@ -20,7 +20,7 @@ export default function SellItem(props) {
         const imageNames = [];
         // var userName = "noUser";
         // get username of the user
-        Axios.get("http://localhost:5000/profile/getUserData", {
+        Axios.get("https://exchange-app-team14.herokuapp.com/profile/getUserData", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
                 'content-type': 'multipart/form-data'
@@ -28,7 +28,6 @@ export default function SellItem(props) {
         })
         .then((res)=>{
             // console.log(res);
-            let data = res.data.result;
             for(let i=0; i<images.length; i++) {
                 fd.append('images', images[i]);
                 imageNames.push(images[i].name);

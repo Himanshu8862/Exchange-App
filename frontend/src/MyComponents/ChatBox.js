@@ -15,7 +15,7 @@ export default function ChatBox(props) {
     },[])
 
     function getChatList(){
-        Axios.get("http://localhost:5000/chat/getChatList", {
+        Axios.get("https://exchange-app-team14.herokuapp.com/chat/getChatList", {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
