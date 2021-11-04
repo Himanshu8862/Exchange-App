@@ -11,7 +11,11 @@ export default function Login() {
         if(passwordReg === "" || emailReg === ""){
             seterrmsg("All fields are required!!");
         }else{
-            Axios.post("http://localhost:5000/login", {
+            // Axios.post("http://localhost:5000/login", {
+            //     email: emailReg,
+            //     password: passwordReg,
+            // })
+            Axios.post("https://exchange-app-team14.herokuapp.com/login", {
                 email: emailReg,
                 password: passwordReg,
             })

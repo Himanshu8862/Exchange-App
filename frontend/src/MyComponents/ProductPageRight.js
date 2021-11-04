@@ -7,9 +7,7 @@ export default function ProductPageRight(props) {
 
     let [cartFlag, setCartFlag] = useState(false);
     let [user, setUser] = useState("");
-   // let query = new URLSearchParams(useLocation().search);
     let history = useHistory();
-    let base_dir = "/assets/images/";
 
     useEffect(()=>{
        checkCart();
@@ -67,18 +65,11 @@ export default function ProductPageRight(props) {
                     <div className="row my-3 ">
                         {
                             props.item.images.map((image) => {
-                                return (<img src={base_dir + image} alt="..." className="col-6 my-1" height="100px" onClick={(e) => {props.setImage(image)}} />)
+                                let imageUrl = `data:image/jpeg;base64,${image.data}`;
+                                return (<img src={imageUrl} alt="..." className="col-6 my-1" height="100px" onClick={(e) => {let imageUrl = `data:image/jpeg;base64,${image.data}`; props.setImage(imageUrl)}} />)
                             })
                         }
                         
-                        {/*<img src={base_dir + props.images[0]} alt="..." className="col-4 my-1 grid-image" />
-                         <img src="/assets/images/iphone8-front.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/iphone-8-back.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/iphone8_1.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/phone1.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/phone2.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/phone3.jpg" alt="..." className="col-4 my-1 grid-image" />
-                        <img src="/assets/images/phone4.jpg" alt="..." className="col-4 my-1 grid-image" /> */}
                     </div>
                 </div>
                 <hr />
@@ -96,13 +87,7 @@ export default function ProductPageRight(props) {
                         <button className="btn btn-success mx-5 my-3 px-5 py-2" onClick={addToCart}>Add to Cart</button>
                         :  
                         <button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Added to Cart</button>) : 
-                        (<button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Add to Cart</button>) }
-                    {/* { !cartFlag ? 
-                        <button className="btn btn-success mx-5 my-3 px-5 py-2" onClick={addToCart}>Add to Cart</button>
-                        :  
-                        <button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Added to Cart</button>
-                         } */}
-                        
+                        (<button className="btn btn-success mx-5 my-3 px-5 py-2" disabled>Add to Cart</button>) }                        
                     </div>
                 </div>
                 <hr />

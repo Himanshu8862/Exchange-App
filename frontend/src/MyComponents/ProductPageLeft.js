@@ -6,6 +6,7 @@ export default function ProductPageLeft(props) {
 
     // let query = new URLSearchParams(useLocation().search);
     let base_dir = "/assets/images/";
+    
 
     // useEffect(()=>{
     //     getDataDB();
@@ -36,7 +37,7 @@ export default function ProductPageLeft(props) {
                     <h3 className="col-6 text-end">Seller: {props.item.owner}</h3>
                 </div>
                 <div className="bg-dark text-center my-3">
-                    <img src={base_dir + props.image} height="400px" alt="..."/>
+                    <img src={props.image} height="400px" alt="..."/>
                 </div>
                 <div>
                     <h2>Price: ₹ {props.item.price}</h2>

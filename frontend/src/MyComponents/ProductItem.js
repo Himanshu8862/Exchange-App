@@ -1,7 +1,7 @@
 import React from "react"
 
 function ProductItem(props) {
-    let url = "/assets/images/" + props.imageUrl;
+    let url = props.imageUrl;
     return (
         <div className="d-flex justify-content-between">
             <div>

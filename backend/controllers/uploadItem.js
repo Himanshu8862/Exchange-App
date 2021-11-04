@@ -2,7 +2,8 @@ import Product from "../model/products.js";
 import User from "../model/users.js";
 
 export let uploadItem = async (req, res) => {
-    //console.log(req.body);
+    console.log(req.body);
+    console.log(req.files);
     try {
         let id = req.user;
         User.findById(id, (err,user) => {
@@ -16,10 +17,9 @@ export let uploadItem = async (req, res) => {
                     owner: user.username,
                     category: req.body.category,
                     date: Date.now(),
+                    images : req.files.images
                 })
-                for(let i=0; i<req.body.imageNames.length; i++) {
-                    item.images.push(req.body.imageNames[i]);
-                }
+                
                 item.save();
                 console.log(item);
                 return res.status(200).json({msg: item});

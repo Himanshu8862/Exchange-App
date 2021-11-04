@@ -9,7 +9,10 @@ export default function ProductBody() {
         console.log(location.state);
         return location.state;
     })
-    let [image, setImage] = useState(item.images[0]);
+    let [image, setImage] = useState(()=>{
+        let imageUrl = `data:image/jpeg;base64,${item.images[0].data}`;
+        return imageUrl;
+    });
 
     return (
         <div>

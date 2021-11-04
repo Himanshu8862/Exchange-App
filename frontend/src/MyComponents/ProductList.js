@@ -51,6 +51,7 @@ export default function ProductList(props) {
     function getProductsfromDB() {
         //window.location.reload();
         Axios.get('http://localhost:5000/products/getProducts', {
+            responseType: "json",
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
@@ -126,7 +127,9 @@ export default function ProductList(props) {
                         }
                     })
                     .map((item) => {
-                        let imageUrl = "/assets/images/"+item.images[0];
+                        //let imageUrl = "/assets/images/"+item.images[0];
+                        //console.log(item.images[0])
+                        let imageUrl = `data:image/jpeg;base64,${item.images[0].data}`;
                         return (
                             //{{path : `/product?id=${item._id}`, state: item}}
                             <Link to={{pathname : `/product`, state: item}} className="text-decoration-none text-dark">

@@ -4,7 +4,8 @@ import multer from "multer";
 import { verifyJwt } from "../middleware/validateUser.js";
 
 const imageStorage = multer.diskStorage({
-    destination: '../frontend/public/Assets/Images',
+    //destination: '../frontend/public/Assets/Images',
+    destination: 'public/images',
     filename: (req, file, cb) => {
         cb(null, file.originalname);
     }

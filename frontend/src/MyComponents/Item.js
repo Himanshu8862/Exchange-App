@@ -47,11 +47,11 @@ export default function Item() {
                                          </div> :
                         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
                       {items.map((item)=>{
-                         let url = "/assets/images/" + item.images[0];
+                        let imageUrl = `data:image/jpeg;base64,${item.images[0].data}`;
                         return <div className="col">
                             <Link to="#" className="text-decoration-none text-dark">
                             <div className="card shadow-sm ">
-                                <img src={url} alt="item" className="card-image"/>
+                                <img src={imageUrl} alt="item" className="card-image"/>
 
                                 <div className="card-body">
                                     <p className="card-text">{ item.desc }</p>

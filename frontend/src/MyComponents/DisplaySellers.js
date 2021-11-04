@@ -96,10 +96,11 @@ export default function DisplaySeller(props) {
                             </div>
                             {
                                 items.map(function (d) {
+                                    let imageUrl = `data:image/jpeg;base64,${d.images[0].data}`;
                                     return (
                                         <>
                                             <hr />
-                                            <ProductItem name={d.title} discription={d.desc} price={d.price} imageUrl={d.images[0]} />
+                                            <ProductItem name={d.title} discription={d.desc} price={d.price} imageUrl={imageUrl} />
 
                                         </>
                                     )

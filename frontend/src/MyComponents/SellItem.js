@@ -34,19 +34,25 @@ export default function SellItem(props) {
                 imageNames.push(images[i].name);
             }
             // console.log(fd);
-            Axios.post("http://localhost:5000/sell/imageupload", fd, {
-                headers: {
-                    "x-access-token": localStorage.getItem("token"),
-                    "Content-Type": "multipart/form-data",
-                }
-            })
-            Axios.post("http://localhost:5000/sell", {
-                category: category,
-                title: title,
-                desc: desc, 
-                price: price,
-                imageNames: imageNames,
-            }, 
+            // Axios.post("http://localhost:5000/sell/imageupload", fd, {
+            //     headers: {
+            //         "x-access-token": localStorage.getItem("token"),
+            //         "Content-Type": "multipart/form-data",
+            //     }
+            // })
+            fd.append('category',category);
+            fd.append('title',title);
+            fd.append('desc',desc);
+            fd.append('price',price);
+            Axios.post("http://localhost:5000/sell",
+            //  {
+            //     category: category,
+            //     title: title,
+            //     desc: desc, 
+            //     price: price,
+            //     imageNames: imageNames,
+            // }, 
+           fd,
             {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),

@@ -12,6 +12,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import ejs from "ejs";
+import fileUpload from "express-fileupload";
 
 dotenv.config();
 const app = express();
@@ -36,9 +37,11 @@ app.use(
         saveUninitialized: false,
     })
 );
+app.use(fileUpload());
+
 
 mongoose.connect(
-    'mongodb://localhost:27017/exchangeDB',
+    process.env.DB_URI,
     {
         useNewUrlParser:true,
         useUnifiedTopology: true,
