@@ -37,7 +37,7 @@ import ResetPassword from './MyComponents/ResetPassword';
 import EditProduct from './MyComponents/EditProduct';
 
 
-const socket = io.connect("http://localhost:3001/");
+const socket = io.connect("https://desolate-sea-32134.herokuapp.com/");
 
 function App() {
 

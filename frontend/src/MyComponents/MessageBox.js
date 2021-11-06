@@ -17,12 +17,15 @@ export default function MessageBox(props) {
     let [firstTime, setFirstTime] = useState(true)
 
     let history = useHistory();
+
     function sendMessage(){
+        let room = props.sender._id;
         let data = {
             author: props.user,
             mess : mess,
+            room  : room
         }
-        let room = props.sender._id;
+        
         let socket = props.socket;
         let message = {
             sender : props.user,
@@ -31,7 +34,7 @@ export default function MessageBox(props) {
         let update_messages = [...messages,message];
         setMessages(update_messages);
         setMess("");
-        socket.emit("send_message", data, room);
+        socket.emit("send_message", data);
         
     }
     useEffect( () => {
@@ -75,6 +78,7 @@ export default function MessageBox(props) {
         let data = {
             author: props.user,
             mess : coup,
+            room : room,
         }
         let room = props.sender._id;
         let socket = props.socket;
@@ -85,7 +89,7 @@ export default function MessageBox(props) {
         let update_messages = [...messages,message];
         setMessages(update_messages);
         setMess("");
-        socket.emit("send_message", data, room);
+        socket.emit("send_message", data);
     }
 
     function createCoupon(){
