@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Axios from "axios";
+import baseUrl from '../services/Baseurl'
 
 export default function Coupon() {
     let history = useHistory();
@@ -12,7 +13,8 @@ export default function Coupon() {
     });
     let [genCoup, setgencoup] = useState(false);
     const login = (e) => {
-        Axios.post("http://localhost:5000/chat/createCoupon", {
+        let url = baseUrl + 'chat/createCoupon';
+        Axios.post(url, {
             oid : oid,
             coupon : coupon,
             price : price,

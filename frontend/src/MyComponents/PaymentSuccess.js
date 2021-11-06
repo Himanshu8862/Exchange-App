@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
+import baseUrl from '../services/Baseurl'
 
 function PaymentSuccess() {
   const [rating, setRating] = useState("3");
@@ -20,8 +21,8 @@ function PaymentSuccess() {
   function GetItems() {
     console.log(location.state);
     setItems(props);
-    let link = "./../../../backend/public/uploads/" + location.state.order._id + ".pdf";
-    seturl(link);
+    // let link = "./../../../backend/public/uploads/" + location.state.order._id + ".pdf";
+    // seturl(link);
   }
 
   useEffect(() => {
@@ -33,7 +34,7 @@ function PaymentSuccess() {
   }, []);
 
   function orderSuccess() {
-    let url = 'http://localhost:5000/products/orderSuccess';
+    let url = baseUrl + 'products/orderSuccess';
     Axios.post(url, {
       order: location.state.order,
       total: location.state.total,
@@ -50,7 +51,7 @@ function PaymentSuccess() {
   }
 
   async function generatePDF() {
-    let url = 'http://localhost:5000/products/generatePDF';
+    let url = baseUrl + 'products/generatePDF';
 
     await Axios.post(url, {
       order: location.state.order,

@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 // import files from "./../../../backend/public/uploads";
+import baseUrl from '../services/Baseurl';
 
 export default function PrevOrders() {
 
@@ -13,7 +14,8 @@ export default function PrevOrders() {
     let [orders, setOrders] = useState([]);
 
     function getPrevOrders(){
-        Axios.get("http://localhost:5000/profile/getPrevOrders", {
+        let url = baseUrl + 'profile/getPrevOrders'
+        Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }
@@ -27,7 +29,7 @@ export default function PrevOrders() {
     function openPDF(id){
         // let fileName = files + id + ".pdf";
         // window.open(fileName);
-        let url = "http://localhost:5000/products/viewPDF?oid="+id;
+        let url = baseUrl + "products/viewPDF?oid="+id;
         Axios.get(url, {
             responseType: "blob",
             headers: {
@@ -52,7 +54,7 @@ export default function PrevOrders() {
                 <h2 className="container row text-white mb-3">Order Archives</h2>
                 <div className="container text-white">
                 { orders.map((order)=>{
-                    let link = "./../../../backend/public/uploads/"+order.orderID+".pdf";
+                   // let link = "./../../../backend/public/uploads/"+order.orderID+".pdf";
                     return <div className="row my-2">
                         <div className="col order-first">
                             Transaction ID: {order.orderID} 

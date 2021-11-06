@@ -3,6 +3,7 @@ import ProductList from './ProductList'
 import Categories from './Categories'
 import Filters from './Filters'
 import Sliders from './Sliders'
+import baseUrl from '../services/Baseurl'
 
 export default function MainPage(props) {
 	let [minPrice, setminPrice] = useState(0);

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
+import baseUrl from '../services/Baseurl'
 
 export default function Login() {
     let history = useHistory();
@@ -11,14 +12,15 @@ export default function Login() {
         if(passwordReg === "" || emailReg === ""){
             seterrmsg("All fields are required!!");
         }else{
-            // Axios.post("http://localhost:5000/login", {
-            //     email: emailReg,
-            //     password: passwordReg,
-            // })
-            Axios.post("https://exchange-app-team14.herokuapp.com/login", {
+            let url = baseUrl + 'login';
+            Axios.post(url, {
                 email: emailReg,
                 password: passwordReg,
             })
+            // Axios.post("https://exchange-app-team14.herokuapp.com/login", {
+            //     email: emailReg,
+            //     password: passwordReg,
+            // })
             .then((res)=>{
                 console.log(res);
                 //setToken(res.data.token);

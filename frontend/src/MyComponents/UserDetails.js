@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import baseUrl from '../services/Baseurl';
 
 
 export default function UserDetails() {
@@ -15,7 +16,8 @@ export default function UserDetails() {
     let [rating, setRating] = useState(0);
     
     function getUserDetails(){
-        Axios.get("http://localhost:5000/profile/getUserData", {
+        let url = baseUrl + 'profile/getUserData';
+        Axios.get(url, {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),
                 }

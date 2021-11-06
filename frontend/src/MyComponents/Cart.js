@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import DisplaySeller from "./DisplaySellers";
+import baseUrl from '../services/Baseurl'
 
 export default function Cart() {
 
@@ -12,7 +13,8 @@ export default function Cart() {
     let [orders, setOrders] = useState([]);
 
     function getCartDetails(){
-        Axios.get("https://exchange-app-team14.herokuapp.com/products/viewCart", {
+        let url = baseUrl + 'products/viewCart';
+        Axios.get(url, {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),
                 }

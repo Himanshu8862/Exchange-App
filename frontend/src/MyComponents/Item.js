@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import baseUrl from '../services/Baseurl'
 
 export default function Item() {
 
@@ -11,7 +12,8 @@ export default function Item() {
     let [items, setItems] = useState([]);
 
     function getOwnItems(){
-        Axios.get('http://localhost:5000/products/getOwnItems', {
+        let url = baseUrl + 'products/getOwnItems';
+        Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }

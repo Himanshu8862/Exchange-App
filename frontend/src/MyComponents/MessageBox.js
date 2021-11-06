@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
+import baseUrl from '../services/Baseurl'
 
 
 export default function MessageBox(props) {
@@ -43,7 +44,8 @@ export default function MessageBox(props) {
     }, [messages] );
 
     function getMessagesFromDB(){
-        let url = "https://exchange-app-team14.herokuapp.com/chat/getMessagesFromDB?id=" + props.sender._id;
+
+        let url = baseUrl + "chat/getMessagesFromDB?id=" + props.sender._id;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -88,7 +90,7 @@ export default function MessageBox(props) {
 
     function createCoupon(){
         let sender = props.user === props.sender.author1 ? props.sender.author2 : props.sender.author1;
-        let url = "https://exchange-app-team14.herokuapp.com/chat/provideDiscount?a1=" + sender;
+        let url = baseUrl + "chat/provideDiscount?a1=" + sender;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),

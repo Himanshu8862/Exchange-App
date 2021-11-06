@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import baseUrl from '../services/Baseurl';
 
 export default function ProductList(props) {
 
@@ -50,7 +51,8 @@ export default function ProductList(props) {
 
     function getProductsfromDB() {
         //window.location.reload();
-        Axios.get('http://localhost:5000/products/getProducts', {
+        let url = baseUrl + 'products/getProducts';
+        Axios.get(url, {
             responseType: "json",
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -66,7 +68,8 @@ export default function ProductList(props) {
                     max = Math.max(max, returned_items[i].price);
                     console.log(returned_items[i]);
                     if(sellers[returned_items[i].owner] === undefined) {
-                        Axios.post('https://exchange-app-team14.herokuapp.com/getUser', {username: returned_items[i].owner})
+                        let url1 = baseUrl + 'getUser'
+                        Axios.post(url1, {username: returned_items[i].owner})
                         .then((res) => {
                             let prev_sellers = sellers;
                             prev_sellers[returned_items[i].owner] = res.data.result;

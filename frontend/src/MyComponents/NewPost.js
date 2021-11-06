@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import axios from "axios";
+import baseUrl from '../services/Baseurl'
 
 function NewPost() {
   const [title, setTitle] = useState("");
@@ -20,8 +21,9 @@ function NewPost() {
     console.log(req);
 
     // post request to the server
+    let url = baseUrl + 'discussion/addPost'
     axios
-      .post("https://exchange-app-team14.herokuapp.com/discussion/addPost", req, 
+      .post(url, req, 
       {
           headers: {
               "x-access-token": localStorage.getItem("token"),

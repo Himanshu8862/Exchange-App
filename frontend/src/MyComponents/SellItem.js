@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Axios from 'axios';
 // import { useState } from 'react
 // import './SellItem.css';
+import baseUrl from '../services/Baseurl';
 
 export default function SellItem() {
     var history = useHistory();
@@ -20,7 +21,8 @@ export default function SellItem() {
         const imageNames = [];
         // var userName = "noUser";
         // get username of the user
-        Axios.get("https://exchange-app-team14.herokuapp.com/profile/getUserData", {
+        let url = baseUrl + 'profile/getUserData';
+        Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
                 'content-type': 'multipart/form-data'
@@ -43,7 +45,8 @@ export default function SellItem() {
             fd.append('title',title);
             fd.append('desc',desc);
             fd.append('price',price);
-            Axios.post("http://localhost:5000/sell",
+            let url1 = baseUrl + 'sell'
+            Axios.post(url1,
             //  {
             //     category: category,
             //     title: title,

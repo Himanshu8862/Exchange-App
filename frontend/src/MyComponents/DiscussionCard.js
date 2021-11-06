@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Collapse, Button, CardBody, Card } from "reactstrap";
+import baseUrl from '../services/Baseurl'
 
 export default function DiscussionCard(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,8 +20,9 @@ export default function DiscussionCard(props) {
     };
     setuserComment("");
     console.log("you clicked the form ", req, props);
+    let url = baseUrl + 'discussion/addComment';
     axios
-      .post("http://localhost:5000/discussion/addComment", req, 
+      .post(url, req, 
       {
           headers: {
               "x-access-token": localStorage.getItem("token"),

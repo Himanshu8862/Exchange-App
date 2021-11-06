@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import Axios from 'axios';
-
+import baseUrl from '../services/Baseurl'
 
 
 export default function EditProfile() {
@@ -12,7 +12,8 @@ export default function EditProfile() {
     const [phone, setPhone] = useState("");
 
     function saveChanges(e){
-        Axios.post("http://localhost:5000/profile/saveChanges", {
+        let url = baseUrl + 'profile/saveChanges'
+        Axios.post(url, {
             name : name === "" ? location.state.name : name,
             city : city === "" ? location.state.city : city,
             phone : phone === ""? location.state.phone : phone,

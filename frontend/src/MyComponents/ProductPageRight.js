@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router';
 import Axios from 'axios';
+import baseUrl from '../services/Baseurl';
 
 export default function ProductPageRight(props) {
 
@@ -13,7 +14,7 @@ export default function ProductPageRight(props) {
        checkCart();
     })
     function checkCart(){
-        let url = 'http://localhost:5000/products/checkCart?id='+props.item._id+'&seller='+props.item.owner;
+        let url = baseUrl + 'products/checkCart?id='+props.item._id+'&seller='+props.item.owner;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -28,7 +29,8 @@ export default function ProductPageRight(props) {
     function addToCart() {
         
         let id = props.item._id;
-        Axios.post("http://localhost:5000/products/addToCart", {
+        let url = baseUrl + 'products/addToCart'
+        Axios.post(url, {
             id: id,
             
         },{headers: {
@@ -45,7 +47,8 @@ export default function ProductPageRight(props) {
     function createChat(){
         
         let id = props.item._id;
-        Axios.post("http://localhost:5000/chat/createChat", {
+        let url = baseUrl + 'chat/createChat'
+        Axios.post(url, {
             id: id,
         },{headers: {
             "x-access-token": localStorage.getItem("token"),

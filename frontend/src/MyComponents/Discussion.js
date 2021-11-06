@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DiscussionCard from "./DiscussionCard";
 import axios from "axios";
+import baseUrl from "../services/Baseurl";
 
 function Discussion() {
     // use of state hook 
@@ -14,7 +15,8 @@ function Discussion() {
 
     // get Discussions 
     const getDiscussions=()=>{
-        axios.get("https://exchange-app-team14.herokuapp.com/discussion/view", {
+        let url = baseUrl + 'discussion/view';
+        axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }

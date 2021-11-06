@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import Axios from 'axios';
 
+import baseUrl from '../services/Baseurl'
+
 
 
 export default function EditProduct() {
@@ -12,7 +14,7 @@ export default function EditProduct() {
     const [price, setprice] = useState("");
 
     function saveChanges(e){
-        let url = 'http://localhost:5000/products/saveProductChanges' ;
+        let url = baseUrl + 'products/saveProductChanges' ;
         Axios.post(url, {
             id : location.state._id,
             title : title === "" ? location.state.title : title,

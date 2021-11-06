@@ -2,6 +2,7 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import ChatList from './ChatList'
 import MessageBox from './MessageBox'
+import baseUrl from '../services/Baseurl'
 
 export default function ChatBox(props) {
 
@@ -15,7 +16,8 @@ export default function ChatBox(props) {
     },[])
 
     function getChatList(){
-        Axios.get("https://exchange-app-team14.herokuapp.com/chat/getChatList", {
+        let url = baseUrl + 'chat/getChatList';
+        Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }

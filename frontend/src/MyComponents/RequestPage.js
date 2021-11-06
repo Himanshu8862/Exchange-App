@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import RequestItem from './RequestItem'
 import Axios from 'axios';
+import baseUrl from '../services/Baseurl';
 
 export default function RequestPage() {
     useEffect( ()=>{
@@ -9,7 +10,8 @@ export default function RequestPage() {
     );
     let [requests, setRequests] = useState([]);
     function getRequests(){
-        Axios.get("https://exchange-app-team14.herokuapp.com/products/getRequests", {
+        let url = baseUrl + 'products/getRequests';
+        Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
             }

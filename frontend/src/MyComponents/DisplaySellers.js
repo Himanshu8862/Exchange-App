@@ -2,6 +2,7 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import ProductItem from "./ProductItem";
+import baseUrl from '../services/Baseurl'
 
 
 export default function DisplaySeller(props) {
@@ -15,7 +16,7 @@ export default function DisplaySeller(props) {
     let [status, setStatus] = useState("");
     function getProductDetails() {
         setStatus(props.status);
-        let url = 'http://localhost:5000/products/getRequestProduct?oid=' + props.id;
+        let url = baseUrl + 'products/getRequestProduct?oid=' + props.id;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -42,7 +43,8 @@ export default function DisplaySeller(props) {
     const toggle = () => setIsOpen(!isOpen);
 
     function makeRequest() {
-        Axios.post("http://localhost:5000/products/makeRequest", {
+        let url = baseUrl + 'products/makeRequest';
+        Axios.post(url, {
             id: props.id,
         }, {
             headers: {
@@ -64,7 +66,8 @@ export default function DisplaySeller(props) {
     }
 
     function cancelOrder(){
-        Axios.post("http://localhost:5000/products/cancelOrder", {
+        let url = baseUrl + "products/cancelOrder";
+        Axios.post(url, {
             id: props.id,
         }, {
             headers: {

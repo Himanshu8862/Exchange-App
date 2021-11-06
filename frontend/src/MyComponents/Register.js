@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
+import baseUrl from '../services/Baseurl';
 
 
 export default function Register() {
@@ -20,7 +21,8 @@ export default function Register() {
             seterrmsg("Password must be atleast 6 characters");
         }
         else{
-            Axios.post("https://exchange-app-team14.herokuapp.com/register", {
+            let url = baseUrl + 'register';
+            Axios.post(url, {
                 username: usernameReg,
                 email: emailReg,
                 password: passwordReg,

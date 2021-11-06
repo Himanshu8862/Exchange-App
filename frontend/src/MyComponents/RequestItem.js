@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
+import baseUrl from '../services/Baseurl';
 
 export default function RequestItem(props) {
 
@@ -12,7 +13,7 @@ export default function RequestItem(props) {
     let [userDecision, setuserDecision] = useState("");
     function getProductDetails(){
         setuserDecision(props.item.decision);
-        let url = 'http://localhost:5000/products/getRequestProduct?oid='+props.item._id;
+        let url = baseUrl  + 'products/getRequestProduct?oid='+props.item._id;
         Axios.get(url, {
             headers: {
                 "x-access-token": localStorage.getItem("token"),
@@ -25,7 +26,8 @@ export default function RequestItem(props) {
     }
     function chooseDecision(decision){
         console.log(decision);
-            Axios.post("http://localhost:5000/products/chooseDecision", {
+        let url = baseUrl + 'products/chooseDecision';
+            Axios.post(url, {
                 id: props.item._id,
                 decision : decision,
             },{headers: {
