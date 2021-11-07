@@ -158,13 +158,6 @@ function PaymentSuccess() {
               Generate Invoice{" "}
               <i class="bi bi-file-earmark-arrow-down-fill"></i>
             </Link>
-
-            <Link
-              className="fs-6  text-white bg-success px-5 py-2 rounded-pill text-decoration-none"
-              to="/"
-            >
-              Continue Shopping <i class="bi bi-bag"></i>
-            </Link>
           </div>
         </div>
       </div>
