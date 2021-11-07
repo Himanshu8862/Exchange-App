@@ -114,9 +114,9 @@ export default function ProductList(props) {
                     .filter((val) => {
                         if(props.filterRatings === 0)
                             return val;
-                        else {
-                            console.log(sellers[val.owner].rating);
-                            if(sellers[val.owner].rating >= props.filterRatings)
+                        else if(sellers[val.owner].count > 0) {
+                            console.log(sellers[val.owner].rating/sellers[val.owner].count);
+                            if(sellers[val.owner].rating/sellers[val.owner].count >= props.filterRatings)
                                 return val;
                         }
                     })
