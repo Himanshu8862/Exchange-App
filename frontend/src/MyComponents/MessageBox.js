@@ -75,12 +75,12 @@ export default function MessageBox(props) {
     }
 
     function sendCoupon(){
+        let room = props.sender._id;
         let data = {
             author: props.user,
             mess : coup,
             room : room,
         }
-        let room = props.sender._id;
         let socket = props.socket;
         let message = {
             sender : props.user,
