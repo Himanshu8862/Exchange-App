@@ -16,7 +16,11 @@ export default function SellItem() {
 
     const upload = (e) => {
         //console.log({category: category, title: title, desc: desc, images: images, price: price});
-        
+        if(images.length === 0) {
+            alert("You must upload atleast 1 image!!");
+            e.preventDefault();
+            return;
+        }
         const fd = new FormData();
         const imageNames = [];
         // var userName = "noUser";
