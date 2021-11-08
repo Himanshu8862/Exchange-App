@@ -142,7 +142,7 @@ export default function ProductList(props) {
                                     <div className="card-body">
                                     <p className="card-text card-title overflow-hidden fs-5">{item.title}</p>
                                     { item.rating > 0 ? (<span className="card-text card-title overflow-hidden fs-5">Owner Rating : {item.rating}</span>)
-                                    : (<></>) }
+                                    : (<span className="card-text card-title overflow-hidden fs-5">Unrated</span>) }
                                     
                                     <div className="d-flex justify-content-between align-items-center">
                                         <h3>₹ {item.price}</h3>
