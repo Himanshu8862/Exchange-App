@@ -151,7 +151,7 @@ export default function DisplaySeller(props) {
                         onClick={cancelOrder}
                         type="button"
                         className="btn btn-danger"
-                        disabled={status === "pending" || status === "accepted"}
+                        disabled={status === "pending"}
                     >
                         Cancel
                     </button>
