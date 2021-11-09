@@ -129,7 +129,7 @@ export default function DisplaySeller(props) {
             <div className="d-flex py-2 justify-content-between">
                 <div>
                     <button type="button" 
-                    disabled={status === "accepted"}
+                    disabled={status === "accepted" || status === "rejected"}
                     onClick={makeRequest} 
                     className={status === "pending" ? " btn btn-warning" : " btn btn-success"}>
                         {status}
