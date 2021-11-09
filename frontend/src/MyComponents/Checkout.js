@@ -11,6 +11,7 @@ function Checkout() {
   let [items, setItems] = useState([]);
   let [coup, setcoup] = useState("");
   let [disprice, setdisprice] = useState("");
+  const [errmsg, seterrmsg] = useState("");
 
   function GetItems() {
     setItems(props.items);
@@ -20,13 +21,18 @@ function Checkout() {
     GetItems();
   }, []);
 
-  function checkCoupon(e){
-
-    if(props.order.discountCoupon.coupon === coup){
+  function checkCoupon(){
+    let order = props.order;
+    if(!order.hasOwnProperty('discountCoupon')){
+      seterrmsg("Invalid discount");
+    }
+    else if(props.order.discountCoupon.coupon === coup){
       setdisprice(props.order.discountCoupon.price);
+    }else{
+      seterrmsg("Invalid discount");
     }
 
-    e.preventDefault();
+    //e.preventDefault();
   }
 
 
@@ -70,7 +76,7 @@ function Checkout() {
           </li>) : (<></>) }
       </ul>
 
-      <form className="card p-2">
+      <div className="card p-2">
         <div className="input-group">
           <input
             type="text"
@@ -82,7 +88,9 @@ function Checkout() {
             Redeem
           </button>
         </div>
-      </form>
+        { errmsg !== "" ? <div class="alert alert-danger alert-dismissible fade show">
+                        <strong>Error!</strong> {errmsg} </div> : <></> }
+      </div>
       <div className="d-flex justify-content-between my-5">
         <Link
           className="fs-6 bg-primary text-white px-3  py-2 rounded-pill text-decoration-none"
