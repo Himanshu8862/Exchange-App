@@ -71,7 +71,7 @@ export default function Coupon() {
                         <label htmlFor="floatingPassword">To Buyer : </label>
                     </div>
                     <div className="form-floating mt-5">
-                        <input type="text" 
+                        <input type="number" min={0}
                         className="form-control" 
                         id="floatingPassword"
                         onChange={(e)=> {

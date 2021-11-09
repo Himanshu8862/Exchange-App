@@ -111,7 +111,7 @@ export default function SellItem() {
                         <label htmlFor="formFileMultiple" className="form-label">Upload pictures</label>
                     </div>
                     <div className="form-floating mb-3 mt-4">
-                        <input type="number" className="form-control" onChange={(e) => {setPrice(e.target.value)}} placeholder="Price" required/>
+                        <input type="number" min={1} className="form-control" onChange={(e) => {setPrice(e.target.value)}} placeholder="Price" required/>
                         <label htmlFor="floatingPrice">Price</label>
                     </div>
                     <div className="row">
