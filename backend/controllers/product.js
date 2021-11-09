@@ -353,13 +353,18 @@ export let generatePDF = async (req,res) => {
         let rating =  req.body.rating;
         //console.log(req.body);
         //res.render("paydone");
-        User.findOne({username : order.seller}, (err,user) => {
+        User.findOne({username : order.seller}, async (err,user) => {
             if(err){
                 console.log(err);
             }else{
                 user.rating += Number(rating);
                 user.count += 1;
                 user.save();
+                await order.items.forEach(async (obj)=> {
+                    console.log(obj);
+                await Product.findByIdAndUpdate(obj, { $set : { rating : user.rating, count: user.count }},{ multi: true });
+                    // this will be called when all the updates are done or an error occurred during the iteration
+                });
             }
         })
 
