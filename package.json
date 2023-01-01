@@ -1,0 +1,17 @@
+{
+    "name": "exchange-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+      "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
+      "start": "node backend/app.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Himanshu8862/Exchange-App"
+    },
+    "author": "",
+    "license": "ISC",
+    "homepage": "https://github.com/Himanshu8862/Exchange-App#readme"
+  }
